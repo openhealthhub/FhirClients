@@ -107,16 +107,17 @@ public class ClientAllAnswersApplication {
         }
     }
 
-    @NotNull
     private static Stream<QuestionnaireResponse.QuestionnaireResponseItemComponent> getNestedItems(
             List<QuestionnaireResponse.QuestionnaireResponseItemComponent> items) {
-        return items.stream().flatMap(item -> {
+        Stream<QuestionnaireResponse.QuestionnaireResponseItemComponent> nestedItems = items.stream().flatMap(item -> {
             List<QuestionnaireResponse.QuestionnaireResponseItemComponent> nestedItem = item.getItem();
             if (nestedItem.isEmpty()) {
-                return items.stream();
+                return Stream.empty();
             }
             return getNestedItems(nestedItem);
         });
+
+        return Stream.concat(items.stream(), nestedItems);
     }
 
     private static void setAnswer(QuestionnaireResponse.QuestionnaireResponseItemAnswerComponent answer, String answerValue) {
