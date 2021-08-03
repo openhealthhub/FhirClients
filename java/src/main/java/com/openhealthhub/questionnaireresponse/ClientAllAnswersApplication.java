@@ -1,19 +1,16 @@
 package com.openhealthhub.questionnaireresponse;
 
-import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.openhealthhub.util.FhirUtil;
 import org.bouncycastle.openpgp.PGPException;
 import org.bouncycastle.openpgp.PGPSecretKeyRing;
-import org.hl7.fhir.r4.formats.JsonCreatorDirect;
-import org.hl7.fhir.r4.formats.JsonParser;
 import org.hl7.fhir.r4.model.Attachment;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.PrimitiveType;
 import org.hl7.fhir.r4.model.QuestionnaireResponse;
 import org.hl7.fhir.r4.model.Type;
-import org.jetbrains.annotations.NotNull;
 import org.pgpainless.PGPainless;
 import org.pgpainless.decryption_verification.DecryptionStream;
 import org.pgpainless.key.protection.SecretKeyRingProtector;
@@ -22,14 +19,11 @@ import org.pgpainless.util.Passphrase;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Stream;
 
 public class ClientAllAnswersApplication {
-
-    private static final String FHIR_ENDPOINT = "https://api-sandbox-staging.openhealthhub.com/fhir";
 
     private static final String PRIVATE_KEY_FILE = "/openpgp/sandbox.key";
     private static final String PRIVATE_KEY_PASSPHRASE = "api-sandbox";
@@ -39,15 +33,15 @@ public class ClientAllAnswersApplication {
     private static PGPSecretKeyRing privateKey;
     private static SecretKeyRingProtector keyRingProtector;
 
-    public static void main(String... args) throws IOException {
+    public static void main(String... args) {
         loadPrivateKey();
 
-        IGenericClient client = createFhirCLient();
+        IGenericClient client = FhirUtil.createClient();
         QuestionnaireResponse questionnaireResponse = getQuestionnaireResponse(client);
         if (isEncryptedQuestionnaireResponse(questionnaireResponse)) {
             decryptResponse(questionnaireResponse);
         }
-        printResponse(questionnaireResponse);
+        FhirUtil.printResource(questionnaireResponse);
     }
 
     private static void loadPrivateKey() {
@@ -60,21 +54,8 @@ public class ClientAllAnswersApplication {
         }
     }
 
-    private static IGenericClient createFhirCLient() {
-        FhirContext ctx = FhirContext.forR4();
-        return ctx.newRestfulGenericClient(FHIR_ENDPOINT);
-    }
-
     private static QuestionnaireResponse getQuestionnaireResponse(IGenericClient client) {
         return client.read().resource(QuestionnaireResponse.class).withId(QUESTIONNAIRE_RESPONSE_ID).execute();
-    }
-
-    private static void printResponse(QuestionnaireResponse questionnaireResponse) throws IOException {
-        StringWriter writer = new StringWriter();
-        JsonCreatorDirect jsonCreator = new JsonCreatorDirect(writer);
-        jsonCreator.setIndent("\t");
-        new JsonParser().compose(jsonCreator, questionnaireResponse);
-        System.out.println(writer.toString());
     }
 
     private static boolean isEncryptedQuestionnaireResponse(QuestionnaireResponse questionnaireResponse) {
