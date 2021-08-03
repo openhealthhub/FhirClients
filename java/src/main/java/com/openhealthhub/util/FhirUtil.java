@@ -3,16 +3,16 @@ package com.openhealthhub.util;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
-import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.hl7.fhir.r4.formats.JsonCreatorDirect;
 import org.hl7.fhir.r4.formats.JsonParser;
+import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Resource;
 
 import java.io.StringWriter;
 
 public class FhirUtil {
 
-    private static final String FHIR_ENDPOINT = "http://localhost:8090/fhir";
+    private static final String FHIR_ENDPOINT = "https://api-sandbox-staging.openhealthhub.com/fhir";
 
     public static IGenericClient createClient() {
         FhirContext ctx = FhirContext.forR4();
@@ -50,5 +50,10 @@ public class FhirUtil {
             System.out.println("failed to print outcome " + outcome);
             e.printStackTrace();
         }
+    }
+
+    public static void printResource(Bundle bundle) {
+        System.out.println("Bundle with " + bundle.getEntry().size() + " resources");
+        bundle.getEntry().forEach(entry -> printResource(entry.getResource()));
     }
 }
