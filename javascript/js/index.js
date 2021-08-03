@@ -5,9 +5,15 @@ const headerDiv = document.createElement('div');
 const preElem = document.createElement('pre');
 
 function onTabClick(resourceName, event) {
-  document.querySelectorAll('.active').forEach(elem => elem.className = '');
+  document.querySelectorAll('.active').forEach(elem => elem.className = undefined);
   event.target.className = 'active';
-  return CLIENT_MAP[resourceName].get().then(appointment => preElem.innerHTML = JSON.stringify(appointment, null, 4));
+  preElem.className = undefined;
+  return CLIENT_MAP[resourceName].get()
+    .then(resource => preElem.innerHTML = JSON.stringify(resource, null, 4))
+    .catch(error => {
+      preElem.innerHTML = error.message;
+      preElem.className = 'error';
+    });
 }
 
 function createTab(resourceName) {

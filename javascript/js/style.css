@@ -34,3 +34,8 @@ pre {
   background-color: #eefbfe;
   overflow: auto;
 }
+
+pre.error {
+  background-color: #d33939;
+  color: white;
+}
