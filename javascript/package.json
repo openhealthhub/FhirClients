@@ -1,0 +1,26 @@
+{
+  "name": "ohh-js-fhir-client",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": "Open HealthHub Javascript FHIR Client",
+  "license": "",
+  "private": true,
+  "author": "",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "start": "webpack serve --open"
+  },
+  "devDependencies": {
+    "acorn": "^8.4.1",
+    "css-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.2",
+    "style-loader": "^3.2.1",
+    "webpack": "^5.48.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "fhirclient": "^2.4.0"
+  }
+}

@@ -1,0 +1,26 @@
+html, body {
+  height: calc(100% - 16px);
+  margin: 8px;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 50px calc(100% - 30px);
+}
+
+.header {
+  display: flex;
+}
+
+.header > div {
+  margin: 10px;
+  border-bottom: 1px solid black;
+  cursor: pointer;
+}
+
+pre {
+  border: 1px solid grey;
+  padding: 10px;
+  background-color: #eefbfe;
+  overflow: auto;
+}
