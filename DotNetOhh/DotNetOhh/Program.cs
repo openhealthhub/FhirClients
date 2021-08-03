@@ -15,9 +15,17 @@ namespace DotNetOhh
             };
 
             var client = new FhirClient("https://api-sandbox-staging.openhealthhub.com/fhir/", settings);
-            var questionnaire = client.Read<Questionnaire>("Questionnaire/1");
             
-            Console.Out.WriteLine(questionnaire.Description);
+            var obs = client.Read<Observation>("Observation/1");
+            Console.Out.WriteLine(obs.Category[0].Text);
+
+            var resource = new Subscription
+            {
+                Channel = new Subscription.ChannelComponent(){Type = Subscription.SubscriptionChannelType.RestHook}
+            };
+            var subscription = client.Create(resource);
+            
+            Console.Out.WriteLine(subscription.Id);
         }
     }
 }
