@@ -13,9 +13,19 @@ body {
 }
 
 .header > div {
-  margin: 10px;
-  border-bottom: 1px solid black;
+  margin: 5px;
+  border-bottom: 3px solid black;
   cursor: pointer;
+  padding: 8px;
+  vertical-align: middle;
+  align-self: center;
+  font-size: 14pt;
+}
+
+.header > div.active {
+  background-color: #1f6480;
+  color: white;
+  border-color: #47ADE9;
 }
 
 pre {
