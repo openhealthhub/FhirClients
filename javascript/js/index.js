@@ -22,6 +22,7 @@ function initPage() {
   headerDiv.className = 'header';
   createTab('Appointment');
   createTab('Questionnaire');
+  createTab('Subscription');
   document.body.append(headerDiv, preElem)
 }
 
