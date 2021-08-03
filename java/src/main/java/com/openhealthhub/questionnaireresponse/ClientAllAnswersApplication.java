@@ -13,6 +13,7 @@ import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.PrimitiveType;
 import org.hl7.fhir.r4.model.QuestionnaireResponse;
 import org.hl7.fhir.r4.model.Type;
+import org.jetbrains.annotations.NotNull;
 import org.pgpainless.PGPainless;
 import org.pgpainless.decryption_verification.DecryptionStream;
 import org.pgpainless.key.protection.SecretKeyRingProtector;
@@ -24,6 +25,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class ClientAllAnswersApplication {
 
@@ -94,7 +96,7 @@ public class ClientAllAnswersApplication {
     }
 
     private static void addToResponse(List<QuestionnaireResponse.QuestionnaireResponseItemComponent> items, String key, JsonArray o) {
-        List<QuestionnaireResponse.QuestionnaireResponseItemAnswerComponent> answers = items.stream()
+        List<QuestionnaireResponse.QuestionnaireResponseItemAnswerComponent> answers = getNestedItems(items)
                 .filter(item -> item.getLinkId().equals(key))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("no question response with key " + key + " found")).getAnswer();
@@ -103,6 +105,18 @@ public class ClientAllAnswersApplication {
             setAnswer(answers.get(i), o.get(i).getAsString());
 
         }
+    }
+
+    @NotNull
+    private static Stream<QuestionnaireResponse.QuestionnaireResponseItemComponent> getNestedItems(
+            List<QuestionnaireResponse.QuestionnaireResponseItemComponent> items) {
+        return items.stream().flatMap(item -> {
+            List<QuestionnaireResponse.QuestionnaireResponseItemComponent> nestedItem = item.getItem();
+            if (nestedItem.isEmpty()) {
+                return items.stream();
+            }
+            return getNestedItems(nestedItem);
+        });
     }
 
     private static void setAnswer(QuestionnaireResponse.QuestionnaireResponseItemAnswerComponent answer, String answerValue) {

@@ -73,7 +73,12 @@ public class ClientPerAnswerApplication {
     }
 
     private static void decryptResponse(QuestionnaireResponse questionnaireResponse) {
-        questionnaireResponse.getItem().parallelStream().forEach(item -> item.getAnswer().parallelStream().forEach(ClientPerAnswerApplication::decryptAnswer));
+        questionnaireResponse.getItem().parallelStream().forEach(ClientPerAnswerApplication::decryptItem);
+    }
+
+    private static void decryptItem(QuestionnaireResponse.QuestionnaireResponseItemComponent item) {
+        item.getAnswer().parallelStream().forEach(ClientPerAnswerApplication::decryptAnswer);
+        item.getItem().parallelStream().forEach(ClientPerAnswerApplication::decryptItem);
     }
 
     private static void printResponse(QuestionnaireResponse questionnaireResponse) throws IOException {
