@@ -1,4 +1,5 @@
 /DotNetOhh/DotNetOhh/bin/
 /DotNetOhh/DotNetOhh/obj/
 /DotNetOhh/packages/
-/DotNetOhh/.idea/
+/**/.idea/
+/**/*.iml
