@@ -26,6 +26,9 @@ namespace DotNetOhh
             var subscription = client.Create(resource);
             
             Console.Out.WriteLine(subscription.Id);
+
+            var qr = client.Read<QuestionnaireResponse>("QuestionnaireResponse/1");
+            new Decrypter().Decrypt(qr);
         }
     }
 }
