@@ -21,8 +21,16 @@ namespace DotNetOhh
             CreateSubscription(client);
             
             ReadAndDecryptQuestionnaireResponse(client);
-
+            
             CreateAppointment(client);
+            
+            ReadQuestionnaire(client);
+        }
+
+        private static void ReadQuestionnaire(FhirClient client)
+        {
+            var questionnaire = client.Read<Questionnaire>("Questionnaire/1");
+            Console.Out.WriteLine(questionnaire.Description);
         }
 
         private static void CreateAppointment(FhirClient client)
