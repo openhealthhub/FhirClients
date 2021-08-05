@@ -1,3 +1,7 @@
-*.iml
-.idea
-**/target/
+/DotNetOhh/DotNetOhh/bin/
+/DotNetOhh/DotNetOhh/obj/
+/DotNetOhh/packages/
+/**/.idea/
+/**/*.iml
+
+/java/target/*
