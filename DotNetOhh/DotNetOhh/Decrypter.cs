@@ -10,7 +10,9 @@ namespace DotNetOhh
 {
     public class Decrypter
     {
-        private static readonly string EncryptedAnswersUrl = "http://openhealthhub.com/StructureDefinition/encryptedAnswers";
+        private static readonly string EncryptedAnswersUrl =
+            "http://openhealthhub.com/StructureDefinition/encryptedAnswers";
+
         private static readonly string PgpPassphrase = "api-sandbox";
 
         public void Decrypt(QuestionnaireResponse qr)
@@ -23,24 +25,18 @@ namespace DotNetOhh
             pgp.Keys[0].Passphrase = PgpPassphrase;
             pgp.InputMessage = encryptedAnswers;
             pgp.Decrypt();
-            
+
             JObject decryptedAnswers = JObject.Parse(pgp.OutputMessage);
 
             var itemComponents = GetNestedItems(qr.Item);
-            
+
             itemComponents.ForEach(component => SetAnswers(component, decryptedAnswers));
-            
-            qr.Item.ForEach(item =>
-            {
-                Console.WriteLine(item.Definition);
-                item.Answer.ForEach(answer => Console.WriteLine(answer.Value.ToString()));
-            });
         }
 
         private static List<QuestionnaireResponse.ItemComponent> GetNestedItems(
             List<QuestionnaireResponse.ItemComponent> items)
         {
-           var nestedItems = items.SelectMany(item =>
+            var nestedItems = items.SelectMany(item =>
             {
                 if (item.Item.Count == 0)
                 {
@@ -49,10 +45,10 @@ namespace DotNetOhh
 
                 return GetNestedItems(item.Item);
             });
-           return items.Concat(nestedItems).ToList();
+            return items.Concat(nestedItems).ToList();
         }
-        
-        private void SetAnswers(QuestionnaireResponse.ItemComponent component, JObject decryptedAnswers)
+
+        private static void SetAnswers(QuestionnaireResponse.ItemComponent component, JObject decryptedAnswers)
         {
             var jsonArray = decryptedAnswers[component.LinkId] as JArray;
             for (int i = 0; i < jsonArray?.Count; i++)
@@ -60,12 +56,11 @@ namespace DotNetOhh
                 SetAnswer(component.Answer[i], jsonArray?[i].ToString());
             }
         }
-        
+
         private static void SetAnswer(QuestionnaireResponse.AnswerComponent answer, string answerValue)
         {
-            
             var value = answer.Value;
-            
+
             if (value is PrimitiveType p)
             {
                 p.ObjectValue = answerValue;
