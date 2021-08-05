@@ -33,8 +33,10 @@ function initPage() {
   createTab('Appointment.get');
   createTab('Appointment.create');
   createTab('Questionnaire.get');
-  createTab('Subscription.create');
   createTab('QuestionnaireResponse.get');
+  createTab('Subscription.create');
+  createTab('VitalSigns.get');
+  createTab('VitalSigns.search');
   document.body.append(headerDiv, preElem)
 }
 
