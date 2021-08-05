@@ -1,1 +1,1 @@
-export const FHIR_ENDPOINT = 'http://localhost:8090/fhir';
+export const FHIR_ENDPOINT = 'https://api-sandbox-staging.openhealthhub.com/fhir';
