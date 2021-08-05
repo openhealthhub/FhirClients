@@ -3,3 +3,5 @@
 /DotNetOhh/packages/
 /**/.idea/
 /**/*.iml
+
+/java/target/*
