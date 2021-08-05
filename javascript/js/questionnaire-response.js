@@ -19,6 +19,16 @@ class QuestionnaireResponseClient {
   async get() {
     const client = FHIR.client(FHIR_ENDPOINT);
     const resp = await client.request("QuestionnaireResponse/1");
+    return this.handleResponse(resp);
+  }
+
+  async search() {
+    const client = FHIR.client(FHIR_ENDPOINT);
+    const resp = await client.request("QuestionnaireResponse?part-of=97f680b9-e397-4298-8c53-de62a284c806&identifier=6226217e-7ae9-4fa2-8fbe-e83a8f8540f9");
+    return Promise.all(resp.entry.map(entry => this.handleResponse(entry.resource)));
+  }
+
+  async handleResponse(resp) {
     if (this.isEncryptedResponse(resp)) {
       const decryptedValues = await this.decrypt(resp);
 
@@ -74,7 +84,12 @@ class QuestionnaireResponseClient {
   }
 
   async decrypt(response) {
-    const messageObj = await openpgp.message.readArmored(response.extension[0].valueString);
+    const stringValue = response.extension[0].valueString;
+    return await this.decryptValue(stringValue);
+  }
+
+  async decryptValue(value) {
+    const messageObj = await openpgp.message.readArmored(value);
 
     const result = await openpgp.decrypt({message: messageObj, privateKeys: [this.pgpPrivKeyDecrypted]});
     return JSON.parse(result.data);

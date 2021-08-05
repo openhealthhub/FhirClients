@@ -34,6 +34,7 @@ function initPage() {
   createTab('Appointment.create');
   createTab('Questionnaire.get');
   createTab('QuestionnaireResponse.get');
+  createTab('QuestionnaireResponse.search');
   createTab('Subscription.create');
   createTab('VitalSigns.get');
   createTab('VitalSigns.search');
