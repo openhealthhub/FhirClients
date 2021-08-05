@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public abstract class QueryResponseDecryptClient {
-    private static final String PRIVATE_KEY_FILE = "/openpgp/sandbox.key";
+    private static final String PRIVATE_KEY_FILE = "/sandbox.key";
     private static final String PRIVATE_KEY_PASSPHRASE = "api-sandbox";
 
     private static final long QUESTIONNAIRE_RESPONSE_ID = 3L;

@@ -46,6 +46,14 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>../</directory>
+                <includes>
+                    <include>sandbox.key</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 </project>
