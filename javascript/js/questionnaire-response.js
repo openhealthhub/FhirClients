@@ -19,11 +19,17 @@ class QuestionnaireResponseClient {
   async get() {
     const client = FHIR.client(FHIR_ENDPOINT);
     const resp = await client.request("QuestionnaireResponse/1");
-    const decryptedValues = await this.decrypt(resp);
+    if (this.isEncryptedResponse(resp)) {
+      const decryptedValues = await this.decrypt(resp);
 
-    this.addToResponse(resp, decryptedValues);
+      this.addToResponse(resp, decryptedValues);
+    }
 
     return resp;
+  }
+
+  isEncryptedResponse(resp) {
+    return resp.meta.profile.some(profile => profile === 'http://openhealthhub.com/StructureDefinition/EncryptedQuestionnaireResponse');
   }
 
   addToResponse(resp, decryptedValues) {
