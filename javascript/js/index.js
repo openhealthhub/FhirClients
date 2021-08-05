@@ -4,11 +4,14 @@ import {CLIENT_MAP} from "./client-map";
 const headerDiv = document.createElement('div');
 const preElem = document.createElement('pre');
 
-function onTabClick(resourceName, event) {
+function onTabClick(resourceOrAction, event) {
   document.querySelectorAll('.active').forEach(elem => elem.className = undefined);
   event.target.className = 'active';
   preElem.className = undefined;
-  return CLIENT_MAP[resourceName].get()
+  const resourceWithAction = resourceOrAction.split('.');
+  const resourceName = resourceWithAction[0];
+  let client = CLIENT_MAP[resourceName];
+  return client[resourceWithAction[1]]()
     .then(resource => preElem.innerHTML = JSON.stringify(resource, null, 4))
     .catch(error => {
       preElem.innerHTML = error.message;
@@ -26,9 +29,10 @@ function createTab(resourceName) {
 
 function initPage() {
   headerDiv.className = 'header';
-  createTab('Appointment');
-  createTab('Questionnaire');
-  createTab('Subscription');
+  createTab('Appointment.get');
+  createTab('Appointment.create');
+  createTab('Questionnaire.get');
+  createTab('Subscription.create');
   document.body.append(headerDiv, preElem)
 }
 

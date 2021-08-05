@@ -2,7 +2,7 @@ import FHIR from "fhirclient";
 import {FHIR_ENDPOINT} from "./constants";
 
 class SubscriptionClient {
-  async get() {
+  async create() {
     const client = FHIR.client(FHIR_ENDPOINT);
     return client.create({
         resourceType: 'Subscription',
