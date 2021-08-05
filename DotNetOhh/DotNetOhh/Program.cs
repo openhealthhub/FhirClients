@@ -1,6 +1,7 @@
 ﻿using System;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
 
 namespace DotNetOhh
 {
@@ -58,6 +59,9 @@ namespace DotNetOhh
                 Console.WriteLine(item.LinkId);
                 item.Answer.ForEach(answer => Console.WriteLine(answer.Value.ToString()));
             });
+
+            var enc = client.Search<QuestionnaireResponse>(new []{"identifier=patientnumber", "part-of=blub"});
+            enc.Entry.ForEach(component => Console.WriteLine(component.FullUrl));
         }
 
         private static void CreateSubscription(FhirClient client)
@@ -74,6 +78,10 @@ namespace DotNetOhh
         {
             var obs = client.Read<Observation>("Observation/1");
             Console.Out.WriteLine(obs.Category[0].Text);
+            
+            var bun = client.Search<Observation>(new[]{"identifier=patientnumber"});
+            
+            bun.Entry.ForEach(component => Console.WriteLine(component.ToJson()));
         }
     }
 }
