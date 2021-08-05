@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './js/index.js',
+  entry:  './js/index.js',
   devtool: 'inline-source-map',
   mode: 'development',
   output: {
@@ -25,6 +25,10 @@ module.exports = {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test: /\.key$/i,
+        use: 'raw-loader',
+      }
     ],
   },
 };

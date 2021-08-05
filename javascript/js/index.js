@@ -5,6 +5,7 @@ const headerDiv = document.createElement('div');
 const preElem = document.createElement('pre');
 
 function onTabClick(resourceOrAction, event) {
+  preElem.innerHTML = 'Loading...';
   document.querySelectorAll('.active').forEach(elem => elem.className = undefined);
   event.target.className = 'active';
   preElem.className = undefined;
@@ -33,6 +34,7 @@ function initPage() {
   createTab('Appointment.create');
   createTab('Questionnaire.get');
   createTab('Subscription.create');
+  createTab('QuestionnaireResponse.get');
   document.body.append(headerDiv, preElem)
 }
 
