@@ -33,11 +33,9 @@ class QuestionnaireResponseClient
     {
         $keyDecrypted = $this->getDecryptedPrivateKey();
 
-        foreach ($resp->getExtension() as $extension) {
-            if ($extension->getUrl() == 'http://openhealthhub.com/StructureDefinition/encryptedAnswers') {
-                $decodedValues = json_decode($this->decryptValue($extension->getValueString(), $keyDecrypted));
+        if ($this->isEncryptedResponse($resp)) {
+                $decodedValues = json_decode($this->decryptValue($this->getEncryptedValue($resp), $keyDecrypted));
                 $this->addToResponse($resp, $decodedValues);
-            }
         }
 
         return $resp;
@@ -111,6 +109,28 @@ class QuestionnaireResponseClient
         if (isset($attachmentValue)) {
             $answer->getValueAttachment()->setData($value);
         }
+    }
+
+    private function isEncryptedResponse(FHIRQuestionnaireResponse $resp)
+    {
+        foreach ($resp->getMeta()->getProfile() as $profile) {
+            if ($profile->getValue() == 'http://openhealthhub.com/StructureDefinition/EncryptedQuestionnaireResponse') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function getEncryptedValue(FHIRQuestionnaireResponse $resp)
+    {
+        foreach ($resp->getExtension() as $extension) {
+            if ($extension->getUrl() == 'http://openhealthhub.com/StructureDefinition/encryptedAnswers') {
+                return $extension->getValueString();
+            }
+        }
+
+        return null;
     }
 
 }
