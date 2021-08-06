@@ -1,0 +1,41 @@
+html, body {
+  height: calc(100% - 16px);
+  margin: 8px;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 50px calc(100% - 30px);
+}
+
+.header {
+  display: flex;
+}
+
+.header > div {
+  margin: 5px;
+  border-bottom: 3px solid black;
+  cursor: pointer;
+  padding: 8px;
+  vertical-align: middle;
+  align-self: center;
+  font-size: 14pt;
+}
+
+.header > div.active {
+  background-color: #1f6480;
+  color: white;
+  border-color: #47ADE9;
+}
+
+pre {
+  border: 1px solid grey;
+  padding: 10px;
+  background-color: #eefbfe;
+  overflow: auto;
+}
+
+pre.error {
+  background-color: #d33939;
+  color: white;
+}
