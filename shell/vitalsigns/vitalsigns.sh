@@ -1,6 +1,6 @@
 #!/bin/bash
 
-baseUrl="https://api-sandbox-staging.openhealthhub.com/fhir"
+source ../config.sh
 
 printf "Getting vital signs\n"
 curl "$baseUrl/Observation/1"

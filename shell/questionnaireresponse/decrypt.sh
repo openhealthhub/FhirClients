@@ -1,6 +1,6 @@
 #!/bin/bash
 
-baseUrl="https://api-sandbox-staging.openhealthhub.com/fhir"
+source ../config.sh
 
 gpg --import "../../sandbox.key"
 

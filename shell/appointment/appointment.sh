@@ -1,6 +1,6 @@
 #!/bin/bash
 
-baseUrl="https://api-sandbox-staging.openhealthhub.com/fhir"
+source ../config.sh
 
 printf "Getting Appointment\n"
 curl "$baseUrl/Appointment/3"
