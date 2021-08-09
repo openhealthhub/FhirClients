@@ -1,0 +1,8 @@
+{
+  "resourceType": "Subscription",
+  "criteria": "Appointment?name=test",
+  "channel": {
+    "type": "rest-hook",
+    "endpoint": "https://your-webhook/endpoint"
+  }
+}
