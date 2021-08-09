@@ -3,3 +3,4 @@ source 'https://rubygems.org'
 
 gem 'fhir_models'
 gem 'fhir_client'
+gem 'gpgme'

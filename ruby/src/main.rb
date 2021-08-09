@@ -17,7 +17,6 @@ puts response.to_json
 
 client = QuestionnaireResponseClient.new
 response = client.get_questionnaire_response(4)
-# TODO OP-651 to_json not emitting all encrypted value see if this is just a to_json issue or an actual implementation issue
 puts response.to_json
 
 response = client.search_questionnaire_response
