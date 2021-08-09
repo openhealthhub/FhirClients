@@ -12,7 +12,6 @@ print(appointment.description)
 with open('appointment.json', 'r') as file:
     appointmentJson = json.load(file)
 
-
 createResponse = a.Appointment(appointmentJson).create(server=server)
 
 print(createResponse)
