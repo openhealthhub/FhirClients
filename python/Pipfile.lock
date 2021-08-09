@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ec6d7f327068a914ff63695470637d5b1a00a2fe933f821a5d94fa7f9132b004"
+            "sha256": "6f775e5f40f1f054465528137ee7ba60555cafc0bcf56c5bd4bc85d26a4a0406"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -32,12 +32,9 @@
             "version": "==2.0.4"
         },
         "fhirclient": {
-            "hashes": [
-                "sha256:9d9fd8d54e4d51ab8f0898aaf7d5975ba984a95c6f81a198bfcd944bf7f1ce61",
-                "sha256:fc85b7bd3c971b18779ae2ec0f3f5dc667eab16a7928e99d68c1c946613cc753"
-            ],
-            "index": "pypi",
-            "version": "==3.2.0"
+            "editable": true,
+            "git": "https://github.com/smart-on-fhir/client-py",
+            "ref": "6047277daa31f10931e44ed19e92128298cdb64b"
         },
         "idna": {
             "hashes": [

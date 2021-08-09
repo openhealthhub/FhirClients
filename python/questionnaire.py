@@ -1,5 +1,13 @@
-import requests
+from fhirclient import client
+import fhirclient.models.questionnaire as q
 
-response = requests.get('https://api-sandbox-staging.openhealthhub.com/fhir/Questionnaire/1')
+settings = {
+    'app_id': 'ohh-fhir',
+    'api_base': 'https://api-sandbox-staging.openhealthhub.com/fhir'
+}
 
-print(response.json())
+cli = client.FHIRClient(settings=settings)
+
+questionnaire = q.Questionnaire.read('1', cli.server)
+
+questionnaire.description

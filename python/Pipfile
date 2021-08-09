@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 requests = "*"
-fhirclient = "*"
+fhirclient = {editable = true, git = "https://github.com/smart-on-fhir/client-py"}
 
 [dev-packages]
 
