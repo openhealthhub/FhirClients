@@ -1,7 +1,5 @@
 import json
 
-import fhirclient.models.appointment
-
 from config.settings import server
 import fhirclient.models.appointment as a
 
