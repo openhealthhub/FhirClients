@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 requests = "*"
 fhirclient = {editable = true, git = "https://github.com/smart-on-fhir/client-py"}
+python-gnupg = "*"
 
 [dev-packages]
 
