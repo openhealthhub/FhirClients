@@ -8,10 +8,7 @@ use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnai
 use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaireResponse\FHIRQuestionnaireResponseItem;
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRBundle;
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRQuestionnaireResponse;
-use OpenPGP;
-use OpenPGP_Crypt_RSA;
-use OpenPGP_Crypt_Symmetric;
-use OpenPGP_Message;
+use gnupg;
 
 class QuestionnaireResponseClient
 {
@@ -31,40 +28,42 @@ class QuestionnaireResponseClient
 
     private function decrypt(FHIRQuestionnaireResponse $resp): FHIRQuestionnaireResponse
     {
-        $keyDecrypted = $this->getDecryptedPrivateKey();
+        $gnupg = $this->loadDecryptedPrivateKey();
 
         if ($this->isEncryptedResponse($resp)) {
-                $decodedValues = json_decode($this->decryptValue($this->getEncryptedValue($resp), $keyDecrypted));
-                $this->addToResponse($resp, $decodedValues);
+            $decodedValues = json_decode($this->decryptValue($gnupg, $this->getEncryptedValue($resp)), true);
+            $this->addToResponse($resp, $decodedValues);
         }
 
         return $resp;
     }
 
-    private function getDecryptedPrivateKey()
+    private function loadDecryptedPrivateKey()
     {
         // TODO OP-651 loading the private key fails on the Message::parse function, we could try with GnuPG, but can't get it to work on Windows
         $keyASCII = file_get_contents(dirname(__FILE__) . '/../../../../sandbox.key');
-        $keyEncrypted = OpenPGP_Message::parse(OpenPGP::unarmor($keyASCII, 'PGP PRIVATE KEY BLOCK'));
-        return OpenPGP_Crypt_Symmetric::decryptSecretKey('sandbox-api', $keyEncrypted[0]);
+        $gnupg = new gnupg();
+        $importKeyResult = $gnupg->import($keyASCII);
+        $fingerPrint = $importKeyResult['fingerprint'];
+        $gnupg -> adddecryptkey($fingerPrint, 'api-sandbox');
+        return $gnupg;
     }
 
-    private function decryptValue($value, $keyDecrypted): ?OpenPGP_Message
+    private function decryptValue($gnupg, $value): string
     {
-        $msg = OpenPGP_Message::parse(OpenPGP::unarmor($value, 'PGP MESSAGE'));
-
-        $decryptor = new OpenPGP_Crypt_RSA($keyDecrypted);
-        return $decryptor->decrypt($msg);
+        $decrypt = $gnupg->decrypt($value);
+        var_dump($decrypt);
+        return $decrypt;
     }
 
-    private function addToResponse(FHIRQuestionnaireResponse $resp, mixed $decodedValues)
+    private function addToResponse(FHIRQuestionnaireResponse $resp, $decodedValues)
     {
         foreach ($resp->getItem() as $item) {
             $this->updateItemValue($decodedValues, $item);
         }
     }
 
-    private function updateItemValue(mixed $decodedValues, FHIRQuestionnaireResponseItem $item): void
+    private function updateItemValue($decodedValues, FHIRQuestionnaireResponseItem $item): void
     {
         $linkId = $item->getLinkId()->getValue()->getValue();
         if (isset($decodedValues[$linkId])) {

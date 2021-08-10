@@ -11,13 +11,14 @@
     "php-fhir"
   ],
   "require": {
-    "php": ">=5.4.0",
+    "php": ">=7.1",
     "ext-libxml": "*",
     "ext-json": "*",
     "ext-simplexml": "*",
     "dcarbone/php-fhir-generated": "2.0.*",
     "singpolyma/openpgp-php": "0.5.0",
-    "ext-curl": "*"
+    "ext-curl": "*",
+    "ext-gnupg": "*"
   },
   "require-dev": {
     "ext-libxml": "*",
