@@ -1,22 +1,18 @@
 package main
 
 import (
+	"openhealthhub.com/go/appointment"
 	"openhealthhub.com/go/vitalsigns"
 )
 
 func main() {
-	//apt, err := appointment.Read()
-	//if err != nil {
-	//	panic(err)
-	//}
-	//print(apt.Description.Value)
+	appointmentCalls()
 
-	//apt, err = appointment.Create()
-	//if err != nil {
-	//	panic(err)
-	//}
-	//print(apt.Description.Value)
+	observationCalls()
 
+}
+
+func observationCalls() {
 	observation, err := vitalsigns.Read()
 	if err != nil {
 		panic(err)
@@ -31,4 +27,18 @@ func main() {
 	for _, o := range obs {
 		println(o.Id.Value)
 	}
+}
+
+func appointmentCalls() {
+	apt, err := appointment.Read()
+	if err != nil {
+		panic(err)
+	}
+	print(apt.Description.Value)
+
+	apt, err = appointment.Create()
+	if err != nil {
+		panic(err)
+	}
+	print(apt.Description.Value)
 }
