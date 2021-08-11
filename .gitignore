@@ -5,3 +5,5 @@
 /**/*.iml
 
 /java/target/*
+/php/vendor/
+/php/.phpunit.result.cache
