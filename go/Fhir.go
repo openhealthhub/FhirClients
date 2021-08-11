@@ -3,10 +3,16 @@ package main
 import "openhealthhub.com/go/appointment"
 
 func main() {
-	appointment, err := appointment.Read()
+	apt, err := appointment.Read()
+	//if err != nil {
+	//	panic(err)
+	//}
+	//print(apt.Description.Value)
+
+	apt, err = appointment.Create()
 	if err != nil {
 		panic(err)
 	}
-	print(appointment.Description.Value)
+	print(apt.Description.Value)
 
 }

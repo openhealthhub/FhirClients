@@ -1,13 +1,12 @@
 package appointment
 
 import (
-	"errors"
-	"github.com/google/fhir/go/fhirversion"
 	"github.com/google/fhir/go/jsonformat"
 	"github.com/google/fhir/go/proto/google/fhir/proto/r4/core/resources/appointment_go_proto"
 	r4pb "github.com/google/fhir/go/proto/google/fhir/proto/r4/core/resources/bundle_and_contained_resource_go_proto"
 	"openhealthhub.com/go/client"
 	"openhealthhub.com/go/config"
+	"os"
 )
 
 const RESOURCE = "Appointment"
@@ -18,7 +17,11 @@ func Read() (*appointment_go_proto.Appointment, error) {
 		return nil, err
 	}
 
-	unmarshaller, err := jsonformat.NewUnmarshaller(config.TimeZone, fhirversion.R4)
+	return toAppointment(bytes)
+}
+
+func toAppointment(bytes []byte) (*appointment_go_proto.Appointment, error) {
+	unmarshaller, err := jsonformat.NewUnmarshaller(config.TimeZone, config.FhirVersion)
 	if err != nil {
 		return nil, err
 	}
@@ -29,9 +32,18 @@ func Read() (*appointment_go_proto.Appointment, error) {
 	}
 
 	appointment := unmarshal.(*r4pb.ContainedResource).GetAppointment()
-
-	if appointment == nil {
-		return nil, errors.New("no appointment found")
-	}
 	return appointment, nil
+}
+
+func Create() (*appointment_go_proto.Appointment, error) {
+	file, err := os.Open("appointment/appointment.json")
+	if err != nil {
+		return nil, err
+	}
+
+	created, err := client.Create(RESOURCE, file)
+	if err != nil {
+		return nil, err
+	}
+	return toAppointment(created)
 }
