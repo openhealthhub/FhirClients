@@ -2,6 +2,7 @@ package main
 
 import (
 	"openhealthhub.com/go/appointment"
+	"openhealthhub.com/go/questionnaire"
 	"openhealthhub.com/go/vitalsigns"
 )
 
@@ -10,6 +11,16 @@ func main() {
 
 	observationCalls()
 
+	questionnaireCalls()
+}
+
+func questionnaireCalls() {
+	read, err := questionnaire.Read()
+	if err != nil {
+		panic(err)
+	}
+
+	println(read.Description)
 }
 
 func observationCalls() {
@@ -17,7 +28,7 @@ func observationCalls() {
 	if err != nil {
 		panic(err)
 	}
-	print(observation.Id.Value)
+	println(observation.Id.Value)
 
 	obs, err := vitalsigns.Search()
 	if err != nil {
@@ -34,11 +45,11 @@ func appointmentCalls() {
 	if err != nil {
 		panic(err)
 	}
-	print(apt.Description.Value)
+	println(apt.Description.Value)
 
 	apt, err = appointment.Create()
 	if err != nil {
 		panic(err)
 	}
-	print(apt.Description.Value)
+	println(apt.Description.Value)
 }
