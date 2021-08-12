@@ -3,6 +3,8 @@ package main
 import (
 	"openhealthhub.com/go/appointment"
 	"openhealthhub.com/go/questionnaire"
+	"openhealthhub.com/go/questionnaireresponse"
+	"openhealthhub.com/go/subscription"
 	"openhealthhub.com/go/vitalsigns"
 )
 
@@ -12,6 +14,36 @@ func main() {
 	observationCalls()
 
 	questionnaireCalls()
+
+	questionnaireResponseCalls()
+
+	subscriptionCalls()
+}
+
+func subscriptionCalls() {
+	create, err := subscription.Create()
+	if err != nil {
+		panic(err)
+	}
+
+	println(create.Criteria.Value)
+}
+
+func questionnaireResponseCalls() {
+	read, err := questionnaireresponse.Read()
+	if err != nil {
+		panic(err)
+	}
+
+	println(read.Id.Value)
+
+	search, err := questionnaireresponse.Search()
+	if err != nil {
+		panic(err)
+	}
+	for _, qr := range search {
+		println(qr.Id.Value)
+	}
 }
 
 func questionnaireCalls() {
