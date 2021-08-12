@@ -1,0 +1,10 @@
+{
+  "resourceType": "Subscription",
+  "criteria": "Appointment?name=test",
+  "reason": "get appointment status updates",
+  "status": "requested",
+  "channel": {
+    "type": "rest-hook",
+    "endpoint": "https://your-webhook/endpoint"
+  }
+}

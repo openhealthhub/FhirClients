@@ -1,0 +1,48 @@
+{
+  "resourceType": "Appointment",
+  "status": "booked",
+  "serviceCategory": [ {
+    "coding": [ {
+      "system": "http://example.org/service-category",
+      "code": "gp",
+      "display": "General Practice"
+    } ]
+  } ],
+  "serviceType": [ {
+    "coding": [ {
+      "code": "52",
+      "display": "General discussion"
+    } ]
+  } ],
+  "specialty": [ {
+    "coding": [ {
+      "system": "http://snomed.info/sct",
+      "code": "394814009",
+      "display": "General practice"
+    } ]
+  } ],
+  "appointmentType": {
+    "coding": [ {
+      "system": "http://terminology.hl7.org/CodeSystem/v2-0276",
+      "code": "FOLLOWUP",
+      "display": "A follow up visit from a previous appointment"
+    } ]
+  },
+  "reasonReference": [ {
+    "reference": "Condition/example",
+    "display": "Severe burn of left ear"
+  } ],
+  "priority": 5,
+  "description": "Discussion on the results of your recent MRI",
+  "start": "2021-08-05T14:28:04.019+00:00",
+  "end": "2021-08-05T14:28:04.019+00:00",
+  "created": "1970-01-01T00:00:00+00:00",
+  "comment": "Further expand on the results of the MRI and determine the next actions that may be appropriate.",
+  "participant": [ {
+    "actor": {
+      "reference": "Patient/example"
+    },
+    "required": "required",
+    "status": "accepted"
+  }]
+}
