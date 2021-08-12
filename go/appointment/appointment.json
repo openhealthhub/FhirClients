@@ -37,5 +37,12 @@
   "start": "2021-08-05T14:28:04.019+00:00",
   "end": "2021-08-05T14:28:04.019+00:00",
   "created": "1970-01-01T00:00:00+00:00",
-  "comment": "Further expand on the results of the MRI and determine the next actions that may be appropriate."
+  "comment": "Further expand on the results of the MRI and determine the next actions that may be appropriate.",
+  "participant": [ {
+    "actor": {
+      "reference": "Patient/example"
+    },
+    "required": "required",
+    "status": "accepted"
+  }]
 }

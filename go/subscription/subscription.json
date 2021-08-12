@@ -4,5 +4,7 @@
   "channel": {
     "type": "rest-hook",
     "endpoint": "https://your-webhook/endpoint"
-  }
+  },
+  "status": "requested",
+  "reason": "Monitor new neonatal function"
 }

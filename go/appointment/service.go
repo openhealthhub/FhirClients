@@ -24,7 +24,7 @@ func Create() (*appointment_go_proto.Appointment, error) {
 		return nil, err
 	}
 
-	created, err := client.Create("/"+resource, file)
+	created, err := client.Create(resource, file)
 	if err != nil {
 		return nil, err
 	}

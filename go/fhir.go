@@ -10,7 +10,7 @@ import (
 	"openhealthhub.com/go/vitalsigns"
 )
 
-const encryptedExtesionUrl = "http://openhealthhub.com/StructureDefinition/encryptedAnswers"
+const encryptedExtensionUrl = "http://openhealthhub.com/StructureDefinition/encryptedAnswers"
 
 func main() {
 	appointmentCalls()
@@ -51,7 +51,7 @@ func questionnaireResponseCalls() {
 
 	var extension *datatypes_go_proto.Extension
 	for _, ext := range read.Extension {
-		if ext.Url.Value == encryptedExtesionUrl {
+		if ext.Url.Value == encryptedExtensionUrl {
 			extension = ext
 			break
 		}

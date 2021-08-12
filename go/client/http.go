@@ -13,15 +13,15 @@ import (
 )
 
 func Read(resourceIdentifier string) (*r4pb.ContainedResource, error) {
-	get, err := http.Get(config.Api + resourceIdentifier)
+	response, err := get(config.Api + resourceIdentifier)
 	if err != nil {
 		return nil, err
 	}
-	return parseResource(get.Body)
+	return parseResource(response.Body)
 }
 
 func Create(resource string, body io.Reader) (*r4pb.ContainedResource, error) {
-	post, err := http.Post(config.Api+resource, "application/json", body)
+	post, err := request("POST", fmt.Sprintf("%s/%s", config.Api, resource), body)
 	if err != nil {
 		return nil, err
 	}
@@ -30,7 +30,7 @@ func Create(resource string, body io.Reader) (*r4pb.ContainedResource, error) {
 
 func Search(resource string, queryParams ...string) (*r4pb.ContainedResource, error) {
 	url := fmt.Sprintf("%s/%s?%s", config.Api, resource, strings.Join(queryParams, "&"))
-	get, err := http.Get(url)
+	get, err := get(url)
 	if err != nil {
 		return nil, err
 	}
@@ -63,4 +63,21 @@ func unmarshall(body io.Reader) (proto.Message, error) {
 		return nil, err
 	}
 	return unmarshal, nil
+}
+
+func get(url string) (*http.Response, error) {
+	return request("GET", url, nil)
+}
+
+func request(method, url string, body io.Reader) (*http.Response, error) {
+	req, err := http.NewRequest(method, url, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Add("X-API-Key", "ad880601-b7e6-4d86-901d-b6fca96fc725")
+	if method == "POST" {
+		req.Header.Add("Content-Type", "application/json")
+	}
+
+	return http.DefaultClient.Do(req)
 }
