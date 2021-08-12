@@ -1,0 +1,35 @@
+{
+  "name": "openhealthhub/php-fhir-client",
+  "type": "library",
+  "description": "Php Examples to retrieve OpenHealthhub Fhir Resources",
+  "homepage": "https://github.com/openhealthhub/FhirClients",
+  "keywords": [
+    "php",
+    "fhir",
+    "ehr",
+    "hl7",
+    "php-fhir"
+  ],
+  "require": {
+    "php": ">=7.1",
+    "ext-libxml": "*",
+    "ext-json": "*",
+    "ext-simplexml": "*",
+    "dcarbone/php-fhir-generated": "2.0.*",
+    "ext-curl": "*",
+    "ext-gnupg": "*"
+  },
+  "require-dev": {
+    "ext-libxml": "*",
+    "ext-json": "*",
+    "ext-simplexml": "*",
+    "ext-curl": "*",
+    "ext-mbstring": "*",
+    "phpunit/phpunit": "@stable"
+  },
+  "autoload": {
+    "psr-0": {
+      "OpenHealthhub\\PhpFhirClient\\": "./src"
+    }
+  }
+}
