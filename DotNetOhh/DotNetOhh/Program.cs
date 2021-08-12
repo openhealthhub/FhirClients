@@ -15,7 +15,7 @@ namespace DotNetOhh
                 VerifyFhirVersion = true
             };
 
-            var client = new FhirClient("https://api-sandbox-staging.openhealthhub.com/fhir/", settings);
+            var client = new FhirClient("https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir/4/", settings);
             
             ReadObservation(client);
             

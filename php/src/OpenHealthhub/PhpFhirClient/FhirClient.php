@@ -4,7 +4,7 @@ namespace OpenHealthhub\PhpFhirClient;
 
 class FhirClient
 {
-    const FHIR_ENDPOINT = 'https://api-sandbox-staging.openhealthhub.com/fhir/';
+    const FHIR_ENDPOINT = 'https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir/4/';
 
     public function get($resourceWithParams)
     {

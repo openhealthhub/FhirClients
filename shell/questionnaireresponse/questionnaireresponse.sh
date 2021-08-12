@@ -1,6 +1,6 @@
 #!/bin/bash
 
-baseUrl="https://api-sandbox-staging.openhealthhub.com/fhir"
+baseUrl="https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir/4"
 
 printf "Getting QuestionnaireResponse\n\n"
 

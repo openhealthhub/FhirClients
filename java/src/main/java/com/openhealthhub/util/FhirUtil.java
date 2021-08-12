@@ -12,7 +12,7 @@ import java.io.StringWriter;
 
 public class FhirUtil {
 
-    private static final String FHIR_ENDPOINT = "https://api-sandbox-staging.openhealthhub.com/fhir";
+    private static final String FHIR_ENDPOINT = "https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir/4";
 
     public static IGenericClient createClient() {
         FhirContext ctx = FhirContext.forR4();

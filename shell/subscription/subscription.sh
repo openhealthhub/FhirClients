@@ -1,6 +1,6 @@
 #!/bin/bash
 
-baseUrl="https://api-sandbox-staging.openhealthhub.com/fhir"
+baseUrl="https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir/4"
 
 curl -X POST "$baseUrl/Subscription" \
       -H 'Content-Type: application/json' \
