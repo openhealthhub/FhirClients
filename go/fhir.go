@@ -1,12 +1,16 @@
 package main
 
 import (
+	"github.com/google/fhir/go/proto/google/fhir/proto/r4/core/datatypes_go_proto"
 	"openhealthhub.com/go/appointment"
+	"openhealthhub.com/go/openpgp"
 	"openhealthhub.com/go/questionnaire"
 	"openhealthhub.com/go/questionnaireresponse"
 	"openhealthhub.com/go/subscription"
 	"openhealthhub.com/go/vitalsigns"
 )
+
+const encryptedExtesionUrl = "http://openhealthhub.com/StructureDefinition/encryptedAnswers"
 
 func main() {
 	appointmentCalls()
@@ -44,6 +48,19 @@ func questionnaireResponseCalls() {
 	for _, qr := range search {
 		println(qr.Id.Value)
 	}
+
+	var extension *datatypes_go_proto.Extension
+	for _, ext := range read.Extension {
+		if ext.Url.Value == encryptedExtesionUrl {
+			extension = ext
+			break
+		}
+	}
+	decrypt, err := openpgp.Decrypt(extension.GetValue().GetStringValue().Value)
+	if err != nil {
+		panic(err)
+	}
+	print(decrypt)
 }
 
 func questionnaireCalls() {
