@@ -40,7 +40,6 @@ class QuestionnaireResponseClient
 
     private function loadDecryptedPrivateKey()
     {
-        // TODO OP-651 loading the private key fails on the Message::parse function, we could try with GnuPG, but can't get it to work on Windows
         $keyASCII = file_get_contents(dirname(__FILE__) . '/../../../../sandbox.key');
         $gnupg = new gnupg();
         $importKeyResult = $gnupg->import($keyASCII);
