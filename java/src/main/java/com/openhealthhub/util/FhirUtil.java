@@ -3,6 +3,7 @@ package com.openhealthhub.util;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
+import com.openhealthhub.ApiKeyInterceptor;
 import org.hl7.fhir.r4.formats.JsonCreatorDirect;
 import org.hl7.fhir.r4.formats.JsonParser;
 import org.hl7.fhir.r4.model.Bundle;
@@ -16,7 +17,9 @@ public class FhirUtil {
 
     public static IGenericClient createClient() {
         FhirContext ctx = FhirContext.forR4();
-        return ctx.newRestfulGenericClient(FHIR_ENDPOINT);
+        IGenericClient client = ctx.newRestfulGenericClient(FHIR_ENDPOINT);
+        client.registerInterceptor(new ApiKeyInterceptor());
+        return client;
     }
 
     public static void printResource(Resource resource) {
