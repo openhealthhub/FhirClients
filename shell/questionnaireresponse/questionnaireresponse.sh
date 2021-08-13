@@ -1,11 +1,11 @@
 #!/bin/bash
 
-baseUrl="https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir/4"
+source ../config.sh
 
 printf "Getting QuestionnaireResponse\n\n"
 
-curl "$baseUrl/QuestionnaireResponse/1"
+curl "$baseUrl/QuestionnaireResponse/1" -H "$apiKeyHeader"
 
 printf "\n\nSearching QuestionnaireResponse\n\n"
 
-curl "$baseUrl/QuestionnaireResponse?identifier=patientnumber&part-of=programuuid"
+curl "$baseUrl/QuestionnaireResponse?identifier=patientnumber&part-of=programuuid" -H "$apiKeyHeader"

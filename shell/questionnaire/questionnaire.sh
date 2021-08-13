@@ -4,5 +4,5 @@ source ../config.sh
 
 printf "Getting Questionnaire\n\n"
 
-curl "$baseUrl/Questionnaire/1"
+curl "$baseUrl/Questionnaire/1" -H "$apiKeyHeader"
 
