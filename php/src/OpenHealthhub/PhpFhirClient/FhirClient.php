@@ -24,6 +24,9 @@ class FhirClient
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTPHEADER, array(
+                'X-API-Key: ad880601-b7e6-4d86-901d-b6fca96fc725'
+            )
         ]);
         $res = curl_exec($ch);
         curl_close($ch);
@@ -38,7 +41,10 @@ class FhirClient
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => json_encode($resource)
+            CURLOPT_POSTFIELDS => json_encode($resource),
+            CURLOPT_HTTPHEADER, array(
+                'X-API-Key: ad880601-b7e6-4d86-901d-b6fca96fc725'
+            )
         ]);
         $res = curl_exec($ch);
         curl_close($ch);
