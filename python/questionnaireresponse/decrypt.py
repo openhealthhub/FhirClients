@@ -1,14 +1,12 @@
 from typing import List
 
 import gnupg
-import fhirclient.models.questionnaireresponse as qr
-from fhirclient.models.extension import Extension
+from config.settings import client
 
-from config.settings import server
 encryptedAnswersUrl = 'http://openhealthhub.com/StructureDefinition/encryptedAnswers'
 
 
-response = qr.QuestionnaireResponse.read('1', server)
+response = client.resources('QuestionnaireResponse').search(_id='1')
 encryptedAnswers: List[Extension] = list(filter(lambda extension: encryptedAnswers == extension.url,
                          response.extension))
 

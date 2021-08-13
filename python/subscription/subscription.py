@@ -1,10 +1,10 @@
 import json
 
-from config.settings import server
-import fhirclient.models.subscription as s
+from config.settings import client
+
 with open('subscription.json', 'r') as file:
     subJson  = json.load(file)
 
-createResponse = s.Subscription(subJson).create(server=server)
+createResponse = client.execute('Subscription', method='post', data=subJson)
 
 print(createResponse)

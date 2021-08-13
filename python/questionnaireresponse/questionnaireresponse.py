@@ -1,11 +1,10 @@
-from config.settings import server
-import fhirclient.models.questionnaireresponse as qr
+from config.settings import client
 
-response = qr.QuestionnaireResponse.read('1', server)
+response = client.resources('QuestionnaireResponse').search(_id='1')
 
 print(response.text)
 
-qrs = qr.QuestionnaireResponse.where({'part-of': 'programUUID', 'identifier': 'patientnumber'}).perform_resources(server)
+qrs = client.resources('QuestionnaireResponse').search(part_of='programUUID', identifier='patientnumber')
 
 for q in qrs:
     print(q.as_json())

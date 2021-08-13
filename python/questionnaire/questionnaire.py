@@ -1,7 +1,5 @@
-import fhirclient.models.questionnaire as q
+from config.settings import client
 
-from config.settings import server
-
-questionnaire = q.Questionnaire.read('1', server)
+questionnaire = await client.resources('Questionnaire').search(_id='1')
 
 print(questionnaire.description)

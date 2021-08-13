@@ -1,14 +1,11 @@
 from config.settings import server
-import fhirclient.models.observation as o
+from config.settings import client
 
-obs = o.Observation.read('1', server)
+obs = client.resources('Observation').search(_id='1')
 
 print(obs.resource_type, obs.id)
 
-observations = o.Observation.where(struct={
-    'identifier': 'identifier',
-    'device-name': 'devicename'
-}).perform_resources(server)
+observations = client.resources('Observation').search(identifier='identifier', device_name='devicename')
 
 for o in observations:
     print(o.as_json())
