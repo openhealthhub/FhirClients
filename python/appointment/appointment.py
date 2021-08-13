@@ -1,9 +1,8 @@
 import json
 
-from config.settings import server
-import fhirclient.models.appointment as a
+from config.settings import client
 
-appointment = a.Appointment.read('1', server)
+appointment = client.resources('Appointment').search(_id='1')
 
 print(appointment.description)
 
