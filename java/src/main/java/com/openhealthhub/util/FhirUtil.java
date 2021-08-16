@@ -19,6 +19,7 @@ public class FhirUtil {
         FhirContext ctx = FhirContext.forR4();
         IGenericClient client = ctx.newRestfulGenericClient(FHIR_ENDPOINT);
         client.registerInterceptor(new ApiKeyInterceptor());
+        client.registerInterceptor(new AuthorizationInterceptor());
         return client;
     }
 
