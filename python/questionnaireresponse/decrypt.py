@@ -1,3 +1,4 @@
+import asyncio
 from typing import List
 
 import gnupg
@@ -12,16 +13,20 @@ def is_encrypted(resource):
     return len(encProfile) > 0
 
 
-response = client.resources('QuestionnaireResponse').search(_id='1')
+async def decrypt_questionnaire_response():
+    response = await client.resource('QuestionnaireResponse').execute('1', 'GET')
 
-if is_encrypted(response):
-    encryptedAnswers: List[Extension] = list(filter(lambda extension: encryptedAnswers == extension.url,
-                             response.extension))
+    if is_encrypted(response):
+        encryptedAnswers = list(filter(lambda extension: encryptedAnswersUrl == extension.url,
+                                 response.extension))
 
-    gpg = gnupg.GPG()
-    with open('../../sandbox.key') as file:
-        gpg.import_keys(file.read(), passphrase='api-sandbox')
+        gpg = gnupg.GPG()
+        with open('../../sandbox.key') as file:
+            gpg.import_keys(file.read(), passphrase='api-sandbox')
 
-    if len(encryptedAnswers) > 0:
-        dec = gpg.decrypt(encryptedAnswers[0].valueString)
-        print(dec)
+        if len(encryptedAnswers) > 0:
+            dec = gpg.decrypt(encryptedAnswers[0].valueString)
+            print(dec)
+
+
+asyncio.run(decrypt_questionnaire_response())

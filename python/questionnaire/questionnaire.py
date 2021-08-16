@@ -1,5 +1,12 @@
+import asyncio
+
 from config.settings import client
 
-questionnaire = await client.resources('Questionnaire').search(_id='1')
 
-print(questionnaire.description)
+async def get_questionnaire():
+    questionnaire = await client.resource('Questionnaire').execute('1', 'GET')
+
+    print(questionnaire.description)
+
+
+asyncio.run(get_questionnaire())
