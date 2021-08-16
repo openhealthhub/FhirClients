@@ -10,7 +10,7 @@ class Client {
   request(request) {
     const requestObj = typeof request === 'string' ? {url: request} : request;
     const parameterSeparator = requestObj.url.indexOf('?') === -1 ? '?' : '&';
-    requestObj.url = `${requestObj.url}${parameterSeparator}apikey=ad880601-b7e6-4d86-901d-b6fca96fc725`;
+    requestObj.url = `${requestObj.url}${parameterSeparator}apikey=${API_KEY}`;
     return this.client.request(requestObj);
   }
 
