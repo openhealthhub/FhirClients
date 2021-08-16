@@ -1,10 +1,15 @@
+import asyncio
 import json
 
 from config.settings import client
 
-with open('subscription.json', 'r') as file:
-    subJson  = json.load(file)
 
-createResponse = client.execute('Subscription', method='post', data=subJson)
+async def create_subscription():
+    with open('subscription.json', 'r') as file:
+        subJson  = json.load(file)
 
-print(createResponse)
+    createResponse = await client.execute('Subscription', method='post', data=subJson)
+
+    print(createResponse)
+
+asyncio.run(create_subscription())

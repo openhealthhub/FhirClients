@@ -1,14 +1,22 @@
+import asyncio
 import json
 
 from config.settings import client
 
-appointment = await client.resources('Appointment').search(_id='1')
 
-print(appointment.description)
+async def get_appointment():
+    appointment = await client.resource('Appointment').execute('1', 'GET')
 
-with open('appointment.json', 'r') as file:
-    appointmentJson = json.load(file)
+    print(appointment.description)
 
-createResponse = client.execute('Appointment', method='post', data=appointmentJson)
+    with open('appointment.json', 'r') as file:
+        appointment_json = json.load(file)
 
-print(createResponse)
+    create_response = await client.execute('Appointment', method='post', data=appointment_json)
+
+    print(create_response)
+
+
+asyncio.run(get_appointment())
+
+

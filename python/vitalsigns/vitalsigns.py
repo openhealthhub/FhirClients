@@ -1,11 +1,16 @@
-from config.settings import server
+import asyncio
+
 from config.settings import client
 
-obs = client.resources('Observation').search(_id='1')
 
-print(obs.resource_type, obs.id)
+async def get_observation():
+    obs = await client.resource('Observation').execute('1', 'GET')
 
-observations = client.resources('Observation').search(identifier='identifier', device_name='devicename')
+    print(obs.resourceType, obs.id)
 
-for o in observations:
-    print(o.as_json())
+    observations = await client.resources('Observation').search(identifier='identifier', device_name='devicename').fetch()
+
+    for o in observations:
+        print(o.valueQuantity.value)
+
+asyncio.run(get_observation())

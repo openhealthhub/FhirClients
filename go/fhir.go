@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/google/fhir/go/proto/google/fhir/proto/r4/core/datatypes_go_proto"
+	"github.com/google/fhir/go/proto/google/fhir/proto/r4/core/resources/questionnaire_response_go_proto"
 	"openhealthhub.com/go/appointment"
 	"openhealthhub.com/go/openpgp"
 	"openhealthhub.com/go/questionnaire"
@@ -11,6 +12,7 @@ import (
 )
 
 const encryptedExtensionUrl = "http://openhealthhub.com/StructureDefinition/encryptedAnswers"
+const encryptedProfileUrl = "http://openhealthhub.com/StructureDefinition/EncryptedQuestionnaireResponse"
 
 func main() {
 	appointmentCalls()
@@ -49,18 +51,20 @@ func questionnaireResponseCalls() {
 		println(qr.Id.Value)
 	}
 
-	var extension *datatypes_go_proto.Extension
-	for _, ext := range read.Extension {
-		if ext.Url.Value == encryptedExtensionUrl {
-			extension = ext
-			break
+	if isEncrypted(read) {
+		var extension *datatypes_go_proto.Extension
+		for _, ext := range read.Extension {
+			if ext.Url.Value == encryptedExtensionUrl {
+				extension = ext
+				break
+			}
 		}
+		decrypt, err := openpgp.Decrypt(extension.GetValue().GetStringValue().Value)
+		if err != nil {
+			panic(err)
+		}
+		print(decrypt)
 	}
-	decrypt, err := openpgp.Decrypt(extension.GetValue().GetStringValue().Value)
-	if err != nil {
-		panic(err)
-	}
-	print(decrypt)
 }
 
 func questionnaireCalls() {
@@ -101,4 +105,13 @@ func appointmentCalls() {
 		panic(err)
 	}
 	println(apt.Description.Value)
+}
+
+func isEncrypted(qr *questionnaire_response_go_proto.QuestionnaireResponse) bool {
+	for _, p := range qr.Meta.Profile {
+		if p.GetValue() == encryptedProfileUrl {
+			return true
+		}
+	}
+	return false
 }
