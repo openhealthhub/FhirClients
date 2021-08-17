@@ -1,5 +1,5 @@
-export const FHIR_ENDPOINT = 'https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir/4';
-export const API_KEY = 'f6f5ab9e-c131-4b7e-a38b-9053cd621cf4';
+export const FHIR_ENDPOINT = 'https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4';
+export const API_KEY = 'ad880601-b7e6-4d86-901d-b6fca96fc725';
 
 const KEYCLOAK_BASE_URL = 'https://auth-staging.openhealthhub.com/auth';
 const REALM = 'OpenHealthHub';

@@ -2,8 +2,8 @@ package config
 
 import "github.com/google/fhir/go/fhirversion"
 
-const Api = "https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir/4"
-const ApiKey = "90da723b-70f7-400b-8ddb-8574c45bff13"
+const Api = "https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4"
+const ApiKey = "ad880601-b7e6-4d86-901d-b6fca96fc725"
 const TimeZone = "Europe/Amsterdam"
 const FhirVersion = fhirversion.R4
 

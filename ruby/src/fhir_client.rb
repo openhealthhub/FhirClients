@@ -6,9 +6,9 @@ class FhirClient
   CLIENT_SECRET = '915e87d4-16ee-4ca5-b701-b38b6afce8ff'
   CLIENT_ID = 'api-sandbox'
 
-  API_KEY = '90da723b-70f7-400b-8ddb-8574c45bff13'
+  API_KEY = 'ad880601-b7e6-4d86-901d-b6fca96fc725'
 
-  FHIR_ENDPOINT = 'https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir/4'
+  FHIR_ENDPOINT = 'https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4'
 
   def initialize
     client = FHIR::Client.new(FHIR_ENDPOINT)
