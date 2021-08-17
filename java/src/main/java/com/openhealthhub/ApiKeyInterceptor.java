@@ -8,7 +8,7 @@ import ca.uhn.fhir.rest.client.api.IHttpRequest;
 @Interceptor
 public class ApiKeyInterceptor {
     private static final String API_KEY_HEADER_NAME = "x-api-key";
-    private static final String API_KEY = "ad880601-b7e6-4d86-901d-b6fca96fc725";
+    private static final String API_KEY = "90da723b-70f7-400b-8ddb-8574c45bff13";
 
     @Hook(Pointcut.CLIENT_REQUEST)
     public void addApiKey(IHttpRequest request) {
