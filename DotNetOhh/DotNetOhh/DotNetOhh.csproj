@@ -132,6 +132,7 @@
     <ItemGroup>
         <Compile Include="Decrypter.cs" />
         <Compile Include="Program.cs" />
+        <Compile Include="ApiKeyMessageHandler.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
