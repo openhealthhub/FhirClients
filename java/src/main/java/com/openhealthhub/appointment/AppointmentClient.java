@@ -6,9 +6,17 @@ import com.openhealthhub.util.FhirUtil;
 import org.hl7.fhir.r4.model.Appointment;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.ContactPoint;
+import org.hl7.fhir.r4.model.HumanName;
+import org.hl7.fhir.r4.model.Identifier;
+import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Reference;
+import org.hl7.fhir.r4.model.StringType;
 
+import java.time.Instant;
+import java.util.Collections;
 import java.util.Date;
+import java.util.UUID;
 
 public class AppointmentClient {
 
@@ -38,25 +46,35 @@ public class AppointmentClient {
     }
 
     MethodOutcome createAppointment() {
-        Appointment appointment = new Appointment()
-                .setStatus(Appointment.AppointmentStatus.BOOKED)
-                .setAppointmentType(new CodeableConcept().addCoding(new Coding().setSystem("http://terminology.hl7.org/CodeSystem/v2-0276")
-                        .setCode("FOLLOWUP")
-                        .setDisplay("A follow up visit from a previous appointment")))
-                .addReasonReference(new Reference("Condition/example").setDisplay("Severe burn of left ear"))
-                .setPriority(5)
-                .setDescription("Discussion on the results of your recent MRI")
-                .setStart(new Date())
-                .setEnd(new Date())
-                .setComment("Further expand on the results of the MRI and determine the next actions that may be appropriate.")
-                .addParticipant(new Appointment.AppointmentParticipantComponent().setActor(new Reference("Patient/1234"))
-                        .setRequired(Appointment.ParticipantRequired.REQUIRED)
-                        .setStatus(Appointment.ParticipationStatus.ACCEPTED))
-                .addParticipant(new Appointment.AppointmentParticipantComponent().setActor(new Reference("Practitioner/example")));
+        Appointment appointment = new Appointment();
+        appointment.setStart(Date.from(Instant.now()));
 
-        return client.create()
-                .resource(appointment)
-                .execute();
+        Patient patient = new Patient();
+        patient.setId("patient");
+        HumanName humanName = new HumanName();
+        humanName.setText("Test Patient");
+        patient.setName(Collections.singletonList(humanName));
+
+        ContactPoint email = new ContactPoint();
+        email.setSystem(ContactPoint.ContactPointSystem.EMAIL);
+        email.setValue("test@patient.ohh");
+        patient.addTelecom(email);
+
+        Identifier programPatientId = new Identifier();
+        programPatientId.setSystem("http://openhealthhub.com/fhir/program-patient-id");
+        programPatientId.setValue("1234");
+        patient.addIdentifier(programPatientId);
+
+        appointment.addContained(patient);
+        Appointment.AppointmentParticipantComponent participantComponent = new Appointment.AppointmentParticipantComponent();
+        participantComponent.setActor(new Reference("#patient"));
+        participantComponent.setStatus(Appointment.ParticipationStatus.NEEDSACTION);
+        appointment.addParticipant(participantComponent);
+        appointment.setSupportingInformation(
+                Collections.singletonList(new Reference().setReference("PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6")));
+        appointment.addExtension("http://openhealthhub.com/fhir/StructureDefinition/appointment-pin", new StringType("59gladtc"));
+
+        return client.create().resource(appointment).execute();
 
     }
 }
