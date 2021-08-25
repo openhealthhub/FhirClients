@@ -99,7 +99,7 @@ namespace DotNetOhh
                 item.Answer.ForEach(answer => Console.WriteLine(answer.Value.ToString()));
             });
 
-            var enc = client.Search<QuestionnaireResponse>(new[] {"identifier=patientnumber", "part-of=blub"});
+            var enc = client.Search<QuestionnaireResponse>(new []{"identifier=patientnumber", "part-of=blub"});
             enc.Entry.ForEach(component => Console.WriteLine(component.FullUrl));
         }
 
