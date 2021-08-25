@@ -119,7 +119,7 @@ namespace DotNetOhh
             Console.Out.WriteLine(obs.Category[0].Text);
 
             
-            var bun = client.Search<Observation>(new[]{"identifier=patientnumber", "device-name=blub"});
+            var bun = client.Search<Observation>(new []{"identifier=patientnumber", "device-name=blub"});
             
             bun.Entry.ForEach(component => Console.WriteLine(component.ToJson()));
         }
