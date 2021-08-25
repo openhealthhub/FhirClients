@@ -1,5 +1,5 @@
-# FhirClients
-FHIR client examples in various languages to show how to interact with Open Healthhub's FHIR API
+# Welcome FhirClients
+Welcome to the FHIRClients for Open HealthHub. These FHIR client examples in various languages to show how to interact with [Open Healthhub](https://www.openhealthhub.com) FHIR API and to integrate them in your project. Please, see installation instructions as well as the full [documentation](https://developer.openhealthhub.com) here.
 
 ### PHP
 
