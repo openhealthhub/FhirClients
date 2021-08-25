@@ -7,3 +7,4 @@
 /java/target/*
 /php/vendor/
 /php/.phpunit.result.cache
+/ruby/vendor/

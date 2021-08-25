@@ -1,7 +1,6 @@
-import FHIR from "fhirclient";
-import {FHIR_ENDPOINT} from "./constants";
 import * as openpgp from 'openpgp/dist/compat/openpgp';
 import privateKey from '../../sandbox.key';
+import Client from "./client";
 
 class QuestionnaireResponseClient {
   constructor() {
@@ -17,13 +16,13 @@ class QuestionnaireResponseClient {
   }
 
   async get() {
-    const client = FHIR.client(FHIR_ENDPOINT);
+    const client = new Client();
     const resp = await client.request("QuestionnaireResponse/1");
     return this.handleResponse(resp);
   }
 
   async search() {
-    const client = FHIR.client(FHIR_ENDPOINT);
+    const client = new Client();
     const resp = await client.request("QuestionnaireResponse?part-of=97f680b9-e397-4298-8c53-de62a284c806&identifier=6226217e-7ae9-4fa2-8fbe-e83a8f8540f9");
     return Promise.all(resp.entry.map(entry => this.handleResponse(entry.resource)));
   }

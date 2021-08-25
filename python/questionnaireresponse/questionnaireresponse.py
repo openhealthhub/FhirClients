@@ -1,11 +1,16 @@
-from config.settings import server
-import fhirclient.models.questionnaireresponse as qr
+import asyncio
 
-response = qr.QuestionnaireResponse.read('1', server)
+from config.settings import client
 
-print(response.text)
 
-qrs = qr.QuestionnaireResponse.where({'part-of': 'programUUID', 'identifier': 'patientnumber'}).perform_resources(server)
+async def questionnaire_response():
+    response = await client.resource('QuestionnaireResponse').execute('1', 'GET')
 
-for q in qrs:
-    print(q.as_json())
+    print(response.resourceType, response.id)
+
+    qrs = await client.resources('QuestionnaireResponse').search(part_of='programUUID', identifier='patientnumber').fetch()
+
+    for q in qrs:
+        print(q.reference)
+
+asyncio.run(questionnaire_response())

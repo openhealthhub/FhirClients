@@ -1,11 +1,8 @@
 {
   "name": "ohh-js-fhir-client",
   "version": "0.0.1",
-  "description": "",
-  "keywords": "Open HealthHub Javascript FHIR Client",
-  "license": "",
+  "description": "Open HealthHub Javascript FHIR Client",
   "private": true,
-  "author": "",
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
