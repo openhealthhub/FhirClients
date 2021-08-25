@@ -9,29 +9,36 @@ class AppointmentClient {
   async create() {
     const client = new Client();
     return client.create({
-      resourceType: 'Appointment',
-      status: 'booked',
-      priority: 5,
-      description: 'Discussion on the results of your recent MRI',
-      start: '2021-08-05T15:20:35.348+02:00',
-      end: '2021-08-05T15:20:35.348+02:00',
-      created: '1970-01-01T01:00:00+01:00',
-      comment: 'Further expand on the results of the MRI and determine the next actions that may be appropriate.',
-      participant: [
-        {
-          actor: {
-            reference: 'Patient/example'
-          },
-          required: 'required',
-          status: 'accepted'
+      resourceType: "Appointment",
+      contained: [{
+        resourceType: "Patient",
+        id: "patient",
+        identifier: [{
+          system: "http://openhealthhub.com/fhir/program-patient-id",
+          value: "1234"
+        }],
+        name: [{
+          text: "Test Patient"
+        }],
+        telecom: [{
+          system: "email",
+          value: "test@patient.ohh"
+        }]
+      }],
+      extension: [{
+        url: "http://openhealthhub.com/fhir/StructureDefinition/appointment-pin",
+        valueString: "59gladtc"
+      }],
+      supportingInformation: [{
+        reference: "PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6"
+      }],
+      start: "2021-03-16T13:32:37.430+01:00",
+      participant: [{
+        actor: {
+          reference: "#patient"
         },
-        {
-          actor: {
-            reference: 'Practitioner/example',
-            display: 'Dr Adam Careful'
-          }
-        }
-      ]
+        status: "needs-action"
+      }]
     });
   }
 }

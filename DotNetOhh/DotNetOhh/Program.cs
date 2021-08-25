@@ -18,16 +18,17 @@ namespace DotNetOhh
                 VerifyFhirVersion = true
             };
 
+
             var client = new FhirClient("https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4/", settings, new ApiKeyMessageHandler());
-            
+
             ReadObservation(client);
-            
+
             CreateSubscription(client);
-            
+
             ReadAndDecryptQuestionnaireResponse(client);
-            
+
             CreateAppointment(client);
-            
+
             ReadQuestionnaire(client);
         }
 
@@ -39,16 +40,51 @@ namespace DotNetOhh
 
         private static void CreateAppointment(FhirClient client)
         {
-            Appointment app = new Appointment
+            var patient = new Patient
             {
-                Status = Appointment.AppointmentStatus.Booked,
-                AppointmentType = new CodeableConcept("http://terminology.hl7.org/CodeSystem/v2-0276","FOLLOWUP", "A follow up visit from a previous appointment"),
-                Description = "Discussion on the results of your recent MRI",
-                Start = DateTimeOffset.Now,
-                End = DateTimeOffset.Now
+                Id = "patient",
+                Identifier = new List<Identifier>
+                {
+                    new Identifier
+                    {
+                        System = "http://openhealthhub.com/fhir/program-patient-id",
+                        Value = "1234"
+                    }
+                },
+                Name = new List<HumanName> {new HumanName {Text = "Test Patient"}},
+                Telecom = new List<ContactPoint>
+                {
+                    new ContactPoint
+                    {
+                        System = ContactPoint.ContactPointSystem.Email,
+                        Value = "test@patient.ohh"
+                    }
+                }
             };
+
+            var app = new Appointment
+            {
+                Start = DateTimeOffset.Now,
+                Contained = new List<Resource> {patient},
+                Participant = new List<Appointment.ParticipantComponent>
+                {
+                    new Appointment.ParticipantComponent
+                    {
+                        Actor = new ResourceReference {Reference = "#patient"},
+                        Status = ParticipationStatus.NeedsAction
+                    }
+                },
+                SupportingInformation = new List<ResourceReference>
+                    {new ResourceReference {Reference = "PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6"}},
+                Extension = new List<Extension> {new Extension
+                {
+                    Url = "http://openhealthhub.com/fhir/StructureDefinition/appointment-pin",
+                    Value = new FhirString("59gladtc")
+                }}
+            };
+
             var a = client.Create(app);
-            
+
             Console.Out.WriteLine(a.Description);
         }
 
@@ -56,7 +92,7 @@ namespace DotNetOhh
         {
             var qr = client.Read<QuestionnaireResponse>("QuestionnaireResponse/1");
             new Decrypter().Decrypt(qr);
-            
+
             qr.Item.ForEach(item =>
             {
                 Console.WriteLine(item.LinkId);
@@ -81,8 +117,9 @@ namespace DotNetOhh
         {
             var obs = client.Read<Observation>("Observation/1");
             Console.Out.WriteLine(obs.Category[0].Text);
+
             
-            var bun = client.Search<Observation>(new[]{"identifier=patientnumber", "device-name=blub"});
+            var bun = client.Search<Observation>(new []{"identifier=patientnumber", "device-name=blub"});
             
             bun.Entry.ForEach(component => Console.WriteLine(component.ToJson()));
         }
