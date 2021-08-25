@@ -1,8 +1,8 @@
-require './appointment'
-require './questionnaire'
-require './questionnaire-response'
-require './vitalsigns'
-require './subscription'
+require '../src/appointment'
+require '../src/questionnaire'
+require '../src/questionnaire-response'
+require '../src/vitalsigns'
+require '../src/subscription'
 
 client = AppointmentClient.new
 response = client.get_appointment(4)

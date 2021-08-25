@@ -1,9 +1,8 @@
-import FHIR from "fhirclient";
-import {FHIR_ENDPOINT} from "./constants";
+import Client from "./client";
 
 class QuestionnaireClient {
    async get() {
-    const client = FHIR.client(FHIR_ENDPOINT);
+    const client = new Client();
     return client.request("Questionnaire/1");
   }
 }

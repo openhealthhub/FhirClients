@@ -3,6 +3,8 @@ package com.openhealthhub.util;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
+import com.openhealthhub.ApiKeyInterceptor;
+import com.openhealthhub.AuthorizationInterceptor;
 import org.hl7.fhir.r4.formats.JsonCreatorDirect;
 import org.hl7.fhir.r4.formats.JsonParser;
 import org.hl7.fhir.r4.model.Bundle;
@@ -12,11 +14,15 @@ import java.io.StringWriter;
 
 public class FhirUtil {
 
-    private static final String FHIR_ENDPOINT = "https://api-sandbox-staging.openhealthhub.com/fhir";
+//    private static final String FHIR_ENDPOINT = "https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4";
+    private static final String FHIR_ENDPOINT = "http://localhost:8090/fhir";
 
     public static IGenericClient createClient() {
         FhirContext ctx = FhirContext.forR4();
-        return ctx.newRestfulGenericClient(FHIR_ENDPOINT);
+        IGenericClient client = ctx.newRestfulGenericClient(FHIR_ENDPOINT);
+        client.registerInterceptor(new ApiKeyInterceptor());
+        client.registerInterceptor(new AuthorizationInterceptor());
+        return client;
     }
 
     public static void printResource(Resource resource) {

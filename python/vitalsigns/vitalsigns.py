@@ -1,14 +1,16 @@
-from config.settings import server
-import fhirclient.models.observation as o
+import asyncio
 
-obs = o.Observation.read('1', server)
+from config.settings import client
 
-print(obs.resource_type, obs.id)
 
-observations = o.Observation.where(struct={
-    'identifier': 'identifier',
-    'device-name': 'devicename'
-}).perform_resources(server)
+async def get_observation():
+    obs = await client.resource('Observation').execute('1', 'GET')
 
-for o in observations:
-    print(o.as_json())
+    print(obs.resourceType, obs.id)
+
+    observations = await client.resources('Observation').search(identifier='identifier', device_name='devicename').fetch()
+
+    for o in observations:
+        print(o.valueQuantity.value)
+
+asyncio.run(get_observation())

@@ -1,6 +1,7 @@
 package client
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/google/fhir/go/jsonformat"
 	r4pb "github.com/google/fhir/go/proto/google/fhir/proto/r4/core/resources/bundle_and_contained_resource_go_proto"
@@ -74,10 +75,51 @@ func request(method, url string, body io.Reader) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Add("X-API-Key", "ad880601-b7e6-4d86-901d-b6fca96fc725")
+
+	req.Header.Add("X-API-Key", config.ApiKey)
+
+	token := authenticate()
+	req.Header.Add("Authorization", "Bearer "+token)
+
 	if method == "POST" {
 		req.Header.Add("Content-Type", "application/json")
 	}
 
 	return http.DefaultClient.Do(req)
+}
+
+type TokenResponse struct {
+	Access_token string
+}
+
+func authenticate() string {
+	url := config.KeycloakTokenUri
+	method := "POST"
+
+	payload := strings.NewReader("client_id=" + config.KeycloakClientId + "&client_secret=" + config.KeycloakClientSecret + "&grant_type=client_credentials")
+
+	client := &http.Client{}
+	req, err := http.NewRequest(method, url, payload)
+
+	if err != nil {
+		fmt.Println(err)
+		return ""
+	}
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return ""
+	}
+	defer res.Body.Close()
+
+	data := new(TokenResponse)
+	err = json.NewDecoder(res.Body).Decode(&data)
+	if err != nil {
+		fmt.Println(err)
+		return ""
+	}
+
+	return data.Access_token
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
+using Newtonsoft.Json;
 
 namespace DotNetOhh
 {
@@ -16,7 +18,8 @@ namespace DotNetOhh
                 VerifyFhirVersion = true
             };
 
-            var client = new FhirClient("https://api-sandbox-staging.openhealthhub.com/fhir/", settings);
+
+            var client = new FhirClient("https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4/", settings, new ApiKeyMessageHandler());
 
             ReadObservation(client);
 
@@ -115,9 +118,12 @@ namespace DotNetOhh
             var obs = client.Read<Observation>("Observation/1");
             Console.Out.WriteLine(obs.Category[0].Text);
 
-            var bun = client.Search<Observation>(new[] {"identifier=patientnumber"});
-
+            
+            var bun = client.Search<Observation>(new[]{"identifier=patientnumber", "device-name=blub"});
+            
             bun.Entry.ForEach(component => Console.WriteLine(component.ToJson()));
         }
+     
+
     }
 }

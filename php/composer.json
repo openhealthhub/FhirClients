@@ -11,7 +11,7 @@
     "php-fhir"
   ],
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "ext-libxml": "*",
     "ext-json": "*",
     "ext-simplexml": "*",

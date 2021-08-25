@@ -1,10 +1,15 @@
+import asyncio
 import json
 
-from config.settings import server
-import fhirclient.models.subscription as s
-with open('subscription.json', 'r') as file:
-    subJson  = json.load(file)
+from config.settings import client
 
-createResponse = s.Subscription(subJson).create(server=server)
 
-print(createResponse)
+async def create_subscription():
+    with open('subscription.json', 'r') as file:
+        subJson  = json.load(file)
+
+    createResponse = await client.execute('Subscription', method='post', data=subJson)
+
+    print(createResponse)
+
+asyncio.run(create_subscription())
