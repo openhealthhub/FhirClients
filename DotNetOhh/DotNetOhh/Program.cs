@@ -47,7 +47,7 @@ namespace DotNetOhh
                 {
                     new Identifier
                     {
-                        System = "http://openhealthhub.com/fhir/program-patient-id",
+                        System = "urn:oid:2.16.840.1.113883.2.4.99",
                         Value = "1234"
                     }
                 },

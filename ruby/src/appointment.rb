@@ -17,7 +17,7 @@ class AppointmentClient
     patient = FHIR::Patient.new
     patient.id = 'patient'
     patient_identifier = FHIR::Identifier.new
-    patient_identifier.system = 'http://openhealthhub.com/fhir/program-patient-id'
+    patient_identifier.system = 'urn:oid:2.16.840.1.113883.2.4.99'
     patient_identifier.value = '1234'
     patient.identifier = [patient_identifier]
     patient.name = 'Test Patient'

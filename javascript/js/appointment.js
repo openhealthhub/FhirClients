@@ -14,7 +14,7 @@ class AppointmentClient {
         resourceType: "Patient",
         id: "patient",
         identifier: [{
-          system: "http://openhealthhub.com/fhir/program-patient-id",
+          system: "urn:oid:2.16.840.1.113883.2.4.99",
           value: "1234"
         }],
         name: [{

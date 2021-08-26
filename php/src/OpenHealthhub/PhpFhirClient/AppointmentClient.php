@@ -38,7 +38,7 @@ class AppointmentClient
         $telecomType->setValue('email');
         $patientEmail->setSystem($telecomType)->setValue('test@patient.ohh');
         $patientIdentifier = new FHIRIdentifier();
-        $patientIdentifier->setSystem('http://openhealthhub.com/fhir/program-patient-id')->setValue('1234');
+        $patientIdentifier->setSystem('urn:oid:2.16.840.1.113883.2.4.99')->setValue('1234');
         $patient->setId('patient')->addName($patientName)->addTelecom($patientEmail)->addIdentifier($patientIdentifier);
         $appointment->addContained($patient);
         $participant = new FHIRAppointmentParticipant();
