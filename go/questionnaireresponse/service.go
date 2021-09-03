@@ -9,7 +9,7 @@ import (
 const resource = "QuestionnaireResponse"
 
 func Read() (*qrproto.QuestionnaireResponse, error) {
-	containedResource, err := client.Read(fmt.Sprintf("/%s/1", resource))
+	containedResource, err := client.Read(fmt.Sprintf("/%s/57a1f708-d9cf-4d8c-9f25-b5a450e7f0ca", resource))
 	if err != nil {
 		return nil, err
 	}
@@ -18,7 +18,7 @@ func Read() (*qrproto.QuestionnaireResponse, error) {
 }
 
 func Search() ([]*qrproto.QuestionnaireResponse, error) {
-	containedResource, err := client.Search(resource, "part-of=programUUID", "identifier=moduleUUID")
+	containedResource, err := client.Search(resource, "based-on=PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806", "patient.identifier=6226217e")
 	if err != nil {
 		return nil, err
 	}

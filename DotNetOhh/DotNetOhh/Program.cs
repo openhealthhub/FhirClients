@@ -19,7 +19,8 @@ namespace DotNetOhh
             };
 
 
-            var client = new FhirClient("https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4/", settings, new ApiKeyMessageHandler());
+            var client = new FhirClient("https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4/",
+                settings, new ApiKeyMessageHandler());
 
             ReadObservation(client);
 
@@ -76,11 +77,14 @@ namespace DotNetOhh
                 },
                 SupportingInformation = new List<ResourceReference>
                     {new ResourceReference {Reference = "PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6"}},
-                Extension = new List<Extension> {new Extension
+                Extension = new List<Extension>
                 {
-                    Url = "http://openhealthhub.com/fhir/StructureDefinition/appointment-pin",
-                    Value = new FhirString("59gladtc")
-                }}
+                    new Extension
+                    {
+                        Url = "http://openhealthhub.com/fhir/StructureDefinition/appointment-pin",
+                        Value = new FhirString("59gladtc")
+                    }
+                }
             };
 
             var a = client.Create(app);
@@ -90,7 +94,7 @@ namespace DotNetOhh
 
         private static void ReadAndDecryptQuestionnaireResponse(FhirClient client)
         {
-            var qr = client.Read<QuestionnaireResponse>("QuestionnaireResponse/1");
+            var qr = client.Read<QuestionnaireResponse>("QuestionnaireResponse/57a1f708-d9cf-4d8c-9f25-b5a450e7f0ca");
             new Decrypter().Decrypt(qr);
 
             qr.Item.ForEach(item =>
@@ -99,7 +103,8 @@ namespace DotNetOhh
                 item.Answer.ForEach(answer => Console.WriteLine(answer.Value.ToString()));
             });
 
-            var enc = client.Search<QuestionnaireResponse>(new []{"identifier=patientnumber", "part-of=blub"});
+            var enc = client.Search<QuestionnaireResponse>(new[]
+                {"patient.identifier=6226217e", "based-on=PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806"});
             enc.Entry.ForEach(component => Console.WriteLine(component.FullUrl));
         }
 
@@ -118,12 +123,10 @@ namespace DotNetOhh
             var obs = client.Read<Observation>("Observation/1");
             Console.Out.WriteLine(obs.Category[0].Text);
 
-            
-            var bun = client.Search<Observation>(new []{"identifier=patientnumber", "device-name=blub"});
-            
+
+            var bun = client.Search<Observation>(new[] {"identifier=patientnumber", "device-name=blub"});
+
             bun.Entry.ForEach(component => Console.WriteLine(component.ToJson()));
         }
-     
-
     }
 }

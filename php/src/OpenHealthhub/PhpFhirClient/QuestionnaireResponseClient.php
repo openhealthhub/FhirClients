@@ -19,10 +19,10 @@ class QuestionnaireResponseClient
         return $this->decrypt(new FHIRQuestionnaireResponse($res));
     }
 
-    public function searchQuestionnaireResponses($partOf, $identifier): FHIRBundle
+    public function searchQuestionnaireResponses($programUuid, $patientIdentifier): FHIRBundle
     {
         $client = new FhirClient();
-        $res = $client->search(sprintf('QuestionnaireResponse?part-of=%s&identifier=%s', $partOf, $identifier));
+        $res = $client->search(sprintf('QuestionnaireResponse?based-on=%s&patient.identifier=%s', $programUuid, $patientIdentifier));
         return new FHIRBundle($res);
     }
 
@@ -112,7 +112,7 @@ class QuestionnaireResponseClient
     private function isEncryptedResponse(FHIRQuestionnaireResponse $resp)
     {
         foreach ($resp->getMeta()->getProfile() as $profile) {
-            if ($profile->getValue() == 'http://openhealthhub.com/StructureDefinition/EncryptedQuestionnaireResponse') {
+            if ($profile->getValue() == 'http://openhealthhub.com/fhir/StructureDefinition/EncryptedQuestionnaireResponse') {
                 return true;
             }
         }
@@ -123,7 +123,7 @@ class QuestionnaireResponseClient
     private function getEncryptedValue(FHIRQuestionnaireResponse $resp)
     {
         foreach ($resp->getExtension() as $extension) {
-            if ($extension->getUrl() == 'http://openhealthhub.com/StructureDefinition/encryptedAnswers') {
+            if ($extension->getUrl() == 'http://openhealthhub.com/fhir/StructureDefinition/encryptedAnswers') {
                 return $extension->getValueString();
             }
         }

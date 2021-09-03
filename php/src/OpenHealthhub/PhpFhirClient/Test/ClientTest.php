@@ -54,7 +54,7 @@ class ClientTest extends TestCase
     public function testGetQuestionnaireResponse()
     {
         $client = new QuestionnaireResponseClient();
-        $resp = $client->getQuestionnaireResponse(4);
+        $resp = $client->getQuestionnaireResponse('57a1f708-d9cf-4d8c-9f25-b5a450e7f0ca');
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRQuestionnaireResponse', $resp);
         $this->assertEquals('4', $resp->getId()->getValue()->getValue());
     }
@@ -62,7 +62,7 @@ class ClientTest extends TestCase
     public function testSearchQuestionnaireResponse()
     {
         $client = new QuestionnaireResponseClient();
-        $resp = $client->searchQuestionnaireResponses('97f680b9-e397-4298-8c53-de62a284c806', '6226217e-7ae9-4fa2-8fbe-e83a8f8540f9');
+        $resp = $client->searchQuestionnaireResponses('PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806', '6226217e');
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRBundle', $resp);
         $this->assertEquals(1, count($resp->getEntry()));
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRQuestionnaireResponse', $resp->getEntry()[0]->getResource());
