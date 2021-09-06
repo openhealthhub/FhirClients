@@ -21,8 +21,8 @@ class QuestionnaireResponseClient
     FhirClient.new
 
     params = {
-      'part-of': '97f680b9-e397-4298-8c53-de62a284c806',
-      'identifier': '6226217e-7ae9-4fa2-8fbe-e83a8f8540f9'
+      'based-on': 'PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806',
+      'patient.identifier': '6226217e'
     }
     FHIR::QuestionnaireResponse.search(params)
   end
@@ -34,11 +34,11 @@ class QuestionnaireResponseClient
   end
 
   def is_encrypted_response(response)
-    response.meta.profile.any? { |profile| profile == 'http://openhealthhub.com/StructureDefinition/EncryptedQuestionnaireResponse' }
+    response.meta.profile.any? { |profile| profile == 'http://openhealthhub.com/fhir/StructureDefinition/EncryptedQuestionnaireResponse' }
   end
 
   def decrypt(response)
-    extensions = response.extension.select { |extension| extension.url == 'http://openhealthhub.com/StructureDefinition/encryptedAnswers' }
+    extensions = response.extension.select { |extension| extension.url == 'http://openhealthhub.com/fhir/StructureDefinition/encryptedAnswers' }
     crypto = GPGME::Crypto.new
     encrypted_answers = fix_encrypted_message_for_xml_response(extensions)
     decrypted_string = crypto.decrypt(encrypted_answers, password: 'api-sandbox').to_s

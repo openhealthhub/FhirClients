@@ -17,13 +17,13 @@ class QuestionnaireResponseClient {
 
   async get() {
     const client = new Client();
-    const resp = await client.request("QuestionnaireResponse/1");
+    const resp = await client.request("QuestionnaireResponse/57a1f708-d9cf-4d8c-9f25-b5a450e7f0ca");
     return this.handleResponse(resp);
   }
 
   async search() {
     const client = new Client();
-    const resp = await client.request("QuestionnaireResponse?part-of=97f680b9-e397-4298-8c53-de62a284c806&identifier=6226217e-7ae9-4fa2-8fbe-e83a8f8540f9");
+    const resp = await client.request("QuestionnaireResponse?based-on=PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806&patient.identifier=6226217e");
     return Promise.all(resp.entry.map(entry => this.handleResponse(entry.resource)));
   }
 
@@ -38,7 +38,7 @@ class QuestionnaireResponseClient {
   }
 
   isEncryptedResponse(resp) {
-    return resp.meta.profile.some(profile => profile === 'http://openhealthhub.com/StructureDefinition/EncryptedQuestionnaireResponse');
+    return resp.meta.profile.some(profile => profile === 'http://openhealthhub.com/fhir/StructureDefinition/EncryptedQuestionnaireResponse');
   }
 
   addToResponse(resp, decryptedValues) {

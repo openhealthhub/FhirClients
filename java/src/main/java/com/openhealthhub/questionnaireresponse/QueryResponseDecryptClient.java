@@ -5,6 +5,7 @@ import com.openhealthhub.util.FhirUtil;
 import org.bouncycastle.openpgp.PGPException;
 import org.bouncycastle.openpgp.PGPSecretKeyRing;
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.QuestionnaireResponse;
 import org.pgpainless.PGPainless;
 import org.pgpainless.decryption_verification.DecryptionStream;
@@ -20,7 +21,7 @@ public abstract class QueryResponseDecryptClient {
     private static final String PRIVATE_KEY_FILE = "/sandbox.key";
     private static final String PRIVATE_KEY_PASSPHRASE = "api-sandbox";
 
-    private static final long QUESTIONNAIRE_RESPONSE_ID = 3L;
+    private static final String QUESTIONNAIRE_RESPONSE_ID = "57a1f708-d9cf-4d8c-9f25-b5a450e7f0ca";
 
     protected final IGenericClient client;
 
@@ -53,16 +54,17 @@ public abstract class QueryResponseDecryptClient {
     public Bundle searchQuestionnaireResponse() {
         return client.search()
                 .forResource(QuestionnaireResponse.class)
-                .where(QuestionnaireResponse.PART_OF.hasId("97f680b9-e397-4298-8c53-de62a284c806"))
-                .and(QuestionnaireResponse.IDENTIFIER.exactly().identifier("6226217e-7ae9-4fa2-8fbe-e83a8f8540f9"))
+                .where(QuestionnaireResponse.BASED_ON.hasId("PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806"))
+                .and(QuestionnaireResponse.PATIENT.hasChainedProperty(Patient.IDENTIFIER.exactly().identifier("6226217e")))
                 .returnBundle(Bundle.class)
                 .execute();
     }
+
     public boolean isEncryptedQuestionnaireResponse(QuestionnaireResponse questionnaireResponse) {
         return questionnaireResponse.getMeta()
                 .getProfile()
                 .stream()
-                .anyMatch(profile -> "http://openhealthhub.com/StructureDefinition/EncryptedQuestionnaireResponse".equals(
+                .anyMatch(profile -> "http://openhealthhub.com/fhir/StructureDefinition/EncryptedQuestionnaireResponse".equals(
                         profile.getValue()));
     }
 
