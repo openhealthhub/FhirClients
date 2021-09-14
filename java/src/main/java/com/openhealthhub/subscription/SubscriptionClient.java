@@ -22,6 +22,7 @@ public class SubscriptionClient {
     MethodOutcome createSubscription() {
         Subscription.SubscriptionChannelComponent channel = new Subscription.SubscriptionChannelComponent()
                 .setType(Subscription.SubscriptionChannelType.RESTHOOK)
+                .setStatus(Subscription.SubscriptionStatus.REQUESTED)
                 .setEndpoint("https://your-webhook/endpoint");
         Subscription subscription = new Subscription()
                 .setCriteria("Appointment?name=test")
