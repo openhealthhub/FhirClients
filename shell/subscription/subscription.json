@@ -1,5 +1,6 @@
 {
   "resourceType": "Subscription",
+  "status": "requested",
   "criteria": "Appointment?name=test",
   "channel": {
     "type": "rest-hook",
