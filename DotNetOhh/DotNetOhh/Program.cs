@@ -112,6 +112,8 @@ namespace DotNetOhh
         {
             var resource = new Subscription
             {
+                Status = Subscription.SubscriptionStatus.Requested,
+                Criteria = "QuestionnaireResponse",
                 Channel = new Subscription.ChannelComponent() {Type = Subscription.SubscriptionChannelType.RestHook}
             };
             var subscription = client.Create(resource);
