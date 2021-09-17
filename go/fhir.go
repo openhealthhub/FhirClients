@@ -4,6 +4,7 @@ import (
 	"github.com/google/fhir/go/proto/google/fhir/proto/r4/core/datatypes_go_proto"
 	"github.com/google/fhir/go/proto/google/fhir/proto/r4/core/resources/questionnaire_response_go_proto"
 	"openhealthhub.com/go/appointment"
+	"openhealthhub.com/go/careplan"
 	"openhealthhub.com/go/openpgp"
 	"openhealthhub.com/go/questionnaire"
 	"openhealthhub.com/go/questionnaireresponse"
@@ -15,6 +16,8 @@ const encryptedExtensionUrl = "http://openhealthhub.com/fhir/StructureDefinition
 const encryptedProfileUrl = "http://openhealthhub.com/fhir/StructureDefinition/EncryptedQuestionnaireResponse"
 
 func main() {
+	carePlanCalls()
+
 	appointmentCalls()
 
 	observationCalls()
@@ -24,6 +27,22 @@ func main() {
 	questionnaireResponseCalls()
 
 	subscriptionCalls()
+}
+
+func carePlanCalls() {
+	find, err := careplan.Read()
+	if err != nil {
+		panic(err)
+	}
+
+	println(find.InstantiatesCanonical[0])
+
+	create, err := careplan.Create()
+	if err != nil {
+		panic(err)
+	}
+
+	println(create.Id.Value)
 }
 
 func subscriptionCalls() {
@@ -98,13 +117,13 @@ func appointmentCalls() {
 	if err != nil {
 		panic(err)
 	}
-	println(apt.Description.Value)
+	println(apt.Id)
 
 	apt, err = appointment.Create()
 	if err != nil {
 		panic(err)
 	}
-	println(apt.Description.Value)
+	println(apt.Start)
 }
 
 func isEncrypted(qr *questionnaire_response_go_proto.QuestionnaireResponse) bool {
