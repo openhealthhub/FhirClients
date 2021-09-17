@@ -6,6 +6,7 @@ class SubscriptionClient {
     return client.create({
       resourceType: 'Subscription',
       criteria: 'Appointment?name=test',
+      status: 'requested',
       channel: {
         type: 'rest-hook',
         endpoint: 'https://your-webhook/endpoint'
