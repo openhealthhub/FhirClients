@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
@@ -49,11 +50,11 @@ namespace DotNetOhh
 
             var findPlan = client.Read<CarePlan>("CarePlan/aax4cxe5-03a9-46c0-88c6-e0287917cea6");
             
-            Console.Out.WriteLine(findPlan.InstantiatesCanonical);
+            Console.Out.WriteLine(findPlan.InstantiatesCanonical.First());
             
             var plan = client.Create(carePlan);
             
-            Console.Out.WriteLine(plan.InstantiatesCanonical);
+            Console.Out.WriteLine(plan.InstantiatesCanonical.First());
             }
 
         private static void ReadQuestionnaire(FhirClient client)
