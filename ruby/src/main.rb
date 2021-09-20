@@ -1,4 +1,5 @@
 require '../src/appointment'
+require '../src/careplan'
 require '../src/questionnaire'
 require '../src/questionnaire-response'
 require '../src/vitalsigns'
@@ -30,4 +31,8 @@ puts response.to_json
 
 client = SubscriptionClient.new
 response = client.create_subscription
+puts response.to_json
+
+client = CarePlanClient.new
+response = client.create_careplan
 puts response.to_json
