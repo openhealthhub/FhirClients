@@ -21,8 +21,7 @@ class QuestionnaireResponseClient
     FhirClient.new
 
     params = {
-      'based-on': '97f680b9-e397-4298-8c53-de62a284c806',
-      'patient.identifier': '6226217e'
+      'based-on.instantiatesCanonical': '97f680b9-e397-4298-8c53-de62a284c806'
     }
     FHIR::QuestionnaireResponse.search(params)
   end
