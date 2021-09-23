@@ -31,6 +31,18 @@ namespace DotNetOhh
             CreateAppointment(client);
 
             ReadQuestionnaire(client);
+
+            ReadPlanDefinition(client);
+        }
+
+        private static void ReadPlanDefinition(FhirClient client)
+        {
+            var planDefinition = client.Read<PlanDefinition>("PlanDefinition/4944e73f-e447-49ba-a64c-a246b9ef4bdd");
+            Console.Out.WriteLine(planDefinition.Description);
+            
+            var searchDefinition = client.Search<PlanDefinition>(new[]
+                {"publisher=Program Creator", "definition=Questionnaire/866683f3-c41b-47c0-b42f-86f9ff978d1d"});
+            searchDefinition.Entry.ForEach(component => Console.WriteLine(component.FullUrl));
         }
 
         private static void ReadQuestionnaire(FhirClient client)

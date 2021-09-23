@@ -32,6 +32,8 @@ function initPage() {
   headerDiv.className = 'header';
   createTab('Appointment.get');
   createTab('Appointment.create');
+  createTab('PlanDefinition.get');
+  createTab('PlanDefinition.search');
   createTab('Questionnaire.get');
   createTab('QuestionnaireResponse.get');
   createTab('QuestionnaireResponse.search');
