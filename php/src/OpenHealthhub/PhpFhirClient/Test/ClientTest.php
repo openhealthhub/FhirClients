@@ -4,6 +4,7 @@ namespace OpenHealthhub\PhpFhirClient\Test;
 
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRPlanDefinition;
 use OpenHealthhub\PhpFhirClient\AppointmentClient;
+use OpenHealthhub\PhpFhirClient\CarePlanClient;
 use OpenHealthhub\PhpFhirClient\PlanDefinitionClient;
 use OpenHealthhub\PhpFhirClient\QuestionnaireClient;
 use OpenHealthhub\PhpFhirClient\QuestionnaireResponseClient;
@@ -13,6 +14,21 @@ use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
 {
+    public function testGetCarePlan()
+    {
+        $client = new CarePlanClient();
+        $resp = $client->getCarePlan('4');
+        $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRCarePlan', $resp);
+        $this->assertEquals('4', $resp->getId()->getValue()->getValue());
+    }
+
+    public function testCreateCarePlan()
+    {
+        $client = new CarePlanClient();
+        $resp = $client->createCarePlan();
+        $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRCarePlan', $resp);
+    }
+
     public function testGetAppointment()
     {
         $client = new AppointmentClient();
@@ -73,15 +89,15 @@ class ClientTest extends TestCase
     public function testGetQuestionnaireResponse()
     {
         $client = new QuestionnaireResponseClient();
-        $resp = $client->getQuestionnaireResponse('57a1f708-d9cf-4d8c-9f25-b5a450e7f0ca');
+        $resp = $client->getQuestionnaireResponse('PlanDefinition/57a1f708-d9cf-4d8c-9f25-b5a450e7f0ca');
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRQuestionnaireResponse', $resp);
-        $this->assertEquals('4', $resp->getId()->getValue()->getValue());
+        $this->assertEquals('57a1f708-d9cf-4d8c-9f25-b5a450e7f0ca', $resp->getId()->getValue()->getValue());
     }
 
     public function testSearchQuestionnaireResponse()
     {
         $client = new QuestionnaireResponseClient();
-        $resp = $client->searchQuestionnaireResponses('PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806', '6226217e');
+        $resp = $client->searchQuestionnaireResponses('PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806');
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRBundle', $resp);
         $this->assertEquals(1, count($resp->getEntry()));
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRQuestionnaireResponse', $resp->getEntry()[0]->getResource());

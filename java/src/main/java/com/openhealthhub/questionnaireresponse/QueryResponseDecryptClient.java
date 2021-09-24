@@ -5,6 +5,7 @@ import com.openhealthhub.util.FhirUtil;
 import org.bouncycastle.openpgp.PGPException;
 import org.bouncycastle.openpgp.PGPSecretKeyRing;
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.CarePlan;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.QuestionnaireResponse;
 import org.pgpainless.PGPainless;
@@ -54,8 +55,7 @@ public abstract class QueryResponseDecryptClient {
     public Bundle searchQuestionnaireResponse() {
         return client.search()
                 .forResource(QuestionnaireResponse.class)
-                .where(QuestionnaireResponse.BASED_ON.hasId("PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806"))
-                .and(QuestionnaireResponse.PATIENT.hasChainedProperty(Patient.IDENTIFIER.exactly().identifier("6226217e")))
+                .where(QuestionnaireResponse.BASED_ON.hasChainedProperty(CarePlan.INSTANTIATES_CANONICAL.hasId("PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806")))
                 .returnBundle(Bundle.class)
                 .execute();
     }

@@ -23,7 +23,7 @@ class QuestionnaireResponseClient {
 
   async search() {
     const client = new Client();
-    const resp = await client.request("QuestionnaireResponse?based-on=PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806&patient.identifier=6226217e");
+    const resp = await client.request("QuestionnaireResponse?based-on.instantiates-canonical=PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806");
     return Promise.all(resp.entry.map(entry => this.handleResponse(entry.resource)));
   }
 

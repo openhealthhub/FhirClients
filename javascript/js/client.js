@@ -35,10 +35,10 @@ class Client {
   async request(request) {
     await this.tokenPromise;
     const requestObj = typeof request === 'string' ? {url: request} : request;
-    const parameterSeparator = requestObj.url.indexOf('?') === -1 ? '?' : '&';
-    requestObj.url = `${requestObj.url}${parameterSeparator}apikey=${API_KEY}`;
     requestObj.headers = {
-      Authorization: `Bearer ${this.token}`
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.token}`,
+      'x-api-key': API_KEY
     };
     return this.client.request(requestObj);
   }
@@ -48,9 +48,6 @@ class Client {
       url: resource.resourceType,
       method: 'POST',
       body: JSON.stringify(resource),
-      headers: {
-        'Content-Type': 'application/json'
-      }
     });
   }
 

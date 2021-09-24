@@ -9,4 +9,4 @@ curl "$baseUrl/QuestionnaireResponse/57a1f708-d9cf-4d8c-9f25-b5a450e7f0ca" -H "$
 
 printf "\n\nSearching QuestionnaireResponse\n\n"
 
-curl "$baseUrl/QuestionnaireResponse?patient.identifier=6226217e&based-on=PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806" -H "$apiKeyHeader" -H "$authHeader"
+curl "$baseUrl/QuestionnaireResponse?based-on.instantiates-canonical=PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806" -H "$apiKeyHeader" -H "$authHeader"

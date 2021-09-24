@@ -2,7 +2,7 @@ require 'fhir_models'
 require 'fhir_client'
 
 class FhirClient
-  KEYCLOAK_OIDC_BASE_URL = 'https://auth-sandbox-staging.openhealthhub.com/auth/realms/OpenHealthHub/protocol/openid-connect'
+  KEYCLOAK_OIDC_BASE_URL = 'https://auth-staging.openhealthhub.com/auth/realms/OpenHealthHub/protocol/openid-connect'
   CLIENT_SECRET = '915e87d4-16ee-4ca5-b701-b38b6afce8ff'
   CLIENT_ID = 'api-sandbox'
 
