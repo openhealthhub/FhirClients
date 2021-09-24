@@ -21,7 +21,7 @@ class QuestionnaireResponseClient
     FhirClient.new
 
     params = {
-      'based-on.instantiatesCanonical': '97f680b9-e397-4298-8c53-de62a284c806'
+      'based-on.instantiates-canonical': 'PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806'
     }
     FHIR::QuestionnaireResponse.search(params)
   end

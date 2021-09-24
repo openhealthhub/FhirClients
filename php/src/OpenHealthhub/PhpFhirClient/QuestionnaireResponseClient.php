@@ -22,7 +22,7 @@ class QuestionnaireResponseClient
     public function searchQuestionnaireResponses($programUuid): FHIRBundle
     {
         $client = new FhirClient();
-        $res = $client->search(sprintf('QuestionnaireResponse?based-on.instantiatesCanonical=%s', $programUuid));
+        $res = $client->search(sprintf('QuestionnaireResponse?based-on.instantiates-canonical=%s', $programUuid));
         return new FHIRBundle($res);
     }
 

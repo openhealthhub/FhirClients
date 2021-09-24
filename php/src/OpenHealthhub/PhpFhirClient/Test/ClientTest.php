@@ -89,7 +89,7 @@ class ClientTest extends TestCase
     public function testGetQuestionnaireResponse()
     {
         $client = new QuestionnaireResponseClient();
-        $resp = $client->getQuestionnaireResponse('57a1f708-d9cf-4d8c-9f25-b5a450e7f0ca');
+        $resp = $client->getQuestionnaireResponse('PlanDefinition/57a1f708-d9cf-4d8c-9f25-b5a450e7f0ca');
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRQuestionnaireResponse', $resp);
         $this->assertEquals('57a1f708-d9cf-4d8c-9f25-b5a450e7f0ca', $resp->getId()->getValue()->getValue());
     }
