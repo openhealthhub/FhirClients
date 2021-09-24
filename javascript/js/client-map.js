@@ -4,12 +4,14 @@ import SubscriptionClient from "./subscription";
 import QuestionnaireResponseClient from './questionnaire-response';
 import VitalSignsClient from "./vitalsigns";
 import CarePlanClient from "./careplan";
+import PlanDefinitionClient from "./plan-definition";
 
 export const CLIENT_MAP = {
   Appointment: new AppointmentClient(),
+  PlanDefinition: new PlanDefinitionClient(),
   Questionnaire: new QuestionnaireClient(),
-  Subscription: new SubscriptionClient(),
   QuestionnaireResponse: new QuestionnaireResponseClient(),
   VitalSigns: new VitalSignsClient(),
-  CarePlan: new CarePlanClient()
+  CarePlan: new CarePlanClient(),
+  Subscription: new SubscriptionClient()
 }

@@ -10,9 +10,9 @@ async def get_careplan():
     print(care_plan.instantiatesCanonical)
 
     with open('careplan.json', 'r') as file:
-        appointment_json = json.load(file)
+        careplan_json = json.load(file)
 
-    create_response = await client.execute('CarePlan', method='post', data=appointment_json)
+    create_response = await client.execute('CarePlan', method='post', data=careplan_json)
 
     print(create_response)
 

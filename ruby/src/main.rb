@@ -23,6 +23,12 @@ puts response.to_json
 response = client.search_questionnaire_response
 puts response.to_json
 
+client = PlanDefinitionClient.new
+response = client.get_plandefinition('4944e73f-e447-49ba-a64c-a246b9ef4bdd')
+puts response.to_json
+response = client.search_plandefinition
+puts response.to_json
+
 client = VitalSignsClient.new
 response = client.get_vitalsigns(4)
 puts response.to_json
