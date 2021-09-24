@@ -157,7 +157,11 @@ namespace DotNetOhh
             {
                 Status = Subscription.SubscriptionStatus.Requested,
                 Criteria = "QuestionnaireResponse",
-                Channel = new Subscription.ChannelComponent() {Type = Subscription.SubscriptionChannelType.RestHook}
+                Channel = new Subscription.ChannelComponent()
+                {
+                    Type = Subscription.SubscriptionChannelType.RestHook,
+                    Header = new List<string>{"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"} 
+                }
             };
             var subscription = client.Create(resource);
             Console.Out.WriteLine(subscription.Id);

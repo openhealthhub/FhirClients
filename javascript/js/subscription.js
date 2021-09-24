@@ -9,7 +9,8 @@ class SubscriptionClient {
       status: 'requested',
       channel: {
         type: 'rest-hook',
-        endpoint: 'https://your-webhook/endpoint'
+        endpoint: 'https://your-webhook/endpoint',
+        header: ['Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8']
       }
     });
   }
