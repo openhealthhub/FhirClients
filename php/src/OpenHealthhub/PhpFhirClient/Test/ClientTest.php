@@ -2,7 +2,9 @@
 
 namespace OpenHealthhub\PhpFhirClient\Test;
 
+use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRPlanDefinition;
 use OpenHealthhub\PhpFhirClient\AppointmentClient;
+use OpenHealthhub\PhpFhirClient\PlanDefinitionClient;
 use OpenHealthhub\PhpFhirClient\QuestionnaireClient;
 use OpenHealthhub\PhpFhirClient\QuestionnaireResponseClient;
 use OpenHealthhub\PhpFhirClient\SubscriptionClient;
@@ -41,6 +43,23 @@ class ClientTest extends TestCase
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRBundle', $resp);
         $this->assertEquals(4, count($resp->getEntry()));
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRObservation', $resp->getEntry()[0]->getResource());
+    }
+
+    public function testGetPlanDefinition()
+    {
+        $client = new PlanDefinitionClient();
+        $resp = $client->getPlanDefinition("4944e73f-e447-49ba-a64c-a246b9ef4bdd");
+        $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRPlanDefinition', $resp);
+        $this->assertEquals('4944e73f-e447-49ba-a64c-a246b9ef4bdd', $resp->getId()->getValue()->getValue());
+    }
+
+    public function testSearchPlanDefintion()
+    {
+        $client = new VitalSignsClient();
+        $resp = $client->searchVitalSigns('866683f3-c41b-47c0-b42f-86f9ff978d1d', 'Program Creator');
+        $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRBundle', $resp);
+        $this->assertEquals(1, count($resp->getEntry()));
+        $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRPlanDefinition', $resp->getEntry()[0]->getResource());
     }
 
     public function testGetQuestionnaire()
