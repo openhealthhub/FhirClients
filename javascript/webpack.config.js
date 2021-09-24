@@ -28,6 +28,10 @@ module.exports = {
       {
         test: /\.key$/i,
         use: 'raw-loader',
+      },
+      {
+        test: /\.pub$/i,
+        use: 'raw-loader',
       }
     ],
   },

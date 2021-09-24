@@ -42,22 +42,8 @@ class FhirClient
 
     public function create($resourceName, $resource)
     {
-        $url = self::FHIR_ENDPOINT . $resourceName;
-        $ch = curl_init($url);
-        $token = $this->get_token();
-        curl_setopt_array($ch, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => json_encode($resource),
-            CURLOPT_HTTPHEADER => array(
-                'X-API-Key: ' . self::API_KEY
-            ),
-            CURLOPT_XOAUTH2_BEARER => $token,
-            CURLOPT_HTTPAUTH => CURLAUTH_BEARER
-        ]);
-        $res = curl_exec($ch);
-        curl_close($ch);
+        $body = json_encode($resource);
+        $res = $this->createRaw($resourceName, $body, 'application/json');
         return json_decode($res, true);
     }
 
@@ -76,5 +62,27 @@ class FhirClient
         curl_close($ch);
         $decoded_json = json_decode($res, true);
         return $decoded_json['access_token'];
+    }
+
+    public function createRaw($resourceName, $body, $contentType)
+    {
+        $url = self::FHIR_ENDPOINT . $resourceName;
+        $ch = curl_init($url);
+        $token = $this->get_token();
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $body,
+            CURLOPT_HTTPHEADER => array(
+                'X-API-Key: ' . self::API_KEY,
+                'Content-Type: ' . $contentType
+            ),
+            CURLOPT_XOAUTH2_BEARER => $token,
+            CURLOPT_HTTPAUTH => CURLAUTH_BEARER
+        ]);
+        $res = curl_exec($ch);
+        curl_close($ch);
+        return $res;
     }
 }

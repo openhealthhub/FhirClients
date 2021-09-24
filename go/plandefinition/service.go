@@ -2,13 +2,13 @@ package plandefinition
 
 import (
 	"fmt"
-	qrproto "github.com/google/fhir/go/proto/google/fhir/proto/r4/core/resources/questionnaire_response_go_proto"
+	"github.com/google/fhir/go/proto/google/fhir/proto/r4/core/resources/plan_definition_go_proto"
 	"openhealthhub.com/go/client"
 )
 
 const resource = "PlanDefinition"
 
-func Read() (*qrproto.PlanDefinition, error) {
+func Read() (*plan_definition_go_proto.PlanDefinition, error) {
 	containedResource, err := client.Read(fmt.Sprintf("/%s/4944e73f-e447-49ba-a64c-a246b9ef4bdd", resource))
 	if err != nil {
 		return nil, err
@@ -17,14 +17,14 @@ func Read() (*qrproto.PlanDefinition, error) {
 	return containedResource.GetPlanDefinition(), nil
 }
 
-func Search() ([]*qrproto.PlanDefinition, error) {
-	containedResource, err := client.Search(resource, "definition=Questionnaire/866683f3-c41b-47c0-b42f-86f9ff978d1d", "publisher=Program Creator")
+func Search() ([]*plan_definition_go_proto.PlanDefinition, error) {
+	containedResource, err := client.Search(resource, "definition=Questionnaire/866683f3-c41b-47c0-b42f-86f9ff978d1d", "publisher=Program+Creator")
 	if err != nil {
 		return nil, err
 	}
 
 	responses := containedResource.GetBundle().GetEntry()
-	result := make([]*qrproto.PlanDefinition, len(responses))
+	result := make([]*plan_definition_go_proto.PlanDefinition, len(responses))
 	for idx, entry := range responses {
 		result[idx] = entry.GetResource().GetPlanDefinition()
 	}

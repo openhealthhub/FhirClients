@@ -4,8 +4,6 @@ import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import com.openhealthhub.util.FhirUtil;
 import org.hl7.fhir.r4.model.Appointment;
-import org.hl7.fhir.r4.model.CodeableConcept;
-import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.ContactPoint;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
@@ -16,7 +14,6 @@ import org.hl7.fhir.r4.model.StringType;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.Date;
-import java.util.UUID;
 
 public class AppointmentClient {
 
