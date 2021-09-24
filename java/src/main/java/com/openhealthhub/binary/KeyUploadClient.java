@@ -11,6 +11,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
 
+import static com.openhealthhub.ApiKeyInterceptor.API_KEY;
+import static com.openhealthhub.ApiKeyInterceptor.API_KEY_HEADER_NAME;
 import static com.openhealthhub.util.AuthorizationUtil.getToken;
 import static java.net.http.HttpRequest.BodyPublishers.ofString;
 
@@ -24,7 +26,7 @@ public class KeyUploadClient {
                 .POST(ofString(publicKey))
                 .header("Content-Type", "text/plain")
                 .header("Authorization", "Bearer " + getToken())
-                // TODO Add API-KEY
+                .header(API_KEY_HEADER_NAME, API_KEY)
                 .build();
 
         HttpResponse<Void> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.discarding());

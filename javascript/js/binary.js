@@ -1,5 +1,5 @@
 import Client from "./client";
-import {FHIR_ENDPOINT} from "./constants";
+import {API_KEY, FHIR_ENDPOINT} from "./constants";
 import publicKey from '../../sandbox.pub';
 
 class BinaryClient {
@@ -10,8 +10,8 @@ class BinaryClient {
       method: 'POST',
       headers: {
         'Content-Type': 'text/plain',
-        'Authorization': `Bearer ${token}`
-        // TODO Add API-KEY
+        'Authorization': `Bearer ${token}`,
+        'X-API-KEY': API_KEY
       },
       body: btoa(publicKey)
     };

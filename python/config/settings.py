@@ -1,6 +1,8 @@
 import requests
 from fhirpy import AsyncFHIRClient
 
+FHIR_URL = 'https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4'
+API_KEY = 'ad880601-b7e6-4d86-901d-b6fca96fc725'
 
 def get_token():
     client_id = 'api-sandbox'
@@ -13,7 +15,7 @@ def get_token():
 
 
 client = AsyncFHIRClient(
-    'https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4',
+    FHIR_URL,
     authorization=f'Bearer {get_token()}',
-    extra_headers={'x-api-key': 'ad880601-b7e6-4d86-901d-b6fca96fc725'}
+    extra_headers={'x-api-key': API_KEY}
 )

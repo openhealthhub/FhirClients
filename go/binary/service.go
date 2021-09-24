@@ -27,7 +27,7 @@ func Create() (int, error) {
 	token := client.Authenticate()
 	req.Header.Add("Authorization", "Bearer "+token)
 	req.Header.Add("Content-Type", "text/plain")
-	// TODO Add API-KEY
+	req.Header.Add("X-API-KEY", config.ApiKey)
 
 	resp, err := http.DefaultClient.Do(req)
 
