@@ -34,6 +34,8 @@ function initPage() {
   createTab('Appointment.create');
   createTab('CarePlan.get');
   createTab('CarePlan.create');
+  createTab('PlanDefinition.get');
+  createTab('PlanDefinition.search');
   createTab('Questionnaire.get');
   createTab('QuestionnaireResponse.get');
   createTab('QuestionnaireResponse.search');

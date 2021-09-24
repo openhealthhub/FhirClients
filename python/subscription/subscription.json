@@ -1,10 +1,11 @@
 {
-  "resourceType": "Subscription",
-  "criteria": "Appointment?name=test",
-  "reason": "get appointment status updates",
+  "reason": "test",
+  "resourceType" : "Subscription",
+  "criteria": "QuestionnaireResponse?based-on.instantiatesCanonical=f029ce5e-52f2-4a03-9937-b4190d8104d3",
   "status": "requested",
-  "channel": {
-    "type": "rest-hook",
-    "endpoint": "https://your-webhook/endpoint"
+  "channel" : {
+    "type" : "rest-hook",
+    "endpoint" : "http://localhost:8888",
+    "header": ["Content-Length: 0", "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" ]
   }
 }

@@ -48,6 +48,7 @@ namespace DotNetOhh
                 InstantiatesCanonical = new List<string> { "PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6" }
             };
 
+
             var findPlan = client.Read<CarePlan>("CarePlan/aax4cxe5-03a9-46c0-88c6-e0287917cea6");
             
             Console.Out.WriteLine(findPlan.InstantiatesCanonical.First());
@@ -55,7 +56,19 @@ namespace DotNetOhh
             var plan = client.Create(carePlan);
             
             Console.Out.WriteLine(plan.InstantiatesCanonical.First());
-            }
+            
+        }
+
+        private static void ReadPlanDefinition(FhirClient client)
+        {
+            var planDefinition = client.Read<PlanDefinition>("PlanDefinition/4944e73f-e447-49ba-a64c-a246b9ef4bdd");
+            Console.Out.WriteLine(planDefinition.Description);
+            
+            var searchDefinition = client.Search<PlanDefinition>(new[]
+                {"publisher=Program Creator", "definition=Questionnaire/866683f3-c41b-47c0-b42f-86f9ff978d1d"});
+            searchDefinition.Entry.ForEach(component => Console.WriteLine(component.FullUrl));
+        }
+
 
         private static void ReadQuestionnaire(FhirClient client)
         {
