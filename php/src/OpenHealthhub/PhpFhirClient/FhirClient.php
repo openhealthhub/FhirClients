@@ -4,10 +4,10 @@ namespace OpenHealthhub\PhpFhirClient;
 
 class FhirClient
 {
-    const FHIR_ENDPOINT = 'https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4/';
-    const KEYCLOAK_OIDC_TOKEN_URL = 'https://auth-staging.openhealthhub.com/auth/realms/OpenHealthHub/protocol/openid-connect/token';
+    const FHIR_ENDPOINT = 'https://api.openhealthhub.com/OpenHealthhub/fhir-sandbox/4/';
+    const KEYCLOAK_OIDC_TOKEN_URL = 'https://auth.openhealthhub.com/auth/realms/OpenHealthHub/protocol/openid-connect/token';
     const CLIENT_ID = 'api-sandbox';
-    const CLIENT_SECRET = '915e87d4-16ee-4ca5-b701-b38b6afce8ff';
+    const CLIENT_SECRET = '95810e52-4307-41f5-99a4-d873ab63b536';
     const API_KEY = 'ad880601-b7e6-4d86-901d-b6fca96fc725';
 
     public function get($resourceWithParams)

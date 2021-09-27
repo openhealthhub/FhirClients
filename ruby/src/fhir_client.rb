@@ -2,13 +2,13 @@ require 'fhir_models'
 require 'fhir_client'
 
 class FhirClient
-  KEYCLOAK_OIDC_BASE_URL = 'https://auth-staging.openhealthhub.com/auth/realms/OpenHealthHub/protocol/openid-connect'.freeze
-  CLIENT_SECRET = '915e87d4-16ee-4ca5-b701-b38b6afce8ff'.freeze
+  KEYCLOAK_OIDC_BASE_URL = 'https://auth.openhealthhub.com/auth/realms/OpenHealthHub/protocol/openid-connect'.freeze
+  CLIENT_SECRET = '95810e52-4307-41f5-99a4-d873ab63b536'.freeze
   CLIENT_ID = 'api-sandbox'.freeze
 
   API_KEY = 'ad880601-b7e6-4d86-901d-b6fca96fc725'.freeze
 
-  FHIR_ENDPOINT = 'https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4'.freeze
+  FHIR_ENDPOINT = 'https://api.openhealthhub.com/OpenHealthhub/fhir-sandbox/4'.freeze
 
   def initialize
     client = FHIR::Client.new(FHIR_ENDPOINT)

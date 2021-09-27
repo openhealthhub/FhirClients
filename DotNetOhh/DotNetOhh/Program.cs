@@ -14,7 +14,7 @@ namespace DotNetOhh
 {
     internal class Program
     {
-        const string FhirUrl = "https://api-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4/";
+        const string FhirUrl = "https://api.openhealthhub.com/OpenHealthhub/fhir-sandbox/4/";
 
         public static void Main(string[] args)
         {

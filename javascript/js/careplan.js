@@ -44,7 +44,7 @@ class CarePlanClient {
           }
         ],
         instantiatesCanonical: [
-          "https://api-staging.openhealthhub.com/OpenHealthhub/fhir/4/PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6"
+          "https://api.openhealthhub.com/OpenHealthhub/fhir/4/PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6"
         ],
         status: "completed",
         intent: "plan",

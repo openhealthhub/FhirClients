@@ -11,9 +11,9 @@ import java.net.http.HttpResponse;
 import static java.net.http.HttpRequest.BodyPublishers.ofString;
 
 public class AuthorizationUtil {
-    private static final String CLIENT_SECRET = "915e87d4-16ee-4ca5-b701-b38b6afce8ff";
+    private static final String CLIENT_SECRET = "95810e52-4307-41f5-99a4-d873ab63b536";
     private static final String KEYCLOAK_TOKEN_URI =
-            "https://auth-staging.openhealthhub.com/auth/realms/OpenHealthHub/protocol/openid-connect/token";
+            "https://auth.openhealthhub.com/auth/realms/OpenHealthHub/protocol/openid-connect/token";
     public static final String CLIENT_ID = "api-sandbox";
 
     public static String getToken() {
