@@ -30,9 +30,7 @@ namespace DotNetOhh
            CreateSubscription(client);
            
            ReadAndDecryptQuestionnaireResponse(client);
-            
-           CreateAppointment(client);
-            
+
            ReadQuestionnaire(client);
         }
 
@@ -74,39 +72,6 @@ namespace DotNetOhh
         {
             var questionnaire = client.Read<Questionnaire>("Questionnaire/1");
             Console.Out.WriteLine(questionnaire.Description);
-        }
-
-        private static void CreateAppointment(FhirClient client)
-        {
-            var patient = GetPatient();
-
-            var app = new Appointment
-            {
-                Start = DateTimeOffset.Now,
-                Contained = new List<Resource> {patient},
-                Participant = new List<Appointment.ParticipantComponent>
-                {
-                    new Appointment.ParticipantComponent
-                    {
-                        Actor = new ResourceReference {Reference = "#patient"},
-                        Status = ParticipationStatus.NeedsAction
-                    }
-                },
-                SupportingInformation = new List<ResourceReference>
-                    {new ResourceReference {Reference = "PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6"}},
-                Extension = new List<Extension>
-                {
-                    new Extension
-                    {
-                        Url = "http://openhealthhub.com/fhir/StructureDefinition/appointment-pin",
-                        Value = new FhirString("59gladtc")
-                    }
-                }
-            };
-
-            var a = client.Create(app);
-
-            Console.Out.WriteLine(a.Description);
         }
 
         private static Patient GetPatient()
