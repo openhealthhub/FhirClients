@@ -3,7 +3,6 @@
 namespace OpenHealthhub\PhpFhirClient\Test;
 
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRPlanDefinition;
-use OpenHealthhub\PhpFhirClient\AppointmentClient;
 use OpenHealthhub\PhpFhirClient\CarePlanClient;
 use OpenHealthhub\PhpFhirClient\PlanDefinitionClient;
 use OpenHealthhub\PhpFhirClient\QuestionnaireClient;
@@ -27,21 +26,6 @@ class ClientTest extends TestCase
         $client = new CarePlanClient();
         $resp = $client->createCarePlan();
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRCarePlan', $resp);
-    }
-
-    public function testGetAppointment()
-    {
-        $client = new AppointmentClient();
-        $resp = $client->getAppointment(4);
-        $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRAppointment', $resp);
-        $this->assertEquals('4', $resp->getId()->getValue()->getValue());
-    }
-
-    public function testCreateAppointment()
-    {
-        $client = new AppointmentClient();
-        $resp = $client->createAppointment();
-        $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRAppointment', $resp);
     }
 
     public function testGetVitalSigns()
