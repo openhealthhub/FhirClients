@@ -4,8 +4,10 @@ import (
 	"github.com/google/fhir/go/proto/google/fhir/proto/r4/core/datatypes_go_proto"
 	"github.com/google/fhir/go/proto/google/fhir/proto/r4/core/resources/questionnaire_response_go_proto"
 	"openhealthhub.com/go/appointment"
+	"openhealthhub.com/go/binary"
 	"openhealthhub.com/go/careplan"
 	"openhealthhub.com/go/openpgp"
+	"openhealthhub.com/go/plandefinition"
 	"openhealthhub.com/go/questionnaire"
 	"openhealthhub.com/go/questionnaireresponse"
 	"openhealthhub.com/go/subscription"
@@ -20,6 +22,10 @@ func main() {
 
 	appointmentCalls()
 
+	uploadKeyCalls()
+
+	plandefinitionCalls()
+
 	observationCalls()
 
 	questionnaireCalls()
@@ -27,6 +33,15 @@ func main() {
 	questionnaireResponseCalls()
 
 	subscriptionCalls()
+}
+
+func uploadKeyCalls() {
+	status, err := binary.Create()
+	if err != nil {
+		panic(err)
+	}
+
+	println(status)
 }
 
 func carePlanCalls() {
@@ -108,6 +123,23 @@ func observationCalls() {
 	}
 
 	for _, o := range obs {
+		println(o.Id.Value)
+	}
+}
+
+func plandefinitionCalls() {
+	pd, err := plandefinition.Read()
+	if err != nil {
+		panic(err)
+	}
+	println(pd.Id.Value)
+
+	pds, err := plandefinition.Search()
+	if err != nil {
+		panic(err)
+	}
+
+	for _, o := range pds {
 		println(o.Id.Value)
 	}
 }

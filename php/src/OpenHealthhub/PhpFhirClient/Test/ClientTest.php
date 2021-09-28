@@ -3,6 +3,7 @@
 namespace OpenHealthhub\PhpFhirClient\Test;
 
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRPlanDefinition;
+use OpenHealthhub\PhpFhirClient\BinaryClient;
 use OpenHealthhub\PhpFhirClient\CarePlanClient;
 use OpenHealthhub\PhpFhirClient\PlanDefinitionClient;
 use OpenHealthhub\PhpFhirClient\QuestionnaireClient;
@@ -92,5 +93,12 @@ class ClientTest extends TestCase
         $client = new SubscriptionClient();
         $resp = $client->createSubscription();
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRSubscription', $resp);
+    }
+
+    public function testUploadKey()
+    {
+        $client = new BinaryClient();
+        $resp = $client->uploadKey();
+        $this->assertEquals('', $resp);
     }
 }

@@ -130,9 +130,10 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="AuthenticationUtil.cs" />
         <Compile Include="Decrypter.cs" />
         <Compile Include="Program.cs" />
-        <Compile Include="ApiKeyMessageHandler.cs"/>
+        <Compile Include="ApiKeyMessageHandler.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
@@ -141,6 +142,9 @@
     <ItemGroup>
       <Content Include="../../sandbox.key">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="../../sandbox.pub">
+         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

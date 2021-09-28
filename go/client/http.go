@@ -78,7 +78,7 @@ func request(method, url string, body io.Reader) (*http.Response, error) {
 
 	req.Header.Add("X-API-Key", config.ApiKey)
 
-	token := authenticate()
+	token := Authenticate()
 	req.Header.Add("Authorization", "Bearer "+token)
 
 	if method == "POST" {
@@ -92,7 +92,7 @@ type TokenResponse struct {
 	Access_token string
 }
 
-func authenticate() string {
+func Authenticate() string {
 	url := config.KeycloakTokenUri
 	method := "POST"
 

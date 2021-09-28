@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -11,6 +14,8 @@ namespace DotNetOhh
 {
     internal class Program
     {
+        const string FhirUrl = "https://api.openhealthhub.com/OpenHealthhub/fhir-sandbox/4/";
+
         public static void Main(string[] args)
         {
             var settings = new FhirClientSettings
@@ -20,48 +25,64 @@ namespace DotNetOhh
             };
 
 
-            var client = new FhirClient("https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4/",
-                settings, new ApiKeyMessageHandler());
-            
-           CreateCarePlan(client);
-            
-           ReadObservation(client);
-           
-           CreateSubscription(client);
-           
-           ReadAndDecryptQuestionnaireResponse(client);
+            var client = new FhirClient(FhirUrl, settings, new ApiKeyMessageHandler());
 
-           ReadQuestionnaire(client);
+            CreateCarePlan(client);
+
+            ReadObservation(client);
+
+            CreateSubscription(client);
+
+            ReadAndDecryptQuestionnaireResponse(client);
+
+            ReadQuestionnaire(client);
+
+            UploadKey();
+        }
+
+        private static void UploadKey()
+        {
+            HttpClient http = new HttpClient();
+
+            var publicKey = File.ReadAllBytes(Path.Combine(Directory.GetCurrentDirectory(), "sandbox.pub"));
+            var encodedKey = System.Convert.ToBase64String(publicKey);
+            var content = new ByteArrayContent(Encoding.ASCII.GetBytes(encodedKey));
+            content.Headers.ContentType = MediaTypeHeaderValue.Parse("text/plain");
+
+            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
+                AuthenticationUtil.authenticate());
+            http.DefaultRequestHeaders.Add(ApiKeyMessageHandler.ApiKeyHeader, ApiKeyMessageHandler.ApiKey);
+
+            HttpResponseMessage response = http.PostAsync(FhirUrl + "/Binary", content).Result;
+            Console.Out.WriteLine(response.StatusCode);
         }
 
         private static void CreateCarePlan(FhirClient client)
         {
-            
             var patient = GetPatient();
             var carePlan = new CarePlan
             {
                 Period = new Period(FhirDateTime.Now(), null),
-                Contained = new List<Resource>{patient},
+                Contained = new List<Resource> {patient},
                 Subject = new ResourceReference("#patient"),
-                InstantiatesCanonical = new List<string> { "PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6" }
+                InstantiatesCanonical = new List<string> {"PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6"}
             };
 
 
             var findPlan = client.Read<CarePlan>("CarePlan/aax4cxe5-03a9-46c0-88c6-e0287917cea6");
-            
+
             Console.Out.WriteLine(findPlan.InstantiatesCanonical.First());
-            
+
             var plan = client.Create(carePlan);
-            
+
             Console.Out.WriteLine(plan.InstantiatesCanonical.First());
-            
         }
 
         private static void ReadPlanDefinition(FhirClient client)
         {
             var planDefinition = client.Read<PlanDefinition>("PlanDefinition/4944e73f-e447-49ba-a64c-a246b9ef4bdd");
             Console.Out.WriteLine(planDefinition.Description);
-            
+
             var searchDefinition = client.Search<PlanDefinition>(new[]
                 {"publisher=Program Creator", "definition=Questionnaire/866683f3-c41b-47c0-b42f-86f9ff978d1d"});
             searchDefinition.Entry.ForEach(component => Console.WriteLine(component.FullUrl));
@@ -87,7 +108,7 @@ namespace DotNetOhh
                         Value = "1234"
                     }
                 },
-                Name = new List<HumanName> { new HumanName { Text = "Test Patient" } },
+                Name = new List<HumanName> {new HumanName {Text = "Test Patient"}},
                 Telecom = new List<ContactPoint>
                 {
                     new ContactPoint
@@ -125,7 +146,8 @@ namespace DotNetOhh
                 Channel = new Subscription.ChannelComponent()
                 {
                     Type = Subscription.SubscriptionChannelType.RestHook,
-                    Header = new List<string>{"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"} 
+                    Header = new List<string>
+                        {"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"}
                 }
             };
             var subscription = client.Create(resource);

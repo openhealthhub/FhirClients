@@ -16,6 +16,7 @@ import org.pgpainless.util.Passphrase;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public abstract class QueryResponseDecryptClient {

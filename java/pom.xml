@@ -51,6 +51,7 @@
                 <directory>../</directory>
                 <includes>
                     <include>sandbox.key</include>
+                    <include>sandbox.pub</include>
                 </includes>
             </resource>
         </resources>

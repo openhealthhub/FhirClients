@@ -4,10 +4,10 @@ namespace OpenHealthhub\PhpFhirClient;
 
 class FhirClient
 {
-    const FHIR_ENDPOINT = 'https://api-sandbox-staging.openhealthhub.com/OpenHealthhub/fhir-sandbox/4/';
-    const KEYCLOAK_OIDC_TOKEN_URL = 'https://auth-staging.openhealthhub.com/auth/realms/OpenHealthHub/protocol/openid-connect/token';
+    const FHIR_ENDPOINT = 'https://api.openhealthhub.com/OpenHealthhub/fhir-sandbox/4/';
+    const KEYCLOAK_OIDC_TOKEN_URL = 'https://auth.openhealthhub.com/auth/realms/OpenHealthHub/protocol/openid-connect/token';
     const CLIENT_ID = 'api-sandbox';
-    const CLIENT_SECRET = '915e87d4-16ee-4ca5-b701-b38b6afce8ff';
+    const CLIENT_SECRET = '95810e52-4307-41f5-99a4-d873ab63b536';
     const API_KEY = 'ad880601-b7e6-4d86-901d-b6fca96fc725';
 
     public function get($resourceWithParams)
@@ -42,22 +42,8 @@ class FhirClient
 
     public function create($resourceName, $resource)
     {
-        $url = self::FHIR_ENDPOINT . $resourceName;
-        $ch = curl_init($url);
-        $token = $this->get_token();
-        curl_setopt_array($ch, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => json_encode($resource),
-            CURLOPT_HTTPHEADER => array(
-                'X-API-Key: ' . self::API_KEY
-            ),
-            CURLOPT_XOAUTH2_BEARER => $token,
-            CURLOPT_HTTPAUTH => CURLAUTH_BEARER
-        ]);
-        $res = curl_exec($ch);
-        curl_close($ch);
+        $body = json_encode($resource);
+        $res = $this->createRaw($resourceName, $body, 'application/json');
         return json_decode($res, true);
     }
 
@@ -76,5 +62,27 @@ class FhirClient
         curl_close($ch);
         $decoded_json = json_decode($res, true);
         return $decoded_json['access_token'];
+    }
+
+    public function createRaw($resourceName, $body, $contentType)
+    {
+        $url = self::FHIR_ENDPOINT . $resourceName;
+        $ch = curl_init($url);
+        $token = $this->get_token();
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $body,
+            CURLOPT_HTTPHEADER => array(
+                'X-API-Key: ' . self::API_KEY,
+                'Content-Type: ' . $contentType
+            ),
+            CURLOPT_XOAUTH2_BEARER => $token,
+            CURLOPT_HTTPAUTH => CURLAUTH_BEARER
+        ]);
+        $res = curl_exec($ch);
+        curl_close($ch);
+        return $res;
     }
 }

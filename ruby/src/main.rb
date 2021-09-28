@@ -4,6 +4,7 @@ require '../src/questionnaire'
 require '../src/questionnaire-response'
 require '../src/vitalsigns'
 require '../src/subscription'
+require '../src/binary'
 
 client = AppointmentClient.new
 response = client.get_appointment(4)
@@ -42,3 +43,7 @@ puts response.to_json
 client = CarePlanClient.new
 response = client.create_careplan
 puts response.to_json
+
+client = BinaryClient.new
+response = client.upload_key
+puts response.code
