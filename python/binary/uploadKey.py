@@ -6,7 +6,7 @@ import requests
 from config.settings import FHIR_URL, get_token, API_KEY
 
 
-async def get_observation():
+async def create_key():
     encoded_key = await get_base64_encoded_key()
     token = get_token()
     resp = requests.post(url=FHIR_URL + '/Binary',
