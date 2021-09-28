@@ -23,4 +23,4 @@ async def get_base64_encoded_key():
     return base64_bytes.decode('ascii')
 
 
-asyncio.run(get_observation())
+asyncio.run(create_key())
