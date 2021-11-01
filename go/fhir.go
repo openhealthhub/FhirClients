@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/google/fhir/go/proto/google/fhir/proto/r4/core/datatypes_go_proto"
 	"github.com/google/fhir/go/proto/google/fhir/proto/r4/core/resources/questionnaire_response_go_proto"
-	"openhealthhub.com/go/appointment"
 	"openhealthhub.com/go/binary"
 	"openhealthhub.com/go/careplan"
 	"openhealthhub.com/go/openpgp"
@@ -19,8 +18,6 @@ const encryptedProfileUrl = "http://openhealthhub.com/fhir/StructureDefinition/E
 
 func main() {
 	carePlanCalls()
-
-	appointmentCalls()
 
 	uploadKeyCalls()
 
@@ -142,20 +139,6 @@ func plandefinitionCalls() {
 	for _, o := range pds {
 		println(o.Id.Value)
 	}
-}
-
-func appointmentCalls() {
-	apt, err := appointment.Read()
-	if err != nil {
-		panic(err)
-	}
-	println(apt.Id)
-
-	apt, err = appointment.Create()
-	if err != nil {
-		panic(err)
-	}
-	println(apt.Start)
 }
 
 func isEncrypted(qr *questionnaire_response_go_proto.QuestionnaireResponse) bool {

@@ -50,7 +50,7 @@ class QuestionnaireResponseClient {
 
   addAnswersToItem(keys, item, decryptedValues) {
     if (keys.includes(item.linkId)) {
-      this.setDecryptedAnswer(item.answer, decryptedValues[item.linkId]);
+      this.setDecryptedAnswer(item, decryptedValues[item.linkId]);
     }
 
     if (item.item) {
@@ -58,27 +58,39 @@ class QuestionnaireResponseClient {
     }
   }
 
-  setDecryptedAnswer(answers, decryptedValue) {
-    answers.forEach((answer, i) => {
+  setDecryptedAnswer(item, decryptedValue) {
+    item.answer.forEach((answer, i) => {
+      const decryptedObj = decryptedValue[i];
       if (answer._valueString) {
-        answer.valueString = decryptedValue[i];
+        answer.valueString = decryptedObj.value;
       }
 
       if (answer.valueCoding) {
-        answer.valueCoding.code = decryptedValue[i];
+        answer.valueCoding.code = decryptedObj.value;
       }
 
       if (answer._valueDecimal) {
-        answer.valueDecimal = decryptedValue[i];
+        answer.valueDecimal = decryptedObj.value;
       }
 
       if (answer.valueAttachment) {
-        answer.valueAttachment.data = decryptedValue[i];
+        answer.valueAttachment.data = decryptedObj.value;
       }
 
       if (answer._valueDate) {
-        answer.valueDate = decryptedValue[i];
+        answer.valueDate = decryptedObj.value;
       }
+
+      decryptedObj.codes.forEach(code => {
+        item.answer.push({
+          valueCoding: {
+            code: code.code,
+            system: code.system,
+            version: code.version,
+            display: code.display
+          }
+        })
+      })
     })
   }
 

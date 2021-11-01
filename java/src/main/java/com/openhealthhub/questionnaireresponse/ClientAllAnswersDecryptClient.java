@@ -1,6 +1,7 @@
 package com.openhealthhub.questionnaireresponse;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.hl7.fhir.r4.model.Attachment;
 import org.hl7.fhir.r4.model.Coding;
@@ -24,15 +25,17 @@ public class ClientAllAnswersDecryptClient extends QueryResponseDecryptClient {
         json.entrySet().forEach(entry -> addToResponse(items, entry.getKey(), entry.getValue().getAsJsonArray()));
     }
 
-    private void addToResponse(List<QuestionnaireResponse.QuestionnaireResponseItemComponent> items, String key, JsonArray o) {
-        List<QuestionnaireResponse.QuestionnaireResponseItemAnswerComponent> answers = getNestedItems(items)
-                .filter(item -> item.getLinkId().equals(key))
+    private void addToResponse(List<QuestionnaireResponse.QuestionnaireResponseItemComponent> items, String key, JsonArray values) {
+        QuestionnaireResponse.QuestionnaireResponseItemComponent item = getNestedItems(items)
+                .filter(i -> i.getLinkId().equals(key))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("no question response with key " + key + " found")).getAnswer();
+                .orElseThrow(() -> new RuntimeException("no question response with key " + key + " found"));
+        List<QuestionnaireResponse.QuestionnaireResponseItemAnswerComponent> answers = item.getAnswer();
 
-        for (int i = 0; i < o.size(); i++) {
-            setAnswer(answers.get(i), o.get(i).getAsString());
-
+        for (int i = 0; i < values.size(); i++) {
+            JsonObject answerObj = values.get(i).getAsJsonObject();
+            setAnswer(answers.get(i), getAsString(answerObj, "value"));
+            setAnswerCode(item, answerObj.get("codes").getAsJsonArray());
         }
     }
 
@@ -62,6 +65,22 @@ public class ClientAllAnswersDecryptClient extends QueryResponseDecryptClient {
         if (value instanceof Coding) {
             ((Coding) value).setCode(answerValue);
         }
+    }
+
+    private static void setAnswerCode(QuestionnaireResponse.QuestionnaireResponseItemComponent item, JsonArray codes) {
+        codes.forEach(code -> {
+            JsonObject codeObj = code.getAsJsonObject();
+            item.addAnswer().setValue(new Coding()
+                    .setCode(getAsString(codeObj, "code"))
+                    .setSystem(getAsString(codeObj, "system"))
+                    .setVersion(getAsString(codeObj, "version"))
+                    .setDisplay(getAsString(codeObj, "display")));
+        });
+    }
+
+    private static String getAsString(JsonObject codeObj, String prop) {
+        JsonElement elem = codeObj.get(prop);
+        return elem == null ? null : elem.getAsString();
     }
 
 }

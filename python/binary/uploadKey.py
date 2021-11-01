@@ -6,7 +6,7 @@ import requests
 from config.settings import FHIR_URL, get_token, API_KEY
 
 
-async def create_key():
+async def upload_key():
     encoded_key = await get_base64_encoded_key()
     token = get_token()
     resp = requests.post(url=FHIR_URL + '/Binary',
@@ -23,4 +23,4 @@ async def get_base64_encoded_key():
     return base64_bytes.decode('ascii')
 
 
-asyncio.run(create_key())
+asyncio.run(upload_key())

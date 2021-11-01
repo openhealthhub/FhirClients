@@ -56,31 +56,37 @@ class QuestionnaireResponseClient
   end
 
   def handle_item(item, response, decrypted_answers)
-    set_decrypted_answer(item.answer, decrypted_answers[item.linkId]) if decrypted_answers.keys.include?(item.linkId)
+    set_decrypted_answer(item, decrypted_answers[item.linkId]) if decrypted_answers.keys.include?(item.linkId)
 
     item.item.each { |nested_item| handle_item(nested_item, response, decrypted_answers) }
   end
 
-  def set_decrypted_answer(answers, decrypted_value)
-    answers.each_with_index do |answer, i|
+  def set_decrypted_answer(item, decrypted_value)
+    coded_answers = []
+    item.answer.each_with_index do |answer, i|
       # Workaround for https://github.com/fhir-crucible/fhir_models/issues/93
       is_encrypted_string = !answer.valueString.nil? && answer.valueString['extension']['url'] == 'http://openhealthhub.com/fhir/StructureDefinition/encrypted-stringType'
-      answer.valueString = decrypted_value[i] if is_encrypted_string
+      json_value = decrypted_value[i]
+      value = json_value['value']
+      answer.valueString = value if is_encrypted_string
 
       is_encrypted_coding = !answer.valueCoding.nil? && answer.valueCoding.extension[0].url == 'http://openhealthhub.com/fhir/StructureDefinition/encrypted-coding'
-      answer.valueCoding.code = decrypted_value[i] if is_encrypted_coding
+      answer.valueCoding.code = value if is_encrypted_coding
 
       # Workaround for https://github.com/fhir-crucible/fhir_models/issues/93
       is_encrypted_decimal = !answer.valueDecimal.nil? && answer.valueDecimal['extension']['url'] == 'http://openhealthhub.com/fhir/StructureDefinition/encrypted-decimalType'
-      answer.valueDecimal = decrypted_value[i] if is_encrypted_decimal
+      answer.valueDecimal = value if is_encrypted_decimal
 
       is_encrypted_attachment = !answer.valueAttachment.nil? && answer.valueAttachment.extension[0].url == 'http://openhealthhub.com/fhir/StructureDefinition/encrypted-attachment'
-      answer.valueAttachment.data = decrypted_value[i] if is_encrypted_attachment
+      answer.valueAttachment.data = value if is_encrypted_attachment
 
       # Workaround for https://github.com/fhir-crucible/fhir_models/issues/93
       is_encrypted_date = !answer.valueDate.nil? && answer.valueDate['extension']['url'] == 'http://openhealthhub.com/fhir/StructureDefinition/encrypted-dateType'
-      answer.valueDate = decrypted_value[i] if is_encrypted_date
+      answer.valueDate = value if is_encrypted_date
+
+      json_value['codes'].each { |code| coded_answers.push({ valueCoding: { code: code['code'], display: code['dispay'], system: code['system'], version: code['version'] } }) }
     end
+    item.answer.concat(coded_answers)
   end
 
 end
