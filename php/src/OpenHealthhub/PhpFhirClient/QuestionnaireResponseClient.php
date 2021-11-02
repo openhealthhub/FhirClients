@@ -6,6 +6,7 @@ namespace OpenHealthhub\PhpFhirClient;
 
 use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaireResponse\FHIRQuestionnaireResponseAnswer;
 use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRBackboneElement\FHIRQuestionnaireResponse\FHIRQuestionnaireResponseItem;
+use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRCoding;
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRBundle;
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRQuestionnaireResponse;
 use gnupg;
@@ -44,14 +45,13 @@ class QuestionnaireResponseClient
         $gnupg = new gnupg();
         $importKeyResult = $gnupg->import($keyASCII);
         $fingerPrint = $importKeyResult['fingerprint'];
-        $gnupg -> adddecryptkey($fingerPrint, 'api-sandbox');
+        $gnupg->adddecryptkey($fingerPrint, 'api-sandbox');
         return $gnupg;
     }
 
     private function decryptValue($gnupg, $value): string
     {
         $decrypt = $gnupg->decrypt($value);
-        var_dump($decrypt);
         return $decrypt;
     }
 
@@ -69,7 +69,7 @@ class QuestionnaireResponseClient
             $values = $decodedValues[$linkId];
             $answers = $item->getAnswer();
             for ($i = 0; $i < count($values); $i++) {
-                $this->setValue($answers[$i], $values[$i]);
+                $this->setValue($item, $answers[$i], $values[$i]);
             }
         }
         foreach ($item->getItem() as $nestedItem) {
@@ -77,35 +77,43 @@ class QuestionnaireResponseClient
         }
     }
 
-    private function setValue(FHIRQuestionnaireResponseAnswer $answer, string $value)
+    private function setValue(FHIRQuestionnaireResponseItem $item, FHIRQuestionnaireResponseAnswer $answer, $decryptedValue)
     {
+        $value = $decryptedValue['value'];
         $valueString = $answer->getValueString();
         if (isset($valueString)) {
             $answer->setValueString($value);
-            return;
         }
 
         $decimalValue = $answer->getValueDecimal();
         if (isset($decimalValue)) {
             $answer->setValueDecimal($value);
-            return;
         }
 
         $dateValue = $answer->getValueDate();
         if (isset($dateValue)) {
             $answer->setValueDate($value);
-            return;
         }
 
         $codingValue = $answer->getValueCoding();
         if (isset($codingValue)) {
             $answer->getValueCoding()->setCode($value);
-            return;
         }
 
         $attachmentValue = $answer->getValueAttachment();
         if (isset($attachmentValue)) {
             $answer->getValueAttachment()->setData($value);
+        }
+
+        foreach ($decryptedValue['codes'] as $code) {
+            $newCodeAnswer = new FHIRQuestionnaireResponseAnswer();
+            $coding = new FHIRCoding();
+            $coding->setCode($code['code']);
+            $coding->setDisplay($code['display'] ?? null);
+            $coding->setSystem($code['system']);
+            $coding->setVersion($code['version'] ?? null);
+            $newCodeAnswer->setValueCoding($coding);
+            $item->addAnswer($newCodeAnswer);
         }
     }
 

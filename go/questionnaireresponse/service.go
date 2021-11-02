@@ -18,7 +18,7 @@ func Read() (*qrproto.QuestionnaireResponse, error) {
 }
 
 func Search() ([]*qrproto.QuestionnaireResponse, error) {
-	containedResource, err := client.Search(resource, "based-on.instantiates-canonical=PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806")
+	containedResource, err := client.Search(resource, "based-on.instantiates-canonical=CarePlan/97f680b9-e397-4298-8c53-de62a284c806")
 	if err != nil {
 		return nil, err
 	}

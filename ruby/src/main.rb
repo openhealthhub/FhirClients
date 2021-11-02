@@ -1,17 +1,9 @@
-require '../src/appointment'
 require '../src/careplan'
 require '../src/questionnaire'
 require '../src/questionnaire-response'
 require '../src/vitalsigns'
 require '../src/subscription'
 require '../src/binary'
-
-client = AppointmentClient.new
-response = client.get_appointment(4)
-puts response.to_json
-
-response = client.create_appointment
-puts response.to_json
 
 client = QuestionnaireClient.new
 response = client.get_questionnaire(4)

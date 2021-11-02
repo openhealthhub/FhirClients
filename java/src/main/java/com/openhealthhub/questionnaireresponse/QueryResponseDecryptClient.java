@@ -6,7 +6,6 @@ import org.bouncycastle.openpgp.PGPException;
 import org.bouncycastle.openpgp.PGPSecretKeyRing;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.CarePlan;
-import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.QuestionnaireResponse;
 import org.pgpainless.PGPainless;
 import org.pgpainless.decryption_verification.DecryptionStream;
@@ -16,7 +15,6 @@ import org.pgpainless.util.Passphrase;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public abstract class QueryResponseDecryptClient {
@@ -36,8 +34,7 @@ public abstract class QueryResponseDecryptClient {
     }
 
     protected void loadPrivateKey() {
-        try {
-            InputStream resourceAsStream = QueryResponseDecryptClient.class.getResourceAsStream(PRIVATE_KEY_FILE);
+        try (InputStream resourceAsStream = QueryResponseDecryptClient.class.getResourceAsStream(PRIVATE_KEY_FILE)) {
             privateKey = PGPainless.readKeyRing().secretKeyRing(resourceAsStream);
             keyRingProtector = SecretKeyRingProtector.unlockAllKeysWith(
                     Passphrase.fromPassword(PRIVATE_KEY_PASSPHRASE), privateKey);
@@ -56,7 +53,8 @@ public abstract class QueryResponseDecryptClient {
     public Bundle searchQuestionnaireResponse() {
         return client.search()
                 .forResource(QuestionnaireResponse.class)
-                .where(QuestionnaireResponse.BASED_ON.hasChainedProperty(CarePlan.INSTANTIATES_CANONICAL.hasId("PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806")))
+                .where(QuestionnaireResponse.BASED_ON.hasChainedProperty(
+                        CarePlan.INSTANTIATES_CANONICAL.hasId("PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806")))
                 .returnBundle(Bundle.class)
                 .execute();
     }
