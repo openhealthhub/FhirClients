@@ -27,11 +27,6 @@ class CarePlanClient
     patient.telecom = [patient_email]
     careplan.contained = [patient]
 
-    pin_extension = FHIR::Extension.new
-    pin_extension.url = 'http://openhealthhub.com/fhir/StructureDefinition/careplan-pin'
-    pin_extension.valueString = '59gladtc'
-    careplan.extension = [pin_extension]
-
     careplan.instantiatesCanonical = 'PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6'
 
     patient_reference = FHIR::Reference.new

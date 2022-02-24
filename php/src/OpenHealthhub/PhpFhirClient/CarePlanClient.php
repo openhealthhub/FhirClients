@@ -46,10 +46,6 @@ class CarePlanClient
         $careplan->addContained($patient);
         $careplan->setSubject(new FHIRReference(['#patient']));
 
-        $pinExtension = new FHIRExtension();
-        $pinExtension->setUrl('http://openhealthhub.com/fhir/StructureDefinition/careplan-pin')->setValueString('59gladtc');
-        $careplan->addExtension($pinExtension);
-
         $careplan->setInstantiatesCanonical([new FHIRCanonical('PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6')]);
         $period = new FHIRPeriod();
         $period->setStart([new FHIRInstant('2021-03-16T13:32:37.430+01:00')]);
