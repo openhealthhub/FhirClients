@@ -68,7 +68,6 @@ public class CarePlanClient {
         carePlan.addContained(patient);
         carePlan.setSubject(new Reference("#patient"));
         carePlan.setInstantiatesCanonical(List.of(new CanonicalType("PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6")));
-        carePlan.addExtension("http://openhealthhub.com/fhir/StructureDefinition/careplan-pin", new StringType("59gladtc"));
 
         return client.create().resource(carePlan).execute();
 
