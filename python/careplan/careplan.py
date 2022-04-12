@@ -16,6 +16,10 @@ async def get_careplan():
 
     print(create_response)
 
+    update_response = await client.execute('CarePlan', method='put', data=careplan_json)
+
+    print(update_response)
+
 
 asyncio.run(get_careplan())
 

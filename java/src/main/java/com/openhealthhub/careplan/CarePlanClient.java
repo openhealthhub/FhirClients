@@ -11,7 +11,6 @@ import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Reference;
-import org.hl7.fhir.r4.model.StringType;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -31,7 +30,19 @@ public class CarePlanClient {
             return;
         }
 
+        if ("update".equals(action)) {
+            FhirUtil.printResource(client.updateCarePlan());
+            return;
+        }
+
         FhirUtil.printResource(client.getCarePlan(args.length == 2 ? args[1] : "4"));
+    }
+
+    private MethodOutcome updateCarePlan() {
+        var carePlan = createCarePlanResource();
+        carePlan.setId("1");
+
+        return client.update().resource(carePlan).execute();
     }
 
     CarePlanClient() {
@@ -46,6 +57,13 @@ public class CarePlanClient {
     }
 
     MethodOutcome createCarePlan() {
+        CarePlan carePlan = createCarePlanResource();
+
+        return client.create().resource(carePlan).execute();
+
+    }
+
+    private CarePlan createCarePlanResource() {
         CarePlan carePlan = new CarePlan();
         carePlan.setPeriod(new Period().setStart(Date.from(Instant.now())));
 
@@ -68,8 +86,6 @@ public class CarePlanClient {
         carePlan.addContained(patient);
         carePlan.setSubject(new Reference("#patient"));
         carePlan.setInstantiatesCanonical(List.of(new CanonicalType("PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6")));
-
-        return client.create().resource(carePlan).execute();
-
+        return carePlan;
     }
 }

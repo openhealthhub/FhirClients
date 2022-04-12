@@ -31,6 +31,24 @@ class CarePlanClient
     public function createCarePlan(): FHIRCarePlan
     {
         $client = new FhirClient();
+        $careplan = $this->createCarePlanResource();
+
+        $res = $client->create('CarePlan', $careplan);
+        return new FHIRCarePlan($res);
+    }
+
+    public function updateCarePlan(): FHIRCarePlan
+    {
+        $client = new FhirClient();
+        $careplan = $this->createCarePlanResource();
+        $careplan->setId("1");
+
+        $res = $client->update('CarePlan', $careplan);
+        return new FHIRCarePlan($res);
+    }
+
+    private function createCarePlanResource(): FHIRCarePlan
+    {
         $careplan = new FHIRCarePlan();
 
         $patient = new FHIRPatient();
@@ -50,8 +68,6 @@ class CarePlanClient
         $period = new FHIRPeriod();
         $period->setStart([new FHIRInstant('2021-03-16T13:32:37.430+01:00')]);
         $careplan->setPeriod($period);
-
-        $res = $client->create('CarePlan', $careplan);
-        return new FHIRCarePlan($res);
+        return $careplan;
     }
 }

@@ -51,6 +51,14 @@ class Client {
     });
   }
 
+  update(resource) {
+    return this.request({
+      url: `${resource.resourceType}/${resource.id}`,
+      method: 'PUT',
+      body: JSON.stringify(resource),
+    });
+  }
+
 }
 
 export default Client;
