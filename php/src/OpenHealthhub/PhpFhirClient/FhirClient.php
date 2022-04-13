@@ -47,6 +47,13 @@ class FhirClient
         return json_decode($res, true);
     }
 
+    public function update($resourceName, $resource)
+    {
+        $body = json_encode($resource);
+        $res = $this->updateRaw($resourceName, $resource->getId(), $body, 'application/json');
+        return json_decode($res, true);
+    }
+
     public function get_token()
     {
         $ch = curl_init(self::KEYCLOAK_OIDC_TOKEN_URL);
@@ -73,6 +80,28 @@ class FhirClient
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $body,
+            CURLOPT_HTTPHEADER => array(
+                'X-API-Key: ' . self::API_KEY,
+                'Content-Type: ' . $contentType
+            ),
+            CURLOPT_XOAUTH2_BEARER => $token,
+            CURLOPT_HTTPAUTH => CURLAUTH_BEARER
+        ]);
+        $res = curl_exec($ch);
+        curl_close($ch);
+        return $res;
+    }
+
+    public function updateRaw($resourceName, $id, $body, $contentType)
+    {
+        $url = self::FHIR_ENDPOINT . $resourceName . '/' . $id;
+        $ch = curl_init($url);
+        $token = $this->get_token();
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => $body,
             CURLOPT_HTTPHEADER => array(
                 'X-API-Key: ' . self::API_KEY,

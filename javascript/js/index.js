@@ -35,6 +35,7 @@ function initPage() {
   createTab('Binary.create');
   createTab('CarePlan.get');
   createTab('CarePlan.create');
+  createTab('CarePlan.update');
   createTab('PlanDefinition.get');
   createTab('PlanDefinition.search');
   createTab('Questionnaire.get');

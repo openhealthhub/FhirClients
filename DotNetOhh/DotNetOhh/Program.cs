@@ -76,6 +76,11 @@ namespace DotNetOhh
             var plan = client.Create(carePlan);
 
             Console.Out.WriteLine(plan.InstantiatesCanonical.First());
+
+            carePlan.Id = "1";
+            var updatedPlan = client.Update(carePlan);
+            
+            Console.Out.WriteLine(updatedPlan.InstantiatesCanonical.First());
         }
 
         private static void ReadPlanDefinition(FhirClient client)

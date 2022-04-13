@@ -29,6 +29,14 @@ func Create(resource string, body io.Reader) (*r4pb.ContainedResource, error) {
 	return parseResource(post.Body)
 }
 
+func Update(id int, resource string, body io.Reader) (*r4pb.ContainedResource, error) {
+	post, err := request("PUT", fmt.Sprintf("%s/%s/%s", config.Api, resource, id), body)
+	if err != nil {
+		return nil, err
+	}
+	return parseResource(post.Body)
+}
+
 func Search(resource string, queryParams ...string) (*r4pb.ContainedResource, error) {
 	url := fmt.Sprintf("%s/%s?%s", config.Api, resource, strings.Join(queryParams, "&"))
 	get, err := get(url)

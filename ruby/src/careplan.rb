@@ -10,6 +10,23 @@ class CarePlanClient
   def create_careplan
     FhirClient.new
 
+    careplan = create_careplan_resource
+
+    FHIR::CarePlan.create(careplan)
+  end
+
+  def update_careplan
+    FhirClient.new
+
+    careplan = create_careplan_resource
+    careplan.id = 1
+
+    FHIR::CarePlan.partial_update(careplan.id, careplan)
+  end
+
+  private
+
+  def create_careplan_resource
     careplan = FHIR::CarePlan.new
     careplan.period = FHIR::Period.new
     careplan.period.start = Date.new(2021, 7, 9)
@@ -32,7 +49,6 @@ class CarePlanClient
     patient_reference = FHIR::Reference.new
     patient_reference.reference = '#patient'
     careplan.subject = patient_reference
-
-    FHIR::CarePlan.create(careplan)
+    careplan
   end
 end
