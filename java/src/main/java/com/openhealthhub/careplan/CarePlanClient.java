@@ -25,17 +25,23 @@ public class CarePlanClient {
         String action = args.length == 0 ? "get" : args[0];
         CarePlanClient client = new CarePlanClient();
 
-        if ("create".equals(action)) {
-            FhirUtil.printResource(client.createCarePlan());
-            return;
+        switch (action) {
+            case "create":
+                FhirUtil.printResource(client.createCarePlan());
+                return;
+            case "update":
+                FhirUtil.printResource(client.updateCarePlan());
+                return;
+            case "delete":
+                client.deleteCarePlan();
+                return;
+            default:
+                FhirUtil.printResource(client.getCarePlan(args.length == 2 ? args[1] : "4"));
         }
+    }
 
-        if ("update".equals(action)) {
-            FhirUtil.printResource(client.updateCarePlan());
-            return;
-        }
-
-        FhirUtil.printResource(client.getCarePlan(args.length == 2 ? args[1] : "4"));
+    private void deleteCarePlan() {
+        client.delete().resourceById("CarePlan", "1").execute();
     }
 
     private MethodOutcome updateCarePlan() {

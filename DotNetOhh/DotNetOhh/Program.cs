@@ -81,6 +81,8 @@ namespace DotNetOhh
             var updatedPlan = client.Update(carePlan);
             
             Console.Out.WriteLine(updatedPlan.InstantiatesCanonical.First());
+            
+            client.Delete("CarePlan/1");
         }
 
         private static void ReadPlanDefinition(FhirClient client)

@@ -47,6 +47,12 @@ class CarePlanClient
         return new FHIRCarePlan($res);
     }
 
+    public function deleteCarePlan($id)
+    {
+        $client = new FhirClient();
+        $res = $client->delete(sprintf('CarePlan/%s', $id));
+    }
+
     private function createCarePlanResource(): FHIRCarePlan
     {
         $careplan = new FHIRCarePlan();

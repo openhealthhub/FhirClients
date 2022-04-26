@@ -36,6 +36,7 @@ function initPage() {
   createTab('CarePlan.get');
   createTab('CarePlan.create');
   createTab('CarePlan.update');
+  createTab('CarePlan.delete');
   createTab('PlanDefinition.get');
   createTab('PlanDefinition.search');
   createTab('Questionnaire.get');

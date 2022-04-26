@@ -22,6 +22,27 @@ class FhirClient
         return $this->request($url);
     }
 
+    public function delete($resourceWithParams)
+    {
+        $url = self::FHIR_ENDPOINT . $resourceWithParams;
+        $ch = curl_init($url);
+        $token = $this->get_token();
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_CUSTOMREQUEST => 'DELETE',
+            CURLOPT_HTTPHEADER => array(
+                'X-API-Key: ' . self::API_KEY,
+            ),
+            CURLOPT_XOAUTH2_BEARER => $token,
+            CURLOPT_HTTPAUTH => CURLAUTH_BEARER
+        ]);
+        $res = curl_exec($ch);
+        curl_close($ch);
+        return $res;
+    }
+
+
     public function request(string $url)
     {
         $ch = curl_init($url);

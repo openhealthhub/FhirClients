@@ -21,6 +21,11 @@ func Read(resourceIdentifier string) (*r4pb.ContainedResource, error) {
 	return parseResource(response.Body)
 }
 
+func Delete(resourceIdentifier string) error {
+	_, err := delete(config.Api + resourceIdentifier)
+	return err
+}
+
 func Create(resource string, body io.Reader) (*r4pb.ContainedResource, error) {
 	post, err := request("POST", fmt.Sprintf("%s/%s", config.Api, resource), body)
 	if err != nil {
@@ -76,6 +81,10 @@ func unmarshall(body io.Reader) (proto.Message, error) {
 
 func get(url string) (*http.Response, error) {
 	return request("GET", url, nil)
+}
+
+func delete(url string) (*http.Response, error) {
+	return request("DELETE", url, nil)
 }
 
 func request(method, url string, body io.Reader) (*http.Response, error) {

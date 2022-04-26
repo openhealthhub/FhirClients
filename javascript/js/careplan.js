@@ -64,6 +64,11 @@ class CarePlanClient {
     const client = new Client();
     return client.update({...CARE_PLAN_RESOURCE, id: 1});
   }
+
+  async delete() {
+    const client = new Client();
+    client.delete('CarePlan', 1);
+  }
 }
 
 export default CarePlanClient;

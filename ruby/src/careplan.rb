@@ -24,6 +24,12 @@ class CarePlanClient
     FHIR::CarePlan.partial_update(careplan.id, careplan)
   end
 
+  def delete_careplan(id)
+    FhirClient.new
+
+    FHIR::CarePlan.destroy(id)
+  end
+
   private
 
   def create_careplan_resource
