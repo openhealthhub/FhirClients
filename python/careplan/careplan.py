@@ -20,6 +20,10 @@ async def get_careplan():
 
     print(update_response)
 
+    delete_response = await client.resource('CarePlan').execute('1', 'DELETE')
+
+    print(delete_response)
+
 
 asyncio.run(get_careplan())
 

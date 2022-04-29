@@ -59,6 +59,12 @@ class Client {
     });
   }
 
+  delete(resourceType, id) {
+    return this.request({
+      url: `${resourceType}/${id}`,
+      method: 'DELETE'
+    });
+  }
 }
 
 export default Client;

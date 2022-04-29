@@ -36,6 +36,13 @@ class ClientTest extends TestCase
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRCarePlan', $resp);
     }
 
+    public function testDeleteCarePlan()
+    {
+        $client = new CarePlanClient();
+        $client->deleteCarePlan(4);
+        $this->assertTrue(true);
+    }
+
     public function testGetVitalSigns()
     {
         $client = new VitalSignsClient();

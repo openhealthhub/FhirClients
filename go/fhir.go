@@ -55,6 +55,18 @@ func carePlanCalls() {
 	}
 
 	println(create.Id.Value)
+
+	updated, err := careplan.Update()
+	if err != nil {
+		panic(err)
+	}
+
+	println(updated.Id.Value)
+
+	err = careplan.Delete()
+	if err != nil {
+		panic(err)
+	}
 }
 
 func subscriptionCalls() {

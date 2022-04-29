@@ -43,3 +43,8 @@ func Update() (*care_plan_go_proto.CarePlan, error) {
 	}
 	return updated.GetCarePlan(), nil
 }
+
+func Delete() error {
+	err := client.Delete(fmt.Sprintf("/%s/1"))
+	return err
+}

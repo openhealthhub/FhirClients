@@ -14,3 +14,6 @@ curl -X POST "$baseUrl/CarePlan" -H "Content-Type: application/json" -H "$apiKey
 
 printf 'Updating CarePlan\n'
 curl -X PUT "$baseUrl/CarePlan/1" -H "Content-Type: application/json" -H "$apiKeyHeader" -H "$authHeader" --data-binary "@careplan.json"
+
+printf 'Deleting CarePlan\n'
+curl -X DELETE "$baseUrl/CarePlan/1" -H "$apiKeyHeader" -H "$authHeader"
