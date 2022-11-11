@@ -33,11 +33,11 @@ class QuestionnaireResponseClient
   end
 
   def is_encrypted_response(response)
-    response.meta.profile.any? { |profile| profile == 'http://openhealthhub.com/fhir/StructureDefinition/EncryptedQuestionnaireResponse' }
+    response.meta.profile.any? { |profile| profile == 'https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/EncryptedQuestionnaireResponse' }
   end
 
   def decrypt(response)
-    extensions = response.extension.select { |extension| extension.url == 'http://openhealthhub.com/fhir/StructureDefinition/encryptedAnswers' }
+    extensions = response.extension.select { |extension| extension.url == 'https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encryptedAnswers' }
     crypto = GPGME::Crypto.new
     encrypted_answers = fix_encrypted_message_for_xml_response(extensions)
     decrypted_string = crypto.decrypt(encrypted_answers, password: 'api-sandbox').to_s
@@ -65,23 +65,23 @@ class QuestionnaireResponseClient
     coded_answers = []
     item.answer.each_with_index do |answer, i|
       # Workaround for https://github.com/fhir-crucible/fhir_models/issues/93
-      is_encrypted_string = !answer.valueString.nil? && answer.valueString['extension']['url'] == 'http://openhealthhub.com/fhir/StructureDefinition/encrypted-stringType'
+      is_encrypted_string = !answer.valueString.nil? && answer.valueString['extension']['url'] == 'https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encrypted-stringType'
       json_value = decrypted_value[i]
       value = json_value['value']
       answer.valueString = value if is_encrypted_string
 
-      is_encrypted_coding = !answer.valueCoding.nil? && answer.valueCoding.extension[0].url == 'http://openhealthhub.com/fhir/StructureDefinition/encrypted-coding'
+      is_encrypted_coding = !answer.valueCoding.nil? && answer.valueCoding.extension[0].url == 'https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encrypted-coding'
       answer.valueCoding.code = value if is_encrypted_coding
 
       # Workaround for https://github.com/fhir-crucible/fhir_models/issues/93
-      is_encrypted_decimal = !answer.valueDecimal.nil? && answer.valueDecimal['extension']['url'] == 'http://openhealthhub.com/fhir/StructureDefinition/encrypted-decimalType'
+      is_encrypted_decimal = !answer.valueDecimal.nil? && answer.valueDecimal['extension']['url'] == 'https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encrypted-decimalType'
       answer.valueDecimal = value if is_encrypted_decimal
 
-      is_encrypted_attachment = !answer.valueAttachment.nil? && answer.valueAttachment.extension[0].url == 'http://openhealthhub.com/fhir/StructureDefinition/encrypted-attachment'
+      is_encrypted_attachment = !answer.valueAttachment.nil? && answer.valueAttachment.extension[0].url == 'https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encrypted-attachment'
       answer.valueAttachment.data = value if is_encrypted_attachment
 
       # Workaround for https://github.com/fhir-crucible/fhir_models/issues/93
-      is_encrypted_date = !answer.valueDate.nil? && answer.valueDate['extension']['url'] == 'http://openhealthhub.com/fhir/StructureDefinition/encrypted-dateType'
+      is_encrypted_date = !answer.valueDate.nil? && answer.valueDate['extension']['url'] == 'https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encrypted-dateType'
       answer.valueDate = value if is_encrypted_date
 
       json_value['codes'].each { |code| coded_answers.push({ valueCoding: { code: code['code'], display: code['dispay'], system: code['system'], version: code['version'] } }) }

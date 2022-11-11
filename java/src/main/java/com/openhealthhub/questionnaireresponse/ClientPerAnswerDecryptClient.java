@@ -23,27 +23,27 @@ public class ClientPerAnswerDecryptClient extends QueryResponseDecryptClient {
     private void decryptAnswer(QuestionnaireResponse.QuestionnaireResponseItemAnswerComponent answer) {
         Type value = answer.getValue();
         if (value instanceof DecimalType) {
-            String decrpytedValue = decryptValue(value, "http://openhealthhub.com/fhir/StructureDefinition/encrypted-decimalType");
+            String decrpytedValue = decryptValue(value, "https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encrypted-decimalType");
             ((DecimalType) value).fromStringValue(decrpytedValue);
         }
 
         if (value instanceof StringType) {
-            String decrpytedValue = decryptValue(value, "http://openhealthhub.com/fhir/StructureDefinition/encrypted-stringType");
+            String decrpytedValue = decryptValue(value, "https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encrypted-stringType");
             ((StringType) value).setValue(decrpytedValue);
         }
 
         if (value instanceof DateType) {
-            String decrpytedValue = decryptValue(value, "http://openhealthhub.com/fhir/StructureDefinition/encrypted-dateType");
+            String decrpytedValue = decryptValue(value, "https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encrypted-dateType");
             ((DateType) value).fromStringValue(decrpytedValue);
         }
 
         if (value instanceof Attachment) {
-            String decrpytedValue = decryptValue(value, "http://openhealthhub.com/fhir/StructureDefinition/encrypted-attachment");
+            String decrpytedValue = decryptValue(value, "https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encrypted-attachment");
             ((Attachment) value).getDataElement().setValueAsString(decrpytedValue);
         }
 
         if (value instanceof Coding) {
-            String decrpytedValue = decryptValue(value, "http://openhealthhub.com/fhir/StructureDefinition/encrypted-coding");
+            String decrpytedValue = decryptValue(value, "https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encrypted-coding");
             ((Coding) value).setCode(decrpytedValue);
         }
     }

@@ -120,7 +120,7 @@ class QuestionnaireResponseClient
     private function isEncryptedResponse(FHIRQuestionnaireResponse $resp)
     {
         foreach ($resp->getMeta()->getProfile() as $profile) {
-            if ($profile->getValue() == 'http://openhealthhub.com/fhir/StructureDefinition/EncryptedQuestionnaireResponse') {
+            if ($profile->getValue() == 'https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/EncryptedQuestionnaireResponse') {
                 return true;
             }
         }
@@ -131,7 +131,7 @@ class QuestionnaireResponseClient
     private function getEncryptedValue(FHIRQuestionnaireResponse $resp)
     {
         foreach ($resp->getExtension() as $extension) {
-            if ($extension->getUrl() == 'http://openhealthhub.com/fhir/StructureDefinition/encryptedAnswers') {
+            if ($extension->getUrl() == 'https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encryptedAnswers') {
                 return $extension->getValueString();
             }
         }

@@ -16,7 +16,7 @@ public class ClientAllAnswersDecryptClient extends QueryResponseDecryptClient {
 
     @Override
     public void decryptResponse(QuestionnaireResponse questionnaireResponse) {
-        String value = questionnaireResponse.getExtensionByUrl("http://openhealthhub.com/fhir/StructureDefinition/encryptedAnswers")
+        String value = questionnaireResponse.getExtensionByUrl("https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encryptedAnswers")
                 .getValue()
                 .primitiveValue();
         String decryptedValue = decryptValue(value);

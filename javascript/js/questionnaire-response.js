@@ -38,7 +38,7 @@ class QuestionnaireResponseClient {
   }
 
   isEncryptedResponse(resp) {
-    return resp.meta.profile.some(profile => profile === 'http://openhealthhub.com/fhir/StructureDefinition/EncryptedQuestionnaireResponse');
+    return resp.meta.profile.some(profile => profile === 'https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/EncryptedQuestionnaireResponse');
   }
 
   addToResponse(resp, decryptedValues) {

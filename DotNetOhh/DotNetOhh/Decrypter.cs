@@ -11,7 +11,7 @@ namespace DotNetOhh
     public class Decrypter
     {
         private static readonly string EncryptedAnswersUrl =
-            "http://openhealthhub.com/fhir/StructureDefinition/encryptedAnswers";
+            "https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encryptedAnswers";
 
         private static readonly string PgpPassphrase = "api-sandbox";
 
