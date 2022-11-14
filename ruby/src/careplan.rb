@@ -7,6 +7,16 @@ class CarePlanClient
     FHIR::CarePlan.read(id)
   end
 
+  def search_careplan
+    FhirClient.new
+
+    params = {
+      'instantiates-canonical': 'PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806',
+      'patient.identifier': '1234'
+    }
+    FHIR::CarePlan.search(params)
+  end
+
   def create_careplan
     FhirClient.new
 

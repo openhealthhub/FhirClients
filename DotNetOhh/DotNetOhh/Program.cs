@@ -57,7 +57,7 @@ namespace DotNetOhh
             Console.Out.WriteLine(response.StatusCode);
         }
 
-        private static void CreateCarePlan(FhirClient client)
+        private static void CarePlan(FhirClient client)
         {
             var patient = GetPatient();
             var carePlan = new CarePlan
@@ -68,10 +68,14 @@ namespace DotNetOhh
                 InstantiatesCanonical = new List<string> {"PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6"}
             };
 
-
             var findPlan = client.Read<CarePlan>("CarePlan/aax4cxe5-03a9-46c0-88c6-e0287917cea6");
 
             Console.Out.WriteLine(findPlan.InstantiatesCanonical.First());
+
+            var searchPlan = client.Search<CarePlan>(new[]
+            {"instantiates-canonical=PlanDefinition/4944e73f-e447-49ba-a64c-a246b9ef4bdd", "patient.identifier=1234"});
+            
+            searchPlan.Entry.ForEach(cp => Console.WriteLine(cp.FullUrl));
 
             var plan = client.Create(carePlan);
 
@@ -79,9 +83,9 @@ namespace DotNetOhh
 
             carePlan.Id = "1";
             var updatedPlan = client.Update(carePlan);
-            
+
             Console.Out.WriteLine(updatedPlan.InstantiatesCanonical.First());
-            
+
             client.Delete("CarePlan/1");
         }
 

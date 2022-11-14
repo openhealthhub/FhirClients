@@ -49,6 +49,13 @@ func carePlanCalls() {
 
 	println(find.InstantiatesCanonical[0])
 
+	search, err := careplan.Search()
+	if err != nil {
+		panic(err)
+	}
+
+	println(search[0].InstantiatesCanonical[0])
+
 	create, err := careplan.Create()
 	if err != nil {
 		panic(err)

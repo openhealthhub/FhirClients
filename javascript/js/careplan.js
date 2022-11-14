@@ -55,6 +55,11 @@ class CarePlanClient {
     return client.request('CarePlan/1');
   }
 
+  async search() {
+    const client = new Client();
+    return client.request('CarePlan/?instantiates-canonical=PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806&patient.identifier=1234');
+  }
+
   async create() {
     const client = new Client();
     return client.create(CARE_PLAN_RESOURCE);
