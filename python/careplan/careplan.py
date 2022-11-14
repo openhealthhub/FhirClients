@@ -9,6 +9,10 @@ async def get_careplan():
 
     print(care_plan.instantiatesCanonical)
 
+    search_response = await client.resources('CarePlan').search(instantiates_canonical='PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806').fetch()
+
+    print(search_response)
+
     with open('careplan.json', 'r') as file:
         careplan_json = json.load(file)
 

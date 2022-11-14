@@ -3,6 +3,7 @@ package com.openhealthhub.careplan;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import com.openhealthhub.util.FhirUtil;
+import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.CanonicalType;
 import org.hl7.fhir.r4.model.CarePlan;
 import org.hl7.fhir.r4.model.ContactPoint;
@@ -29,6 +30,9 @@ public class CarePlanClient {
             case "create":
                 FhirUtil.printResource(client.createCarePlan());
                 return;
+            case "search":
+                FhirUtil.printResource(client.searchCarePlan());
+                return;
             case "update":
                 FhirUtil.printResource(client.updateCarePlan());
                 return;
@@ -38,6 +42,15 @@ public class CarePlanClient {
             default:
                 FhirUtil.printResource(client.getCarePlan(args.length == 2 ? args[1] : "4"));
         }
+    }
+
+    public Bundle searchCarePlan() {
+        return client.search()
+                .forResource(CarePlan.class)
+                .where(CarePlan.INSTANTIATES_CANONICAL.hasId("PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806"))
+                .and(CarePlan.PATIENT.hasChainedProperty(Patient.IDENTIFIER.exactly().identifier("1234")))
+                .returnBundle(Bundle.class)
+                .execute();
     }
 
     private void deleteCarePlan() {

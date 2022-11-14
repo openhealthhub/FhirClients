@@ -15,6 +15,7 @@ use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRInstant;
 use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRParticipationStatus;
 use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRPeriod;
 use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRReference;
+use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRBundle;
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRAppointment;
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRCarePlan;
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRPatient;
@@ -26,6 +27,13 @@ class CarePlanClient
         $client = new FhirClient();
         $res = $client->get(sprintf('CarePlan/%s', $id));
         return new FHIRCarePlan($res);
+    }
+
+    public function searchCarePlans($planDefReference): FHIRBundle
+    {
+        $client = new FhirClient();
+        $res = $client->search(sprintf('CarePlan?instantiates-canonical=PlanDefinition/%s', $planDefReference));
+        return new FHIRBundle($res);
     }
 
     public function createCarePlan(): FHIRCarePlan

@@ -20,10 +20,10 @@ class QuestionnaireResponseClient
         return $this->decrypt(new FHIRQuestionnaireResponse($res));
     }
 
-    public function searchQuestionnaireResponses($programUuid): FHIRBundle
+    public function searchQuestionnaireResponses($planDefReference): FHIRBundle
     {
         $client = new FhirClient();
-        $res = $client->search(sprintf('QuestionnaireResponse?based-on.instantiates-canonical=%s', $programUuid));
+        $res = $client->search(sprintf('QuestionnaireResponse?based-on.instantiates-canonical=%s', $planDefReference));
         return new FHIRBundle($res);
     }
 

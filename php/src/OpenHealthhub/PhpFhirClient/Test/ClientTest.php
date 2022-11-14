@@ -2,7 +2,6 @@
 
 namespace OpenHealthhub\PhpFhirClient\Test;
 
-use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRPlanDefinition;
 use OpenHealthhub\PhpFhirClient\BinaryClient;
 use OpenHealthhub\PhpFhirClient\CarePlanClient;
 use OpenHealthhub\PhpFhirClient\PlanDefinitionClient;
@@ -20,6 +19,15 @@ class ClientTest extends TestCase
         $resp = $client->getCarePlan('4');
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRCarePlan', $resp);
         $this->assertEquals('4', $resp->getId()->getValue()->getValue());
+    }
+
+    public function testSearchCarePlan()
+    {
+        $client = new CarePlanClient();
+        $resp = $client->searchCarePlans('PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806');
+        $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRBundle', $resp);
+        $this->assertEquals(1, count($resp->getEntry()));
+        $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRCarePlan', $resp->getEntry()[0]->getResource());
     }
 
     public function testCreateCarePlan()
