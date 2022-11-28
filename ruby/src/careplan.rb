@@ -17,6 +17,16 @@ class CarePlanClient
     FHIR::CarePlan.search(params)
   end
 
+  def get_careplan_with_practitioners(id)
+    FhirClient.new
+
+    params = {
+      '_id': id,
+      '_include': %w[CareTeam:participant CarePlan:care-team]
+    }
+    FHIR::CarePlan.search(params)
+  end
+
   def create_careplan
     FhirClient.new
 

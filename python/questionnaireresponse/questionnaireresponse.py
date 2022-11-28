@@ -8,7 +8,8 @@ async def questionnaire_response():
 
     print(response.resourceType, response.id)
 
-    qrs = await client.resources('QuestionnaireResponse').search(based_on.instantiates_canonical='PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806').fetch()
+    qrs = await client.resources('QuestionnaireResponse').search(
+        **{'based_on.instantiates_canonical': 'PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806'}).fetch()
 
     for q in qrs:
         print(q.reference)

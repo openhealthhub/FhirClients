@@ -5,8 +5,10 @@ import (
 	"github.com/google/fhir/go/proto/google/fhir/proto/r4/core/resources/questionnaire_response_go_proto"
 	"openhealthhub.com/go/binary"
 	"openhealthhub.com/go/careplan"
+	"openhealthhub.com/go/careteam"
 	"openhealthhub.com/go/openpgp"
 	"openhealthhub.com/go/plandefinition"
+	"openhealthhub.com/go/practitioner"
 	"openhealthhub.com/go/questionnaire"
 	"openhealthhub.com/go/questionnaireresponse"
 	"openhealthhub.com/go/subscription"
@@ -18,6 +20,10 @@ const encryptedProfileUrl = "http://openhealthhub.com/fhir/StructureDefinition/E
 
 func main() {
 	carePlanCalls()
+
+	careTeamCalls()
+
+	practitionerCalls()
 
 	uploadKeyCalls()
 
@@ -56,6 +62,13 @@ func carePlanCalls() {
 
 	println(search[0].InstantiatesCanonical[0])
 
+	withPractitioners, err := careplan.ReadWithPractitioners()
+	if err != nil {
+		panic(err)
+	}
+
+	println(withPractitioners)
+
 	create, err := careplan.Create()
 	if err != nil {
 		panic(err)
@@ -74,6 +87,38 @@ func carePlanCalls() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func careTeamCalls() {
+	find, err := careteam.Read()
+	if err != nil {
+		panic(err)
+	}
+
+	println(find)
+
+	withPractitioners, err := careteam.ReadWithPractitioners()
+	if err != nil {
+		panic(err)
+	}
+
+	println(withPractitioners)
+}
+
+func practitionerCalls() {
+	find, err := practitioner.Read()
+	if err != nil {
+		panic(err)
+	}
+
+	println(find)
+
+	practitioners, err := practitioner.SearchByCareTeam()
+	if err != nil {
+		panic(err)
+	}
+
+	println(practitioners)
 }
 
 func subscriptionCalls() {

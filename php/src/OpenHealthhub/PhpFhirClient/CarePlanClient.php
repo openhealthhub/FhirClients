@@ -36,6 +36,13 @@ class CarePlanClient
         return new FHIRBundle($res);
     }
 
+    public function searchCarePlanWithPractitioners($id): FHIRBundle
+    {
+        $client = new FhirClient();
+        $res = $client->search(sprintf('CarePlan?_id=%s&_include=CarePlan:care-team&_include=CareTeam:participant', $id));
+        return new FHIRBundle($res);
+    }
+
     public function createCarePlan(): FHIRCarePlan
     {
         $client = new FhirClient();

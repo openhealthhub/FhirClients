@@ -27,7 +27,11 @@ namespace DotNetOhh
 
             var client = new FhirClient(FhirUrl, settings, new ApiKeyMessageHandler());
 
-            CreateCarePlan(client);
+            CarePlan(client);
+
+            CareTeam(client);
+
+            Practitioners(client);
 
             ReadObservation(client);
 
@@ -68,14 +72,21 @@ namespace DotNetOhh
                 InstantiatesCanonical = new List<string> {"PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6"}
             };
 
-            var findPlan = client.Read<CarePlan>("CarePlan/aax4cxe5-03a9-46c0-88c6-e0287917cea6");
+            var findPlan = client.Read<CarePlan>("CarePlan/1");
 
             Console.Out.WriteLine(findPlan.InstantiatesCanonical.First());
 
             var searchPlan = client.Search<CarePlan>(new[]
-            {"instantiates-canonical=PlanDefinition/4944e73f-e447-49ba-a64c-a246b9ef4bdd", "patient.identifier=1234"});
-            
+            {
+                "instantiates-canonical=PlanDefinition/4944e73f-e447-49ba-a64c-a246b9ef4bdd", "patient.identifier=1234"
+            });
+
             searchPlan.Entry.ForEach(cp => Console.WriteLine(cp.FullUrl));
+
+            var planWithPractitioners = client.Search<CarePlan>(new[]
+                {"_id=1", "_include=CarePlan:care-team", "_include=CareTeam:participant"});
+
+            planWithPractitioners.Entry.ForEach(cp => Console.WriteLine(cp.FullUrl));
 
             var plan = client.Create(carePlan);
 
@@ -87,6 +98,28 @@ namespace DotNetOhh
             Console.Out.WriteLine(updatedPlan.InstantiatesCanonical.First());
 
             client.Delete("CarePlan/1");
+        }
+
+        private static void CareTeam(FhirClient client)
+        {
+            var findTeam = client.Read<CarePlan>("CareTeam/1");
+
+            Console.Out.WriteLine(findTeam.InstantiatesCanonical.First());
+
+            var searchTeam = client.Search<CareTeam>(new[] {"_id=1", "_include=CareTeam:participant"});
+
+            searchTeam.Entry.ForEach(cp => Console.WriteLine(cp.FullUrl));
+        }
+
+        private static void Practitioners(FhirClient client)
+        {
+            var practitioner = client.Read<Practitioner>("Practitioner/1");
+
+            Console.Out.WriteLine(practitioner);
+
+            var searchPractitioner = client.Search<Practitioner>(new[] {"_has:CareTeam:_id=1"});
+
+            searchPractitioner.Entry.ForEach(cp => Console.WriteLine(cp.FullUrl));
         }
 
         private static void ReadPlanDefinition(FhirClient client)
