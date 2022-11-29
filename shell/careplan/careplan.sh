@@ -13,6 +13,11 @@ curl "$baseUrl/CarePlan/?instantiates-canonical=PlanDefinition/97f680b9-e397-429
 
 printf "\n\n"
 
+printf "Getting CarePlan with Practitioners\n"
+curl "$baseUrl/CarePlan/?_id=3&_include=CarePlan:care-team&_include=CareTeam:participant" -H "$apiKeyHeader" -H "$authHeader"
+
+printf "\n\n"
+
 printf 'Creating CarePlan\n'
 curl -X POST "$baseUrl/CarePlan" -H "Content-Type: application/json" -H "$apiKeyHeader" -H "$authHeader" --data-binary "@careplan.json"
 

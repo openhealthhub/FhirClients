@@ -1,4 +1,6 @@
 require '../src/careplan'
+require '../src/careteam'
+require '../src/practitioner'
 require '../src/questionnaire'
 require '../src/questionnaire-response'
 require '../src/vitalsigns'
@@ -34,6 +36,18 @@ puts response.to_json
 
 client = CarePlanClient.new
 response = client.create_careplan
+puts response.to_json
+
+client = CarePlanClient.new
+response = client.get_careplan_with_practitioners(4)
+puts response.to_json
+
+client = CareTeamClient.new
+response = client.get_careteam_with_practitioners(4)
+puts response.to_json
+
+client = PractitionerClient.new
+response = client.search_practitioners_by_careteam_id(4)
 puts response.to_json
 
 client = BinaryClient.new

@@ -1,11 +1,14 @@
 package com.openhealthhub.careplan;
 
+import ca.uhn.fhir.model.api.Include;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import com.openhealthhub.util.FhirUtil;
+import org.hl7.fhir.instance.model.api.IAnyResource;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.CanonicalType;
 import org.hl7.fhir.r4.model.CarePlan;
+import org.hl7.fhir.r4.model.CareTeam;
 import org.hl7.fhir.r4.model.ContactPoint;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
@@ -33,6 +36,9 @@ public class CarePlanClient {
             case "search":
                 FhirUtil.printResource(client.searchCarePlan());
                 return;
+            case "getInclude":
+                FhirUtil.printResource(client.getCarePlanWithPractitioners());
+                return;
             case "update":
                 FhirUtil.printResource(client.updateCarePlan());
                 return;
@@ -49,6 +55,16 @@ public class CarePlanClient {
                 .forResource(CarePlan.class)
                 .where(CarePlan.INSTANTIATES_CANONICAL.hasId("PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806"))
                 .and(CarePlan.PATIENT.hasChainedProperty(Patient.IDENTIFIER.exactly().identifier("1234")))
+                .returnBundle(Bundle.class)
+                .execute();
+    }
+
+    public Bundle getCarePlanWithPractitioners() {
+        return client.search()
+                .forResource(CarePlan.class)
+                .where(IAnyResource.RES_ID.exactly().identifier("4"))
+                .include(new Include("CarePlan:" + CarePlan.SP_CARE_TEAM))
+                .include(new Include("CareTeam:" + CareTeam.SP_PARTICIPANT))
                 .returnBundle(Bundle.class)
                 .execute();
     }

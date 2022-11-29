@@ -30,7 +30,7 @@ public class FhirUtil {
             JsonCreatorDirect jsonCreator = new JsonCreatorDirect(writer);
             jsonCreator.setIndent("\t");
             new JsonParser().compose(jsonCreator, resource);
-            System.out.println(writer.toString());
+            System.out.println(writer);
         } catch (Exception e) {
             System.out.println("failed to print resource " + resource);
         }
@@ -50,7 +50,7 @@ public class FhirUtil {
             if (operationOutcome != null) {
                 new JsonParser().compose(jsonCreator, operationOutcome);
             }
-            System.out.println(writer.toString());
+            System.out.println(writer);
         } catch (Exception e) {
             System.out.println("failed to print outcome " + outcome);
             e.printStackTrace();
