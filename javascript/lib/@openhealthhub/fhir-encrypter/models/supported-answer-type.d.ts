@@ -6,5 +6,7 @@ export declare enum SupportedAnswerType {
     ATTACHMENT = "ATTACHMENT",
     CODING = "CODING"
 }
-export declare const getValueForType: (answer: QuestionnaireResponseItemAnswer, typeString: keyof typeof SupportedAnswerType) => string | number | Coding | undefined;
+declare type SupportedAnswerValue = string | number | Coding | undefined;
+export declare const getValueForType: (answer: QuestionnaireResponseItemAnswer, typeString: keyof typeof SupportedAnswerType) => SupportedAnswerValue;
 export declare const getAnswerType: (answer: QuestionnaireResponseItemAnswer) => keyof typeof SupportedAnswerType;
+export {};
