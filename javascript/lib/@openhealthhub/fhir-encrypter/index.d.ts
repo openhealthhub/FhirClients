@@ -1,0 +1,1 @@
+export { encryptQuestionnaireResponse } from './encrypter';
