@@ -1,0 +1,82 @@
+{
+  "_from": "@openhealthhub/fhir-encrypter@0.1.1--canary.16.3592704186.0",
+  "_id": "@openhealthhub/fhir-encrypter@0.1.1--canary.16.3592704186.0",
+  "_inBundle": false,
+  "_integrity": "sha512-LDaKXfyHGGZB3WG3/RLwaHpP9n3Kpl681DGCu4WlI9TfjAB4AuSiN59iHmLoNpOU8PC3FguYamwlmfCqlnXoAg==",
+  "_location": "/@openhealthhub/fhir-encrypter",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "@openhealthhub/fhir-encrypter@0.1.1--canary.16.3592704186.0",
+    "name": "@openhealthhub/fhir-encrypter",
+    "escapedName": "@openhealthhub%2ffhir-encrypter",
+    "scope": "@openhealthhub",
+    "rawSpec": "0.1.1--canary.16.3592704186.0",
+    "saveSpec": null,
+    "fetchSpec": "0.1.1--canary.16.3592704186.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://npm.pkg.github.com/download/@openhealthhub/fhir-encrypter/0.1.1--canary.16.3592704186.0/252584127b202c3b8f0aa85d59b7073bd5a4e6e0",
+  "_shasum": "252584127b202c3b8f0aa85d59b7073bd5a4e6e0",
+  "_spec": "@openhealthhub/fhir-encrypter@0.1.1--canary.16.3592704186.0",
+  "_where": "D:\\git\\fhir-encrypter-test-app",
+  "auto": {
+    "noVersionPrefix": true,
+    "shipit": {
+      "prerelease": true,
+      "noChangelog": true
+    },
+    "baseBranch": "main",
+    "prereleaseBranches": [
+      "develop"
+    ],
+    "author": "Open HealthHub <support@openhealthhub.com>"
+  },
+  "bugs": {
+    "url": "https://github.com/openhealthhub/fhir-encrypter/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "deprecated": false,
+  "description": "Library for encrypting FHIR QuestionnaireResponses for Open HealthHub FHIR Platform",
+  "es2020": "fesm2020/openhealthhub-fhir-encrypter.mjs",
+  "esm2020": "esm2020/openhealthhub-fhir-encrypter.mjs",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2020": "./esm2020/openhealthhub-fhir-encrypter.mjs",
+      "es2020": "./fesm2020/openhealthhub-fhir-encrypter.mjs",
+      "es2015": "./fesm2015/openhealthhub-fhir-encrypter.mjs",
+      "node": "./fesm2015/openhealthhub-fhir-encrypter.mjs",
+      "default": "./fesm2020/openhealthhub-fhir-encrypter.mjs"
+    }
+  },
+  "fesm2015": "fesm2015/openhealthhub-fhir-encrypter.mjs",
+  "fesm2020": "fesm2020/openhealthhub-fhir-encrypter.mjs",
+  "homepage": "https://github.com/openhealthhub/fhir-encrypter#readme",
+  "module": "fesm2015/openhealthhub-fhir-encrypter.mjs",
+  "name": "@openhealthhub/fhir-encrypter",
+  "peerDependencies": {
+    "@openpgp/web-stream-tools": "*",
+    "lodash": "4.x",
+    "openpgp": "5.x"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openhealthhub/fhir-encrypter.git"
+  },
+  "sideEffects": false,
+  "typings": "index.d.ts",
+  "version": "0.1.1--canary.16.3592704186.0"
+}
