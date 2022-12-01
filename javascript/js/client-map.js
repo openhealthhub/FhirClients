@@ -3,8 +3,10 @@ import SubscriptionClient from "./subscription";
 import QuestionnaireResponseClient from './questionnaire-response';
 import VitalSignsClient from "./vitalsigns";
 import CarePlanClient from "./careplan";
+import CareTeamClient from "./careteam";
 import PlanDefinitionClient from "./plan-definition";
 import BinaryClient from "./binary";
+import PractitionerClient from "./practitioner";
 
 export const CLIENT_MAP = {
   Binary: new BinaryClient(),
@@ -13,5 +15,7 @@ export const CLIENT_MAP = {
   QuestionnaireResponse: new QuestionnaireResponseClient(),
   VitalSigns: new VitalSignsClient(),
   CarePlan: new CarePlanClient(),
+  CareTeam: new CareTeamClient(),
+  Practitioner: new PractitionerClient(),
   Subscription: new SubscriptionClient()
 }

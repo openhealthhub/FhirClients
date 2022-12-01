@@ -34,9 +34,15 @@ function initPage() {
   createTab('Appointment.create');
   createTab('Binary.create');
   createTab('CarePlan.get');
+  createTab('CarePlan.search');
+  createTab('CarePlan.getWithPractitioners');
   createTab('CarePlan.create');
   createTab('CarePlan.update');
   createTab('CarePlan.delete');
+  createTab('CareTeam.get');
+  createTab('CareTeam.getWithPractitioners');
+  createTab('Practitioner.get');
+  createTab('Practitioner.searchByCareTeam');
   createTab('PlanDefinition.get');
   createTab('PlanDefinition.search');
   createTab('Questionnaire.get');
