@@ -1,28 +1,27 @@
 {
-  "_from": "@openhealthhub/fhir-encrypter@0.1.1--canary.16.3592704186.0",
-  "_id": "@openhealthhub/fhir-encrypter@0.1.1--canary.16.3592704186.0",
+  "_from": "@openhealthhub/fhir-encrypter@0.2.0",
+  "_id": "@openhealthhub/fhir-encrypter@0.2.0",
   "_inBundle": false,
-  "_integrity": "sha512-LDaKXfyHGGZB3WG3/RLwaHpP9n3Kpl681DGCu4WlI9TfjAB4AuSiN59iHmLoNpOU8PC3FguYamwlmfCqlnXoAg==",
+  "_integrity": "sha512-UsBPtVnJB8ZUhQbU2k4bwsQuqRG4+d2AGlpYZjz0hTSDiYRT8tArN7Ceuc7aUcumhubl2w6TX+sxH4gHFFOYIQ==",
   "_location": "/@openhealthhub/fhir-encrypter",
   "_phantomChildren": {},
   "_requested": {
     "type": "version",
     "registry": true,
-    "raw": "@openhealthhub/fhir-encrypter@0.1.1--canary.16.3592704186.0",
+    "raw": "@openhealthhub/fhir-encrypter@0.2.0",
     "name": "@openhealthhub/fhir-encrypter",
     "escapedName": "@openhealthhub%2ffhir-encrypter",
     "scope": "@openhealthhub",
-    "rawSpec": "0.1.1--canary.16.3592704186.0",
+    "rawSpec": "0.2.0",
     "saveSpec": null,
-    "fetchSpec": "0.1.1--canary.16.3592704186.0"
+    "fetchSpec": "0.2.0"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://npm.pkg.github.com/download/@openhealthhub/fhir-encrypter/0.1.1--canary.16.3592704186.0/252584127b202c3b8f0aa85d59b7073bd5a4e6e0",
-  "_shasum": "252584127b202c3b8f0aa85d59b7073bd5a4e6e0",
-  "_spec": "@openhealthhub/fhir-encrypter@0.1.1--canary.16.3592704186.0",
-  "_where": "D:\\git\\fhir-encrypter-test-app",
+  "_resolved": "https://npm.pkg.github.com/download/@openhealthhub/fhir-encrypter/0.2.0/dc1fd611e8951aef8306d7fe07b4555cd5bf7da6",
+  "_shasum": "dc1fd611e8951aef8306d7fe07b4555cd5bf7da6",
+  "_spec": "@openhealthhub/fhir-encrypter@0.2.0",
   "auto": {
     "noVersionPrefix": true,
     "shipit": {
@@ -78,5 +77,5 @@
   },
   "sideEffects": false,
   "typings": "index.d.ts",
-  "version": "0.1.1--canary.16.3592704186.0"
+  "version": "0.2.0"
 }
