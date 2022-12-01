@@ -4,8 +4,8 @@ from typing import List
 import gnupg
 from config.settings import client
 
-encryptedAnswersUrl = 'http://openhealthhub.com/fhir/StructureDefinition/encryptedAnswers'
-encryptedProfile = 'http://openhealthhub.com/fhir/StructureDefinition/EncryptedQuestionnaireResponse'
+encryptedAnswersUrl = 'https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encryptedAnswers'
+encryptedProfile = 'https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/EncryptedQuestionnaireResponse'
 
 
 def is_encrypted(resource):

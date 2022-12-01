@@ -63,7 +63,7 @@ public abstract class QueryResponseDecryptClient {
         return questionnaireResponse.getMeta()
                 .getProfile()
                 .stream()
-                .anyMatch(profile -> "http://openhealthhub.com/fhir/StructureDefinition/EncryptedQuestionnaireResponse".equals(
+                .anyMatch(profile -> "https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/EncryptedQuestionnaireResponse".equals(
                         profile.getValue()));
     }
 

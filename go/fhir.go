@@ -15,8 +15,8 @@ import (
 	"openhealthhub.com/go/vitalsigns"
 )
 
-const encryptedExtensionUrl = "http://openhealthhub.com/fhir/StructureDefinition/encryptedAnswers"
-const encryptedProfileUrl = "http://openhealthhub.com/fhir/StructureDefinition/EncryptedQuestionnaireResponse"
+const encryptedExtensionUrl = "https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encryptedAnswers"
+const encryptedProfileUrl = "https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/EncryptedQuestionnaireResponse"
 
 func main() {
 	carePlanCalls()

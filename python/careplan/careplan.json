@@ -27,22 +27,13 @@
       ]
     }
   ],
-  "extension": [
-    {
-      "url": "http://openhealthhub.com/fhir/StructureDefinition/plan-pin",
-      "valueString": "59gladtc"
-    }
-  ],
   "instantiatesCanonical": [
     "https://api.openhealthhub.com/OpenHealthhub/fhir/4/PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6"
   ],
-  "status": "completed",
-  "intent": "plan",
   "subject": {
     "reference": "#patient"
   },
   "period": {
-    "start": "2021-03-16T13:32:37.430+01:00",
-    "end": "2021-03-16T13:32:37.430+01:00"
+    "start": "2021-03-16T13:32:37.430+01:00"
   }
 }
