@@ -3,38 +3,61 @@ import json
 import sys
 
 sys.path.append('../')
+
 from config.settings import client
+from fhirpy.lib import AsyncFHIRResource
 
 
 async def get_careplan():
-    care_plan = await client.resource('CarePlan').execute('1', 'GET')
+    care_plan: AsyncFHIRResource = (
+        await client.resources("CarePlan").search(_id=1).get()
+    )
 
-    print(care_plan.instantiatesCanonical)
+    # Resource support accessing its elements
+    # both as attribute and as a dictionary keys
+    print(care_plan["instantiatesCanonical"])
 
-    search_response = await client.resources('CarePlan').search(
-        **{'instantiates-canonical': 'PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806'}).fetch()
+    # fetch returns one page of AsyncFHIRResources
+    # if you would like to get all resources on all the pages
+    # use fetch_all() instead
+    care_plans = (
+        await client.resources("CarePlan")
+        .search(
+            instantiates_canonical="PlanDefinition/97f680b9-e397-4298-8c53-de62a284c806"
+        )
+        .fetch()
+    )
 
-    print(search_response)
+    print("Care plans: ".format([resource.serialize() for resource in care_plans]))
 
-    get_with_practitioners = await client.resources('CarePlan').search(
-       _id=1).include('CarePlan', 'care-team').include('CareTeam', 'participant').fetch_raw()
+    # fetch_raw returns a FHIR Bundle of AsyncResources.
+    # Always use fetch_raw with .include/.revinclude
+    get_with_practitioners = (
+        await client.resources("CarePlan")
+        .search(_id=1)
+        .include("CarePlan", "care-team")
+        .include("CareTeam", "participant")
+        .fetch_raw()
+    )
 
     print(get_with_practitioners)
 
-    with open('careplan.json', 'r') as file:
+    with open("careplan.json", "r") as file:
         careplan_json = json.load(file)
 
-    create_response = await client.execute('CarePlan', method='post', data=careplan_json)
+    # create CarePlan resource
+    care_plan = client.resource("CarePlan", **careplan_json)
+    await care_plan.save()
 
-    print(create_response)
+    print("Created care plan:\n {}".format(care_plan.serialize()))
 
-    update_response = await client.execute('CarePlan', method='put', data=careplan_json)
+    # Update CarePlan
+    care_plan.title = "Care plan title"
+    await care_plan.save()
+    print("Updated care plan:\n {}".format(care_plan.serialize()))
 
-    print(update_response)
-
-    delete_response = await client.resource('CarePlan').execute('1', 'DELETE')
-
-    print(delete_response)
+    # Delete CarePlan
+    await care_plan.delete()
 
 
 asyncio.run(get_careplan())

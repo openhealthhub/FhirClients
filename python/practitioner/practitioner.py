@@ -1,16 +1,20 @@
 import asyncio
 import sys
 
-sys.path.append('../')
+from fhirpy.lib import AsyncFHIRResource
+
+sys.path.append("../")
 from config.settings import client
 
 
 async def get_practitioner():
-    practitioner = await client.resource('Practitioner').execute('1', 'GET')
+    practitioner: AsyncFHIRResource = await client.resources("Practitioner").search(_id=1).get()
 
     print(practitioner)
 
-    search_by_careteam = await client.resources('Practitioner').search(**{'_has:CareTeam:_id':1}).fetch()
+    search_by_careteam = (
+        await client.resources("Practitioner").has("CareTeam", _id=1).fetch()
+    )
 
     print(search_by_careteam)
 

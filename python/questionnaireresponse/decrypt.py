@@ -14,11 +14,11 @@ def is_encrypted(resource):
 
 
 async def decrypt_questionnaire_response():
-    response = await client.resource('QuestionnaireResponse').execute('1', 'GET')
+    resource = await client.resources('QuestionnaireResponse').search(_id=1).get()
 
-    if is_encrypted(response):
+    if is_encrypted(resource):
         encryptedAnswers = list(filter(lambda extension: encryptedAnswersUrl == extension.url,
-                                 response.extension))
+                                 resource.extension))
 
         gpg = gnupg.GPG()
         with open('../../sandbox.key') as file:
