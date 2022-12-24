@@ -10,6 +10,12 @@ async def get_plandefinition():
         await client.resources("PlanDefinition").search(_id=1).get()
     )
 
+    # or
+
+    plandefinition: AsyncFHIRResource = await client.reference(
+        "PlanDefinition", 1
+    ).to_resource()
+
     print(plandefinition.resourceType, plandefinition.id)
 
     # Fetch returns records from the one page

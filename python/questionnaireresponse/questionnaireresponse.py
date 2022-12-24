@@ -11,6 +11,12 @@ async def questionnaire_response():
         .get()
     )
 
+    # or
+
+    questionnaire_response: AsyncFHIRResource = await client.reference(
+        "QuestionnaireResponse", "57a1f708-d9cf-4d8c-9f25-b5a450e7f0ca"
+    ).to_resource()
+
     print(questionnaire_response.resource_type, questionnaire_response.id)
 
     qrs = (

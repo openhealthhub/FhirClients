@@ -8,8 +8,13 @@ from fhirpy.lib import AsyncFHIRResource
 
 
 async def get_careteam():
-    care_team: AsyncFHIRResource = await client.resources("CareTeam").search(_id=1).get()
+    care_team: AsyncFHIRResource = (
+        await client.resources("CareTeam").search(_id=1).get()
+    )
 
+    # or
+
+    care_team: AsyncFHIRResource = await client.reference("CareTeam", 1).to_resource()
     print(care_team)
 
     get_with_practitioners = (

@@ -2,7 +2,7 @@ import asyncio
 import json
 import sys
 
-sys.path.append('../')
+sys.path.append("../")
 
 from config.settings import client
 from fhirpy.lib import AsyncFHIRResource
@@ -12,6 +12,10 @@ async def get_careplan():
     care_plan: AsyncFHIRResource = (
         await client.resources("CarePlan").search(_id=1).get()
     )
+
+    # or
+
+    care_plan: AsyncFHIRResource = await client.reference("CarePlan", 1).to_resource()
 
     # Resource support accessing its elements
     # both as attribute and as a dictionary keys
