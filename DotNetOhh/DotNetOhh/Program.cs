@@ -198,6 +198,40 @@ namespace DotNetOhh
             Console.Out.WriteLine(subscription.Id);
         }
 
+        private static void Batch(FhirClient client)
+        {
+                Bundle bundle = new Bundle
+                {
+                    Type = Bundle.BundleType.Batch,
+                    Entry = new List<Bundle.EntryComponent>()
+                };
+
+                bundle.Entry.Add(new Bundle.EntryComponent
+                {
+                    Resource = new CarePlan
+                    {
+                       Period = new Period(FhirDateTime.Now(), null),
+                       InstantiatesCanonical = new List<string> { "PlanDefinition/cca2eaf3-03a9-46c0-88c6-e0287917cea6" }
+                    },
+                    Request = new Bundle.RequestComponent
+                    {
+                        Method = Bundle.HTTPVerb.POST,
+                        Url = "CarePlan"
+                    }
+                });
+
+                bundle.Entry.Add(new Bundle.EntryComponent
+                {
+                    Request = new Bundle.RequestComponent
+                    {
+                        Method = Bundle.HTTPVerb.GET,
+                        Url = "CarePlan/1"
+                    }
+                });
+
+                var result = client.Transaction(bundle);
+        }
+
         private static void ReadObservation(FhirClient client)
         {
             var obs = client.Read<Observation>("Observation/1");
