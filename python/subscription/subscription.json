@@ -1,5 +1,4 @@
 {
-  "reason": "test",
   "resourceType" : "Subscription",
   "criteria": "QuestionnaireResponse?based-on.instantiates-canonical=PlanDefinition/f029ce5e-52f2-4a03-9937-b4190d8104d3",
   "status": "requested",
