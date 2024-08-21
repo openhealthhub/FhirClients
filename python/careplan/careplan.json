@@ -25,6 +25,47 @@
           "value": "test@patient.ohh"
         }
       ]
+    },
+    {
+        "resourceType": "Task",
+        "id": "task",
+        "status": "requested",
+        "intent": "original-order",
+        "input": [
+            {
+                "type": {
+                    "coding": [
+                        {
+                            "system": "http://openhealthhub.com/fhir/StructureDefinition/care-plan-task",
+                            "code": "create-user"
+                        }
+                    ]
+                },
+                "valueBoolean": true
+            },
+            {
+                "type": {
+                    "coding": [
+                        {
+                            "system": "http://openhealthhub.com/fhir/StructureDefinition/care-plan-task",
+                            "code": "register-program"
+                        }
+                    ]
+                },
+                "valueBoolean": true
+            },
+            {
+                "type": {
+                    "coding": [
+                        {
+                            "system": "http://openhealthhub.com/fhir/StructureDefinition/care-plan-task",
+                            "code": "send-invitation-mail"
+                        }
+                    ]
+                },
+                "valueBoolean": true
+            }
+        ]
     }
   ],
   "instantiatesCanonical": [
@@ -35,5 +76,12 @@
   },
   "period": {
     "start": "2021-03-16T13:32:37.430+01:00"
-  }
+  },
+  "activity": [
+      {
+          "reference": {
+              "reference": "#task"
+          }
+      }
+  ]
 }
