@@ -3,8 +3,6 @@
 
 namespace OpenHealthhub\PhpFhirClient;
 
-
-use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRObservation;
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRQuestionnaire;
 
 class QuestionnaireClient
