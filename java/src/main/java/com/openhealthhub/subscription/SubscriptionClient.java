@@ -28,7 +28,7 @@ public class SubscriptionClient {
                 .setHeader(List.of(new StringType("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")))
                 .setEndpoint("https://your-webhook/endpoint");
         Subscription subscription = new Subscription()
-                .setCriteria("Appointment?name=test")
+                .setCriteria("QuestionnaireResponse?author=johndoe")
                 .setStatus(Subscription.SubscriptionStatus.REQUESTED)
                 .setChannel(channel);
 

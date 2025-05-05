@@ -4,7 +4,6 @@
 namespace OpenHealthhub\PhpFhirClient;
 
 
-use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRBackboneElement\FHIRAppointment\FHIRAppointmentParticipant;
 use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRCanonical;
 use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRContactPoint;
 use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRContactPointSystem;
@@ -16,7 +15,6 @@ use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRParticipationStatus;
 use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRPeriod;
 use DCarbone\PHPFHIRGenerated\R4\FHIRElement\FHIRReference;
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRBundle;
-use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRAppointment;
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRCarePlan;
 use DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRPatient;
 

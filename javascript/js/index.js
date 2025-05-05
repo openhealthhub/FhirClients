@@ -30,8 +30,6 @@ function createTab(resourceName) {
 
 function initPage() {
   headerDiv.className = 'header';
-  createTab('Appointment.get');
-  createTab('Appointment.create');
   createTab('Binary.create');
   createTab('CarePlan.get');
   createTab('CarePlan.search');
