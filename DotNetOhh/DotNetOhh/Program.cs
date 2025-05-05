@@ -33,8 +33,6 @@ namespace DotNetOhh
 
             Practitioners(client);
 
-            ReadObservation(client);
-
             CreateSubscription(client);
 
             ReadAndDecryptQuestionnaireResponse(client);
@@ -230,17 +228,6 @@ namespace DotNetOhh
                 });
 
                 var result = client.Transaction(bundle);
-        }
-
-        private static void ReadObservation(FhirClient client)
-        {
-            var obs = client.Read<Observation>("Observation/1");
-            Console.Out.WriteLine(obs.Category[0].Text);
-
-
-            var bun = client.Search<Observation>(new[] {"identifier=patientnumber", "device-name=blub"});
-
-            bun.Entry.ForEach(component => Console.WriteLine(component.ToJson()));
         }
     }
 }

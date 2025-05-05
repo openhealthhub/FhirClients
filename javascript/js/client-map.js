@@ -1,7 +1,6 @@
 import QuestionnaireClient from "./questionnaire";
 import SubscriptionClient from "./subscription";
 import QuestionnaireResponseClient from './questionnaire-response';
-import VitalSignsClient from "./vitalsigns";
 import CarePlanClient from "./careplan";
 import CareTeamClient from "./careteam";
 import PlanDefinitionClient from "./plan-definition";
@@ -13,7 +12,6 @@ export const CLIENT_MAP = {
   PlanDefinition: new PlanDefinitionClient(),
   Questionnaire: new QuestionnaireClient(),
   QuestionnaireResponse: new QuestionnaireResponseClient(),
-  VitalSigns: new VitalSignsClient(),
   CarePlan: new CarePlanClient(),
   CareTeam: new CareTeamClient(),
   Practitioner: new PractitionerClient(),

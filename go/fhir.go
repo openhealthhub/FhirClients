@@ -12,7 +12,6 @@ import (
 	"openhealthhub.com/go/questionnaire"
 	"openhealthhub.com/go/questionnaireresponse"
 	"openhealthhub.com/go/subscription"
-	"openhealthhub.com/go/vitalsigns"
 )
 
 const encryptedExtensionUrl = "https://api.openhealthhub.com/OpenHealthhub/fhir/4/StructureDefinition/encryptedAnswers"
@@ -28,8 +27,6 @@ func main() {
 	uploadKeyCalls()
 
 	plandefinitionCalls()
-
-	observationCalls()
 
 	questionnaireCalls()
 
@@ -169,23 +166,6 @@ func questionnaireCalls() {
 	}
 
 	println(read.Description)
-}
-
-func observationCalls() {
-	observation, err := vitalsigns.Read()
-	if err != nil {
-		panic(err)
-	}
-	println(observation.Id.Value)
-
-	obs, err := vitalsigns.Search()
-	if err != nil {
-		panic(err)
-	}
-
-	for _, o := range obs {
-		println(o.Id.Value)
-	}
 }
 
 func plandefinitionCalls() {

@@ -50,8 +50,6 @@ function initPage() {
   createTab('QuestionnaireResponse.search');
   createTab('QuestionnaireResponse.create');
   createTab('Subscription.create');
-  createTab('VitalSigns.get');
-  createTab('VitalSigns.search');
   document.body.append(headerDiv, preElem)
 }
 

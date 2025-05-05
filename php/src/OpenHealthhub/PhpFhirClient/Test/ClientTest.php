@@ -10,7 +10,6 @@ use OpenHealthhub\PhpFhirClient\PractitionerClient;
 use OpenHealthhub\PhpFhirClient\QuestionnaireClient;
 use OpenHealthhub\PhpFhirClient\QuestionnaireResponseClient;
 use OpenHealthhub\PhpFhirClient\SubscriptionClient;
-use OpenHealthhub\PhpFhirClient\VitalSignsClient;
 use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
@@ -100,23 +99,6 @@ class ClientTest extends TestCase
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRPractitioner', $resp->getEntry()[0]->getResource());
     }
 
-    public function testGetVitalSigns()
-    {
-        $client = new VitalSignsClient();
-        $resp = $client->getVitalSigns(4);
-        $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRObservation', $resp);
-        $this->assertEquals('4', $resp->getId()->getValue()->getValue());
-    }
-
-    public function testSearchVitalSigns()
-    {
-        $client = new VitalSignsClient();
-        $resp = $client->searchVitalSigns('device', '1234');
-        $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRBundle', $resp);
-        $this->assertEquals(4, count($resp->getEntry()));
-        $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRObservation', $resp->getEntry()[0]->getResource());
-    }
-
     public function testGetPlanDefinition()
     {
         $client = new PlanDefinitionClient();
@@ -127,8 +109,8 @@ class ClientTest extends TestCase
 
     public function testSearchPlanDefintion()
     {
-        $client = new VitalSignsClient();
-        $resp = $client->searchVitalSigns('866683f3-c41b-47c0-b42f-86f9ff978d1d', 'Program Creator');
+        $client = new PlanDefinitionClient();
+        $resp = $client->searchPlanDefinition('866683f3-c41b-47c0-b42f-86f9ff978d1d', 'Program Creator');
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRBundle', $resp);
         $this->assertEquals(1, count($resp->getEntry()));
         $this->assertInstanceOf('DCarbone\PHPFHIRGenerated\R4\FHIRResource\FHIRDomainResource\FHIRPlanDefinition', $resp->getEntry()[0]->getResource());

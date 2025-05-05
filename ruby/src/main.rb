@@ -3,7 +3,6 @@ require '../src/careteam'
 require '../src/practitioner'
 require '../src/questionnaire'
 require '../src/questionnaire-response'
-require '../src/vitalsigns'
 require '../src/subscription'
 require '../src/binary'
 
@@ -22,12 +21,6 @@ client = PlanDefinitionClient.new
 response = client.get_plandefinition('4944e73f-e447-49ba-a64c-a246b9ef4bdd')
 puts response.to_json
 response = client.search_plandefinition
-puts response.to_json
-
-client = VitalSignsClient.new
-response = client.get_vitalsigns(4)
-puts response.to_json
-response = client.search_vitalsigns
 puts response.to_json
 
 client = SubscriptionClient.new
