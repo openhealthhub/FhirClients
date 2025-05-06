@@ -16,7 +16,7 @@ class SubscriptionClient
         $subscription = new FHIRSubscription();
         $channel = new FHIRSubscriptionChannel();
         $channelType = new FHIRSubscriptionChannelType();
-        $subscription->setCriteria('Appointment?name=test')->setChannel($channel->setEndpoint('https://your-webhook/endpoint')->setType($channelType->setValue('rest-hook'))->addHeader(['Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8']));
+        $subscription->setCriteria('QuestionnaireResponse?author=johndoe')->setChannel($channel->setEndpoint('https://your-webhook/endpoint')->setType($channelType->setValue('rest-hook'))->addHeader(['Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8']));
         $status = new FHIRSubscriptionStatus(['requested']);
         $subscription->setStatus($status);
         $res = $client->create('Subscription', $subscription);

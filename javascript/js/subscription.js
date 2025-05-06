@@ -5,7 +5,7 @@ class SubscriptionClient {
     const client = new Client();
     return client.create({
       resourceType: 'Subscription',
-      criteria: 'Appointment?name=test',
+      criteria: 'QuestionnaireResponse?author=johndoe',
       status: 'requested',
       channel: {
         type: 'rest-hook',

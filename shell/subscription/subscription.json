@@ -1,7 +1,7 @@
 {
   "resourceType": "Subscription",
   "status": "requested",
-  "criteria": "Appointment?name=test",
+  "criteria": "QuestionnaireResponse?author=johndoe",
   "channel": {
     "type": "rest-hook",
     "endpoint": "https://your-webhook/endpoint"

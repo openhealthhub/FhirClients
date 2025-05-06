@@ -6,7 +6,7 @@ class SubscriptionClient
 
     subscription = FHIR::Subscription.new
 
-    subscription.criteria = 'Appointment?name=test'
+    subscription.criteria = 'QuestionnaireResponse?author=johndoe'
     subscription.status = 'requested'
     subscription.channel = FHIR::Subscription::Channel.new
     subscription.channel.type = 'rest-hook'
